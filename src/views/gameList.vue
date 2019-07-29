@@ -62,7 +62,7 @@
     </a-table>
 
     <a-modal
-            title="新增赛事"
+            title="赛事信息"
             v-model="visible"
             destroyOnClose="true"
             @ok="handleOk"
@@ -100,7 +100,8 @@
               <div class="inputName">开始时间：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-date-picker  @change="onChangeStartTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
+                <a-date-picker  v-if="!isEdit"  @change="onChangeStartTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
+                <a-date-picker  v-if="isEdit" :defaultValue="moment(addGame.startTime, dateFormat)" :format="dateFormat" @change="onChangeStartTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
             </a-col>
           </div>
         </a-col>
@@ -112,7 +113,9 @@
               <div class="inputName">结束时间：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-date-picker  @change="onChangeEndTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
+                <a-date-picker v-if="!isEdit"  @change="onChangeEndTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
+
+                <a-date-picker  v-if="isEdit" :defaultValue="moment(addGame.endTime, dateFormat)" :format="dateFormat"  @change="onChangeEndTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
             </a-col>
           </div>
         </a-col>
@@ -185,7 +188,9 @@
               <div class="inputName">报名时间：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-                <a-date-picker @change="onChangeSignUpStartTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
+                <a-date-picker v-if="!isEdit" @change="onChangeSignUpStartTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
+
+                <a-date-picker v-if="isEdit" :defaultValue="moment(addGame.signUpStartTime, dateFormat)" :format="dateFormat" @change="onChangeSignUpStartTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
             </a-col>
           </div>
         </a-col>
@@ -197,7 +202,9 @@
               <div class="inputName">截止时间：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-date-picker  @change="onChangeSignUpEndTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
+                <a-date-picker v-if="!isEdit"   @change="onChangeSignUpEndTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
+
+                <a-date-picker v-if="isEdit"   :defaultValue="moment(addGame.signUpEndTime, dateFormat)" :format="dateFormat" @change="onChangeSignUpEndTime" showTime="true" format="YYYY-MM-DD HH:mm" :style="{width: '100%'}"/>
             </a-col>
           </div>
         </a-col>
@@ -389,7 +396,7 @@
                           <div class="inputName">竞赛项目：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
-                          <a-select :value="addGame.competitionEventId" style="width: 100%" @change="handleChangeSelect">
+                          <a-select :value="addGame.competitionEventId" style="width: 100%" disabled @change="handleChangeSelect">
                               <a-select-option v-for="item in competitionEvents" :value="item.id">{{item.name}}</a-select-option>
                           </a-select>
                       </a-col>
@@ -630,6 +637,7 @@
     const productListData = [];
     export default {
         methods: {
+            moment,
             seeTable(id){
                 store.commit('changeStore',{key:'matchId',val:id});
                 router.push('/registerForm')
@@ -1084,7 +1092,7 @@
         },
         data() {
             return {
-
+                dateFormat: 'YYYY-MM-DD',
                 competitionList:[],
                 editCompetitionEventData:{
                     id:'',

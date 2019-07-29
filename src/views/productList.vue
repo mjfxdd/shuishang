@@ -23,6 +23,8 @@
        <span slot="action" slot-scope="text, record">
                       <a @click="deleteUser(text.id,text.userName)">删除</a>
                       <a-divider type="vertical" />
+                      <a @click="reSetPassworld(text.id,text.userName)">重置密码</a>
+                      <a-divider type="vertical" />
                       <a @click="edit(text.id,text.userName)">编辑</a>
           </span>
     </a-table>
@@ -107,6 +109,14 @@
         >
           <p>确认要删除 {{del.name}}？</p>
         </a-modal>
+    <a-modal
+            title="警告"
+            :visible="visibleRes"
+            @ok="handleOkRes"
+            @cancel="handleCancel"
+    >
+      <p>确认要重置密码 ？</p>
+    </a-modal>
 
   </div>
 </template>
@@ -129,6 +139,11 @@
     const productListData = [];
     export default {
         methods: {
+            reSetPassworld(id,name){
+                this.visibleRes=true
+                this.resetPassworld = name
+            },
+
             deleteUser(id,name){
                 this.visibleDel=true
                 this.del.id=id
@@ -195,6 +210,33 @@
                 this.visible=true
                 this.addData.userName=''
                 this.addData.roleId=this.roleListData[0].id
+
+
+
+            },
+            handleOkRes(){
+                this.$fetch('/user/resetPassword',{userName:this.resetPassworld}).then((reData)=>{
+                    this.visible = false
+                    if(reData.code==200){
+                        this.$notification.open({
+                            duration:null,
+                            message: '请记住新账号的密码：'+reData.data,
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                        });
+                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
+
+                    }else {
+                        this.$notification.open({
+                            duration:3,
+                            message: reData.msg,
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                        });
+                    }
+                })
 
 
 
@@ -279,6 +321,7 @@
                 this.visible=false
                 this.visibleEdit=false
                 this.visibleDel=false
+                this.visibleRes = false
             }
 
     },
@@ -291,6 +334,7 @@
         },
         data() {
             return {
+                resetPassworld:'',
                 del:{
                     name:'',
                     id:''
@@ -300,6 +344,7 @@
                 visible: false,
                 visibleEdit:false,
                 visibleDel:false,
+                visibleRes:false,
                 productListData,
                 columns,
                 addData:{

@@ -550,6 +550,10 @@
 
         },
         mounted() {
+            if(sessionStorage.getItem("userName")){
+                store.commit('changeStore',{key:'userName',val:sessionStorage.getItem("userName")});
+            }
+
             // store.commit('changeStore',{key:'title',val:'新增产品'});
             // this.getList({page:1,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(["4"])})
             this.getList({page:1,page_size:this.pagination.defaultPageSize})

@@ -31,7 +31,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
      {
-      path: '/',
+      path: '/index',
       name: 'home',
       component: Home,
       children: [
@@ -116,7 +116,7 @@ export default new Router({
           component: login
       },{
           //首页
-          path: '/index',
+          path: '/',
           name: 'index',
           component: index
       },{

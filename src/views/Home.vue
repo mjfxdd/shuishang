@@ -84,12 +84,16 @@
             ,loginOut(){
                 sessionStorage.setItem("token",'');
                 store.commit('changeStore',{key:'userName',val:''});
-                router.push("/index")
+                router.push("/")
             }
         },
         mounted() {
+            store.commit('changeStore',{key:'userId',val:sessionStorage.getItem("userId")});
 
             $(".conRoom").css('min-height',$(window).height()-60)
+            if(this.$store.state.categoryId == 1){
+                router.push('/')
+            }
         }
     }
 </script>

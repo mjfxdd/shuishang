@@ -12,8 +12,8 @@ export default new Vuex.Store({
       formId:'',
       matchId:'',
       alertTip:false,
-      tipText:''
-
+      tipText:'',
+      categoryId:''
   },
   mutations: {
        changeStore(state,data){

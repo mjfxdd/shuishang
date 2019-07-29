@@ -7,9 +7,9 @@
         <img src="../assets/logoF.jpg" width="100%" alt="">
       </div>
       <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['4']" :style="{ textAlign: 'left' }">
-        <a-menu-item key="1" @click="choseWhich('/index','首页')">首页</a-menu-item>
+        <a-menu-item key="1" @click="choseWhich('/','首页')">首页</a-menu-item>
         <a-menu-item key="2" @click="choseWhich('/userHome','报名列表')">报名列表</a-menu-item>
-        <a-menu-item key="3" @click="choseWhich('/personCenterUser','个人中心')">个人中心</a-menu-item>
+        <a-menu-item key="3" @click="choseWhich('/personCenterUser','密码修改')">密码修改</a-menu-item>
         <a-menu-item key="22" @click="loginOut()">退出登录</a-menu-item>
 
       </a-menu>
@@ -78,12 +78,17 @@
             ,loginOut(){
                 sessionStorage.setItem("token",'');
                 store.commit('changeStore',{key:'userName',val:''});
-
-                router.push("/index")
+                router.push("/")
             }
         },
         mounted() {
+            store.commit('changeStore',{key:'userId',val:sessionStorage.getItem("userId")});
+
             $(".conRoom").css('min-height',$(window).height()-60)
+            if(this.$store.state.categoryId == 2){
+                router.push('/index')
+            }
+
         }
     }
 </script>

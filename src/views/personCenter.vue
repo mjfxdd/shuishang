@@ -32,7 +32,7 @@
     <div class="hrLine"></div>
     <a-table :columns="columns" :dataSource="productListData" :pagination="pagination"  :loading="loading"  @change="handleTableChange" >
        <span slot="action" slot-scope="text, record">
-                      <div v-if="text.status==1">
+                      <div v-if="text.status==1||text.status==4">
                         <a @click="deleteUser(text.id,text.matchName)">删除</a>
                         <a-divider type="vertical" />
                         <a @click="editGame(text.id,text.matchId)">编辑</a>
@@ -42,10 +42,8 @@
                         <a  @click="seeGame(text.id)" style="text-decoration: underline;cursor: pointer">查看</a>
                         <a-divider type="vertical" />
                         <a @click="submitMatch(text.id)">提交报名表</a>
-
-
                       </div>
-                      <div v-if="text.status!=1" @click="seeGame(text.id)" style="text-decoration: underline;cursor: pointer">查看</div>
+                      <div v-if="text.status!=1 &&text.status!=4" @click="seeGame(text.id)" style="text-decoration: underline;cursor: pointer">查看</div>
 
           </span>
        <span slot="status" slot-scope="text, record">
@@ -1007,7 +1005,9 @@
         function fake() {
             const str = querystring.encode({
                 nameKeyword: value,
-            });
+                token:sessionStorage.getItem("token")
+
+        });
             jsonp(`http://106.12.61.239:8080/ERService/athletes/findAthletesByNameKeyword?${str}`)
                 .then(response => response.json())
                 .then((d) => {

@@ -1,14 +1,19 @@
 <template>
-    <!--<a-tree-->
-            <!--checkable-->
-            <!--@expand="onExpand"-->
-            <!--:expandedKeys="expandedKeys"-->
-            <!--:autoExpandParent="autoExpandParent"-->
-            <!--v-model="checkedKeys"-->
-            <!--@select="onSelect"-->
-            <!--:selectedKeys="selectedKeys"-->
-            <!--:treeData="treeData"-->
-    <!--/>-->
+    <div>
+        <form action="http://106.12.61.239:8080/ERService/excel/importAthletesExcel" method="POST" enctype="multipart/form-data">
+            sheetNo:<input type="text" name="sheetNo"><br/>
+            headLineNum:<input type="text" name="headLineNum">
+            yourfile: <input type="file" name="file"/><br/>
+            <input type="submit" value="上传图片"/>
+        </form>
+
+
+
+        <form action="http://106.12.61.239:8080/ERService/excel/downImportAthletesTemp" method="GET">
+            fileName:<input type="text" name="fileName"><br/>
+            <input type="submit" value="下载"/>
+        </form>
+    </div>
 </template>
 <script>
     const treeData = [{

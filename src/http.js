@@ -46,9 +46,9 @@ axios.interceptors.response.use(
             store.commit('changeStore',{key:'tipText',val:response.data.msg});
             store.commit('changeStore',{key:'alertTip',val:true});
         }else if(response.data.code ==10000003 ){
-            alert(response.data.msg)
-            // store.commit('changeStore',{key:'tipText',val:response.data.msg});
-            // store.commit('changeStore',{key:'alertTip',val:true});
+            // alert(response.data.msg)
+            store.commit('changeStore',{key:'tipText',val:response.data.msg});
+            store.commit('changeStore',{key:'alertTip',val:true});
         }
 
         return response;
