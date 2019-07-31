@@ -16,17 +16,228 @@
             </a-carousel>
             <template>
                 <a-card title="赛事列表">
-                    <a href="#" slot="extra">more</a>
+                    <!--<a href="#" slot="extra">more</a>-->
                     <div>
-                        <a-row v-for="(item,index) in gameList">
-                            <a-col :span="22">
-                                <div class="gameName">{{index+1}}、{{item.matchName}}</div>
-                            </a-col>
 
-                            <a-col :span="2" >
-                                <a-button @click="joinGame(item.id,item.matchName)" type="primary">报名参加</a-button>
-                            </a-col>
-                        </a-row>
+                        <a-collapse v-model="activeKey">
+                            <a-collapse-panel v-for="(item,index) in gameList" :key="index">
+                                <template slot="header">
+                                    {{item.matchName}}
+                                    <a @click="joinGame(item.id,item.matchName)"  style="float:right;padding-right: 20px">报名参加</a>
+
+                                    <!--<a @click="joinGame(item.id,item.matchName)" v-if="item.status == 4" style="float:right;padding-right: 20px">报名参加</a>-->
+                                    <!--<span  v-if="item.status == 3" style="float:right;padding-right: 20px">报名未开始</span>-->
+                                    <!--<span v-if="item.status == 5" style="float:right;padding-right: 20px">报名已结束</span>-->
+
+                                </template>
+
+
+                                <!--<a-row>-->
+                                    <!--<a-col class="gutter-row" :span="24">-->
+                                        <!--<div class="inputPart">-->
+                                            <!--<a-col class="gutter-row" :span="4">-->
+                                                <!--<div class="inputName">竞赛项目：</div>-->
+                                            <!--</a-col>-->
+                                            <!--<a-col class="gutter-row" :span="20">-->
+                                              <!--{{item.competitionEventId}}-->
+                                            <!--</a-col>-->
+                                        <!--</div>-->
+                                    <!--</a-col>-->
+                                <!--</a-row>-->
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">开始时间：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.startTime}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">结束时间：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.endTime}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">举办省名：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.province}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">举办市名：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.city}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">赛事简介：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.matchIntroduction}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">赛事规则：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.matchRule}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">报名要求：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.qualification}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">报名时间：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.signUpStartTime}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">截止时间：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.signUpEndTime}}
+
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">主办单位：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.organizers}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">承办单位：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.contractor}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">协办单位：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.coSponsors}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">赞助单位：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.sponsor}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName">技术支持：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="20">
+                                                {{item.technicalSupport}}
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName"><a @click="seeProject(item.id)">查看项目列表</a></div>
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
+                            </a-collapse-panel>
+
+                        </a-collapse>
+
+
+                        <!--<a-row v-for="(item,index) in gameList">-->
+                            <!--<a-col :span="22">-->
+                                <!--<div class="gameName">{{index+1}}、{{item.matchName}}</div>-->
+                            <!--</a-col>-->
+
+                            <!--<a-col :span="2" >-->
+                                <!--<a-button @click="joinGame(item.id,item.matchName)" type="primary">报名参加</a-button>-->
+                            <!--</a-col>-->
+                        <!--</a-row>-->
                     </div>
                 </a-card>
                 <div style="padding: 18px 0px;text-align: right;">
@@ -37,34 +248,52 @@
             </template>
             <foot></foot>
         </div>
+        <a-modal
+                title="比赛项目"
+                v-model="visibleProject"
+                destroyOnClose="true"
+                footer=""
+                width="800px"
+        >
+
+
+            <a-row v-for="(items,index) in competitionList">
+                <a-col :span="20">   {{index+1}}.{{items.projectName}}</a-col>
+            </a-row>
+
+        </a-modal>
+
+
+
         <!--参加赛事报名基本信息填写-->
         <a-modal
                 :title="alertTitle"
                 v-model="visible"
                 destroyOnClose="true"
                 @ok="handleOk"
-                width="800px"
+                width="1000px"
         >
                 <a-row>
                     <a-col class="gutter-row" :span="24">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">参赛队名：</div>
+                            <a-col class="gutter-row" :span="3">
+                                <div class="inputName">参赛队全名：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="20">
+                            <a-col class="gutter-row" :span="21">
                                 <a-input v-model="addGame.teamName" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
+
                 </a-row>
                 <a-row>
                     <a-col class="gutter-row" :span="24">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">领队姓名：</div>
+                            <a-col class="gutter-row" :span="3">
+                                <div class="inputName">参赛队简称：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.teamLeaderName" placeholder=""/>
+                            <a-col class="gutter-row" :span="21">
+                                <a-input v-model="addGame.simpleName" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -72,231 +301,239 @@
                 <a-row>
                     <a-col class="gutter-row" :span="24">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
+                            <a-col class="gutter-row" :span="3">
+                                <div class="inputName">领队姓名：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="16">
+                                <a-input v-model="addGame.teamLeaderName" placeholder=""/>
+                            </a-col>
+                            <a-col class="gutter-row" :offset="1" :span="4">
+                                <a-radio-group :options="plainOptions" @change="onChange1" defaultValue="男" />
+                            </a-col>
+                        </div>
+                    </a-col>
+                </a-row>
+                <a-row>
+                    <a-col class="gutter-row" :span="12">
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
                                 <div class="inputName">领队联系方式：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="20">
+                            <a-col class="gutter-row" :span="18">
                                 <a-input v-model="addGame.leaderPhone" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
+                    <a-col class="gutter-row" :span="12">
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">领队微信：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-input v-model="addGame.leaderWechat" placeholder=""/>
+                            </a-col>
+                        </div>
+                    </a-col>
                 </a-row>
+
                 <a-row>
                     <a-col class="gutter-row" :span="24">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
+                            <a-col class="gutter-row" :span="3">
                                 <div class="inputName">教练员：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="20">
+                            <a-col class="gutter-row" :span="21">
                                 <a-input v-model="addGame.coach" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
                 </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
+            <a-row>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">男教练数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.mCoachNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">女教练数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.wCoachNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+            <a-row>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">男子人数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.manNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">女子人数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.womenNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+            <a-row>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">男轻人数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.lManNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">女轻人数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.lWomanNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+            <a-row>
+                <a-col class="gutter-row" :span="24">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="3">
+                            <div class="inputName">医生：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="21">
+                            <a-input v-model="addGame.doctor" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+
+            <a-row>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">男医生数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.mDoctorNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">女医生数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.wDoctorNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+
+
+            <a-row>
+                <a-col class="gutter-row" :span="24">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="3">
+                            <div class="inputName">工作人员：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="21">
+                            <a-input v-model="addGame.personnel" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+
+            <a-row>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">男工作人员数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.mPersonnelNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+                <a-col class="gutter-row" :span="12">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">女工作人员数：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input v-model="addGame.wPersonnelNum" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+
+            <a-row>
+                <a-col class="gutter-row" :span="24">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="3">
+                            <div class="inputName">填报人：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="21">
+                            <a-input v-model="addGame.operator" placeholder=""/>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+
+            <a-row>
+                    <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">医生：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.doctor" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">工作人员：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.personnel" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">填报人：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.operator" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
+                            <a-col class="gutter-row" :span="6">
                                 <div class="inputName">单位电话：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="20">
+                            <a-col class="gutter-row" :span="18">
                                 <a-input v-model="addGame.workPhone" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
+                    <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
+                            <a-col class="gutter-row" :span="6">
                                 <div class="inputName">单位传真：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="20">
+                            <a-col class="gutter-row" :span="18">
                                 <a-input v-model="addGame.workFax" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
                 </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">男子人数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.manNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">男轻人数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.lManNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">女子人数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.womenNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">女轻人数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.lWomanNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">男领队数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.mLeaderNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">女领队数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.wLeaderNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">男教练数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.mCoachNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">女教练数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.wCoachNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">男医生数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.mDoctorNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">女医生数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.wDoctorNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">男工作人员数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.mPersonnelNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
-                <a-row>
-                    <a-col class="gutter-row" :span="24">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="4">
-                                <div class="inputName">女工作人员数：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="20">
-                                <a-input v-model="addGame.wPersonnelNum" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                </a-row>
+
+
+
+
+
+
+
+
+
+
+
+
         </a-modal>
         <!--参加赛事报名项目填写-->
         <a-modal
@@ -362,6 +599,8 @@
                 </a-card>
             </template>
         </a-modal>
+
+
     </div>
 </template>
 <script>
@@ -412,6 +651,24 @@
             foot
         },
         methods: {
+            seeProject(id){
+                this.$fetch('/project/findProjectsByMatchIdAndPage',{matchId:id,page:1,page_size:100}).then((reData)=>{
+                    if(reData.code==200){
+                        this.competitionList=reData.data.dataList
+                        this.visibleProject =true
+                    }else {
+                        this.$notification.open({
+                            message: reData.msg,
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                        });
+                    }
+                })
+            },
+            onChange1 (e) {
+                this.addGame.teamLeaderSex = e.target.value
+            },
             handleOk2(){
                 router.push('/userHome')
 
@@ -553,7 +810,9 @@
             if(sessionStorage.getItem("userName")){
                 store.commit('changeStore',{key:'userName',val:sessionStorage.getItem("userName")});
             }
-
+            if(sessionStorage.getItem("userId")){
+                store.commit('changeStore',{key:'userId',val:sessionStorage.getItem("userId")});
+            }
             // store.commit('changeStore',{key:'title',val:'新增产品'});
             // this.getList({page:1,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(["4"])})
             this.getList({page:1,page_size:this.pagination.defaultPageSize})
@@ -574,6 +833,10 @@
         data() {
 
             return {
+                visibleProject:false,
+                competitionList:[],
+                activeKey: ['1'],
+                plainOptions:['男', '女'],
                 matchId:'',
                 projectId:'',
                 registerFormId:'',
@@ -584,6 +847,7 @@
                     matchId:'',
                     teamName:'',
                     teamLeaderName:'',
+                    teamLeaderSex:'男',
                     leaderPhone:'',
                     coach:'',
                     doctor:'',
@@ -595,15 +859,16 @@
                     lManNum:'',
                     womenNum:'',
                     lWomanNum:'',
-                    mLeaderNum:'',
-                    wLeaderNum:'',
+                    // mLeaderNum:'',
+                    // wLeaderNum:'',
                     mCoachNum:'',
                     wCoachNum:'',
                     mDoctorNum:'',
                     wDoctorNum:'',
                     mPersonnelNum:'',
                     wPersonnelNum:'',
-
+                    simpleName:"",
+                    leaderWechat:''
 
                 },
                 visible:false,
@@ -624,6 +889,11 @@
     }
 </script>
 <style scoped>
+    .ant-col-20 {
+        padding-top: 6px;
+    }
+
+
     .inputName{
         text-align: right;
         line-height: 34px;

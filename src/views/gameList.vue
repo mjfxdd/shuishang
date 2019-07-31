@@ -173,7 +173,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">参赛规则：</div>
+              <div class="inputName">报名要求：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-textarea v-model="addGame.qualification" :rows="4"/>
@@ -480,7 +480,7 @@
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
-                          <div class="inputName">参赛规则：</div>
+                          <div class="inputName">报名要求：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
                           <a-textarea disabled="true" v-model="addGame.qualification" :rows="4"/>

@@ -126,7 +126,7 @@
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
-                          <div class="inputName">参赛队名：</div>
+                          <div class="inputName">参赛队全名：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
                           <a-input v-model="addGame.teamName" disabled placeholder=""/>
@@ -138,10 +138,25 @@
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
-                          <div class="inputName">领队姓名：</div>
+                          <div class="inputName">参赛队简称：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
+                          <a-input v-model="addGame.simpleName" disabled placeholder=""/>
+                      </a-col>
+                  </div>
+              </a-col>
+          </a-row>
+          <a-row>
+              <a-col class="gutter-row" :span="24">
+                  <div class="inputPart">
+                      <a-col class="gutter-row" :span="4">
+                          <div class="inputName">领队姓名：</div>
+                      </a-col>
+                      <a-col class="gutter-row" :span="14">
                           <a-input v-model="addGame.teamLeaderName" disabled placeholder=""/>
+                      </a-col>
+                      <a-col class="gutter-row" :offset="1" :span="4">
+                          <a-radio-group :options="plainOptions" disabled @change="onChange1" :defaultValue="addGame.teamLeaderSex" />
                       </a-col>
                   </div>
               </a-col>
@@ -162,6 +177,18 @@
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
+                          <div class="inputName">领队微信：</div>
+                      </a-col>
+                      <a-col class="gutter-row" :span="20">
+                          <a-input v-model="addGame.leaderWechat" disabled placeholder=""/>
+                      </a-col>
+                  </div>
+              </a-col>
+          </a-row>
+          <a-row>
+              <a-col class="gutter-row" :span="24">
+                  <div class="inputPart">
+                      <a-col class="gutter-row" :span="4">
                           <div class="inputName">教练员：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
@@ -174,10 +201,10 @@
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
-                          <div class="inputName">医生：</div>
+                          <div class="inputName">男教练数：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
-                          <a-input v-model="addGame.doctor" disabled placeholder=""/>
+                          <a-input v-model="addGame.mCoachNum" disabled placeholder=""/>
                       </a-col>
                   </div>
               </a-col>
@@ -186,14 +213,15 @@
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
-                          <div class="inputName">工作人员：</div>
+                          <div class="inputName">女教练数：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
-                          <a-input v-model="addGame.personnel" disabled placeholder=""/>
+                          <a-input v-model="addGame.wCoachNum" disabled placeholder=""/>
                       </a-col>
                   </div>
               </a-col>
           </a-row>
+
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
@@ -237,7 +265,7 @@
                           <div class="inputName">男子人数：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
-                          <a-input v-model="addGame.manNum" disabled placeholder=""/>
+                          <a-input v-model="addGame.manNum"  disabled placeholder=""/>
                       </a-col>
                   </div>
               </a-col>
@@ -278,54 +306,43 @@
                   </div>
               </a-col>
           </a-row>
+          <!--<a-row>-->
+          <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+          <!--<a-col class="gutter-row" :span="4">-->
+          <!--<div class="inputName">男领队数：</div>-->
+          <!--</a-col>-->
+          <!--<a-col class="gutter-row" :span="20">-->
+          <!--<a-input v-model="addGame.mLeaderNum" placeholder=""/>-->
+          <!--</a-col>-->
+          <!--</div>-->
+          <!--</a-col>-->
+          <!--</a-row>-->
+          <!--<a-row>-->
+          <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+          <!--<a-col class="gutter-row" :span="4">-->
+          <!--<div class="inputName">女领队数：</div>-->
+          <!--</a-col>-->
+          <!--<a-col class="gutter-row" :span="20">-->
+          <!--<a-input v-model="addGame.wLeaderNum" placeholder=""/>-->
+          <!--</a-col>-->
+          <!--</div>-->
+          <!--</a-col>-->
+          <!--</a-row>-->
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
-                          <div class="inputName">男领队数：</div>
+                          <div class="inputName">医生：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
-                          <a-input v-model="addGame.mLeaderNum" disabled placeholder=""/>
+                          <a-input v-model="addGame.doctor" disabled placeholder=""/>
                       </a-col>
                   </div>
               </a-col>
           </a-row>
-          <a-row>
-              <a-col class="gutter-row" :span="24">
-                  <div class="inputPart">
-                      <a-col class="gutter-row" :span="4">
-                          <div class="inputName">女领队数：</div>
-                      </a-col>
-                      <a-col class="gutter-row" :span="20">
-                          <a-input v-model="addGame.wLeaderNum" disabled placeholder=""/>
-                      </a-col>
-                  </div>
-              </a-col>
-          </a-row>
-          <a-row>
-              <a-col class="gutter-row" :span="24">
-                  <div class="inputPart">
-                      <a-col class="gutter-row" :span="4">
-                          <div class="inputName">男教练数：</div>
-                      </a-col>
-                      <a-col class="gutter-row" :span="20">
-                          <a-input v-model="addGame.mCoachNum" disabled placeholder=""/>
-                      </a-col>
-                  </div>
-              </a-col>
-          </a-row>
-          <a-row>
-              <a-col class="gutter-row" :span="24">
-                  <div class="inputPart">
-                      <a-col class="gutter-row" :span="4">
-                          <div class="inputName">女教练数：</div>
-                      </a-col>
-                      <a-col class="gutter-row" :span="20">
-                          <a-input v-model="addGame.wCoachNum" disabled placeholder=""/>
-                      </a-col>
-                  </div>
-              </a-col>
-          </a-row>
+
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
@@ -338,6 +355,7 @@
                   </div>
               </a-col>
           </a-row>
+
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
@@ -346,6 +364,18 @@
                       </a-col>
                       <a-col class="gutter-row" :span="20">
                           <a-input v-model="addGame.wDoctorNum" disabled placeholder=""/>
+                      </a-col>
+                  </div>
+              </a-col>
+          </a-row>
+          <a-row>
+              <a-col class="gutter-row" :span="24">
+                  <div class="inputPart">
+                      <a-col class="gutter-row" :span="4">
+                          <div class="inputName">工作人员：</div>
+                      </a-col>
+                      <a-col class="gutter-row" :span="20">
+                          <a-input v-model="addGame.personnel" disabled placeholder=""/>
                       </a-col>
                   </div>
               </a-col>
@@ -472,7 +502,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">参赛队名：</div>
+                        <div class="inputName">参赛队全名：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.teamName" placeholder=""/>
@@ -484,10 +514,25 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">领队姓名：</div>
+                        <div class="inputName">参赛队简称：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
+                        <a-input v-model="addGame.simpleName" placeholder=""/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="24">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="4">
+                        <div class="inputName">领队姓名：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="14">
                         <a-input v-model="addGame.teamLeaderName" placeholder=""/>
+                    </a-col>
+                    <a-col class="gutter-row" :offset="1" :span="4">
+                        <a-radio-group :options="plainOptions" @change="onChange1" :defaultValue="addGame.teamLeaderSex" />
                     </a-col>
                 </div>
             </a-col>
@@ -508,6 +553,18 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
+                        <div class="inputName">领队微信：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="20">
+                        <a-input v-model="addGame.leaderWechat" placeholder=""/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="24">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="4">
                         <div class="inputName">教练员：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
@@ -520,10 +577,10 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">医生：</div>
+                        <div class="inputName">男教练数：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
-                        <a-input v-model="addGame.doctor" placeholder=""/>
+                        <a-input v-model="addGame.mCoachNum" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
@@ -532,14 +589,15 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">工作人员：</div>
+                        <div class="inputName">女教练数：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
-                        <a-input v-model="addGame.personnel" placeholder=""/>
+                        <a-input v-model="addGame.wCoachNum" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
         </a-row>
+
         <a-row>
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
@@ -624,54 +682,43 @@
                 </div>
             </a-col>
         </a-row>
+        <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+        <!--<div class="inputPart">-->
+        <!--<a-col class="gutter-row" :span="4">-->
+        <!--<div class="inputName">男领队数：</div>-->
+        <!--</a-col>-->
+        <!--<a-col class="gutter-row" :span="20">-->
+        <!--<a-input v-model="addGame.mLeaderNum" placeholder=""/>-->
+        <!--</a-col>-->
+        <!--</div>-->
+        <!--</a-col>-->
+        <!--</a-row>-->
+        <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+        <!--<div class="inputPart">-->
+        <!--<a-col class="gutter-row" :span="4">-->
+        <!--<div class="inputName">女领队数：</div>-->
+        <!--</a-col>-->
+        <!--<a-col class="gutter-row" :span="20">-->
+        <!--<a-input v-model="addGame.wLeaderNum" placeholder=""/>-->
+        <!--</a-col>-->
+        <!--</div>-->
+        <!--</a-col>-->
+        <!--</a-row>-->
         <a-row>
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">男领队数：</div>
+                        <div class="inputName">医生：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
-                        <a-input v-model="addGame.mLeaderNum" placeholder=""/>
+                        <a-input v-model="addGame.doctor" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
         </a-row>
-        <a-row>
-            <a-col class="gutter-row" :span="24">
-                <div class="inputPart">
-                    <a-col class="gutter-row" :span="4">
-                        <div class="inputName">女领队数：</div>
-                    </a-col>
-                    <a-col class="gutter-row" :span="20">
-                        <a-input v-model="addGame.wLeaderNum" placeholder=""/>
-                    </a-col>
-                </div>
-            </a-col>
-        </a-row>
-        <a-row>
-            <a-col class="gutter-row" :span="24">
-                <div class="inputPart">
-                    <a-col class="gutter-row" :span="4">
-                        <div class="inputName">男教练数：</div>
-                    </a-col>
-                    <a-col class="gutter-row" :span="20">
-                        <a-input v-model="addGame.mCoachNum" placeholder=""/>
-                    </a-col>
-                </div>
-            </a-col>
-        </a-row>
-        <a-row>
-            <a-col class="gutter-row" :span="24">
-                <div class="inputPart">
-                    <a-col class="gutter-row" :span="4">
-                        <div class="inputName">女教练数：</div>
-                    </a-col>
-                    <a-col class="gutter-row" :span="20">
-                        <a-input v-model="addGame.wCoachNum" placeholder=""/>
-                    </a-col>
-                </div>
-            </a-col>
-        </a-row>
+
         <a-row>
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
@@ -684,6 +731,7 @@
                 </div>
             </a-col>
         </a-row>
+
         <a-row>
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
@@ -692,6 +740,18 @@
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.wDoctorNum" placeholder=""/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="24">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="4">
+                        <div class="inputName">工作人员：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="20">
+                        <a-input v-model="addGame.personnel" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
@@ -833,7 +893,7 @@
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
-                          <div class="inputName">参赛规则：</div>
+                          <div class="inputName"> 报名要求：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
                           <a-textarea disabled="true" v-model="addGame.qualification" :rows="4"/>
@@ -1031,6 +1091,9 @@
 
     export default {
         methods: {
+            onChange1 (e) {
+                this.addGame.teamLeaderSex = e.target.value
+            },
             editPlayer(id){
                 this.$fetch('/register/loadApplicantProjectById',{id:id}).then((reData)=>{
                     this.attendProjectId = id
@@ -1512,10 +1575,11 @@
             this.getList({page:1,page_size:10,statusJson:JSON.stringify(this.checked),userId:this.$store.state.userId})
             this.getRole()
             this.getCompetitionEvents()
-            this.loadProject()
+            // this.loadProject()
         },
         data() {
             return {
+                plainOptions:['男', '女'],
                 attendProjectId:'',
                 alertTitle4:'修改项目',
                 projectReList:'',

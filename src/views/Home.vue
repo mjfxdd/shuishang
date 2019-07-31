@@ -12,7 +12,7 @@
                 key="1"
         >
           <span slot="title"><a-icon type="rocket" /><span>基础功能</span></span>
-          <a-menu-item key="11" @click="choseWhich('/','账号管理')">账号管理</a-menu-item>
+          <a-menu-item key="11" @click="choseWhich('/index','账号管理')">账号管理</a-menu-item>
           <a-menu-item key="12" @click="choseWhich('/roleList','角色管理')">角色管理</a-menu-item>
           <a-menu-item key="13" @click="choseWhich('/gameList','赛事管理')">赛事管理</a-menu-item>
           <a-menu-item key="14" @click="choseWhich('/playerList','运动员管理')">运动员管理</a-menu-item>
@@ -83,6 +83,9 @@
             }
             ,loginOut(){
                 sessionStorage.setItem("token",'');
+                sessionStorage.setItem("userId",'');
+                sessionStorage.setItem("userName",'');
+
                 store.commit('changeStore',{key:'userName',val:''});
                 router.push("/")
             }

@@ -11,7 +11,20 @@
             </a-col>
           </div>
       </a-col>
-      <a-col class="gutter-row"  :span="4" :offset="14">
+      <a-col class="gutter-row" :span="6">
+        <div class="inputPart">
+          <a-col class="gutter-row" :span="6">
+            <div class="inputName">注册单位：</div>
+          </a-col>
+          <a-col class="gutter-row" :span="18">
+            <a-select  style="width: 100%"  v-model="registrant" @change="sexEditSelect">
+              <a-select-option value="">所有单位</a-select-option>
+              <a-select-option v-for = "item in registrantList" :value="item">{{item}}</a-select-option>
+            </a-select>
+          </a-col>
+        </div>
+      </a-col>
+      <a-col class="gutter-row"  :span="4" :offset="8">
         <a-button type="primary" @click="addAccount()">新增</a-button>
         <a-button type="primary" @click="search()">搜索</a-button>
       </a-col>
@@ -665,18 +678,18 @@
             },
             search(){
                 if(this.searchName!=''){
-                    this.$fetch('/athletes/loadAthletesByName',{name:this.searchName}).then((reData)=>{
+                    this.$fetch('/athletes/findAthletesByQueryAndPage',{nameKeyword:this.searchName,registrantOrg:this.registrant}).then((reData)=>{
                         if(reData.data==null){
                             this.$message.info('未查询到此用户');
                         }else {
-                            this.productListData=reData.data
+                            this.productListData=reData.data.dataList
                             this.pagination.total=1
 
                         }
 
                     })
                 }else {
-                    this.getList({page:1,page_size:10})
+                    this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant})
 
                 }
 
@@ -741,7 +754,7 @@
             }
             ,getList(data){
                 this.loading = true
-                this.$fetch('/athletes/findAthletesByPage',data).then((reData)=>{
+                this.$fetch('/athletes/findAthletesByQueryAndPage',data).then((reData)=>{
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.count
                     this.loading = false
@@ -755,10 +768,18 @@
 
                 })
             }
+            ,getregistrantList(){
+                this.$fetch('athletes/findRegistrantOrg').then((reData)=>{
+                    this.registrantList=reData.data
+                    // this.addData.roleId=this.roleListData[0].id
+                    // this.editData.roleId=this.roleListData[0].id
+
+                })
+            }
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.nowPage = pagination.current
-                this.getList({page:pagination.current,page_size:pagination.defaultPageSize})
+                this.getList({page:pagination.current,page_size:pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
             }
             ,addAccount(){
                 this.visible=true
@@ -775,7 +796,7 @@
                                console.log('Notification Clicked!');
                            },
                        });
-                       this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
+                       this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
                        this.visibleDel=false
                    }else {
                        this.$notification.open({
@@ -798,7 +819,7 @@
                                     console.log('Notification Clicked!');
                                 },
                             });
-                            this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
+                            this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
                            this.addData = {
                                 name:'',
                                     sex:'',
@@ -870,12 +891,15 @@
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'运动员管理'});
-            this.getList({page:1,page_size:10})
+            this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant})
             this.getRole()
             this.getOptionList()
+            this.getregistrantList()
         },
         data() {
             return {
+                registrant:'',
+                registrantList:[],
                 sexList:[],
                 typeList:[],
                 levelList:[],

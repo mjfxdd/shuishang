@@ -76,8 +76,10 @@
                 store.commit('changeStore',{key:'title',val:title});
             }
             ,loginOut(){
-                sessionStorage.setItem("token",'');
                 store.commit('changeStore',{key:'userName',val:''});
+                sessionStorage.setItem("token",'');
+                sessionStorage.setItem("userId",'');
+                sessionStorage.setItem("userName",'');
                 router.push("/")
             }
         },
