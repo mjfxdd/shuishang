@@ -274,7 +274,7 @@
     <a-modal
             title="赛事项目管理"
             v-model="visibleEdit"
-            destroyOnClose="true"
+            :destroyOnClose="true"
             @ok="handleEditOk"
     >
       <a-row>
@@ -291,21 +291,30 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
+      <a-row v-if="isShow">
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
               <div class="inputName">赛项组别：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-select defaultValue="请选择赛项组别" :value="editCompetitionSend.itemGroupId" style="width: 90%" @change="handleChangeGroup">
+
+              <a-select v-if="!isDS" defaultValue="请选择赛项组别"  style="width: 90%" @change="handleChangeGroupSelect">
                 <a-select-option :value="item.id" v-for="item in editCompetitionEventData.GroupByCompetitionEventList">{{item.groupName}}</a-select-option>
               </a-select>
+
+                <a-checkbox-group v-if="isDS" @change="handleChangeGroup">
+                    <a-row>
+                        <a-col :span="8" v-for="item in editCompetitionEventData.GroupByCompetitionEventList"><a-checkbox :value="item.id">{{item.groupName}}</a-checkbox></a-col>
+                    </a-row>
+                </a-checkbox-group>
+
+
             </a-col>
           </div>
         </a-col>
       </a-row>
-      <a-row>
+      <a-row v-if="isShow">
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
@@ -313,10 +322,18 @@
             </a-col>
             <a-col class="gutter-row" :span="20">
 
+                <!--<a-checkbox-group :options="editCompetitionEventData.RowingTypeList" v-model="this.editCompetitionSend.rowingTypeIdListJson" @change="handleChangeRowingType" />-->
 
-              <a-select defaultValue="请选择赛艇种类" :value="editCompetitionSend.rowingTypeId" style="width: 90%" @change="handleChangeRowingType">
-                <a-select-option :value="item.id" v-for="item in editCompetitionEventData.RowingTypeList">{{item.name}}</a-select-option>
-              </a-select>
+
+                <a-checkbox-group @change="handleChangeRowingType">
+                    <a-row>
+                        <a-col :span="8" v-for="item in editCompetitionEventData.RowingTypeList"><a-checkbox :value="item.id">{{item.name}}</a-checkbox></a-col>
+                    </a-row>
+                </a-checkbox-group>
+
+                <!--<a-select defaultValue="请选择赛艇种类" :value="editCompetitionSend.rowingTypeId" style="width: 90%" @change="handleChangeRowingType">-->
+                <!--<a-select-option :value="item" v-for="item in editCompetitionEventData.RowingTypeList">{{item}}</a-select-option>-->
+              <!--</a-select>-->
             </a-col>
           </div>
         </a-col>
@@ -328,7 +345,7 @@
               <div class="inputName">性别选择：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-select :defaultValue="editCompetitionSend.attributeJson[0].attributeValue" :value="editCompetitionSend.attributeJson[0].attributeValue" style="width: 90%" @change="handleChangeSex">
+              <a-select :defaultValue="editCompetitionSend.sex" :value="editCompetitionSend.sex" style="width: 90%" @change="handleChangeSex">
                 <a-select-option value="男子">男子</a-select-option>
                 <a-select-option value="女子">女子</a-select-option>
                 <a-select-option value="混合">混合</a-select-option>
@@ -345,7 +362,7 @@
               <div class="inputName">比赛距离：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-input style="width: 90%" v-model="editCompetitionSend.attributeJson[1].attributeValue" placeholder=""/>
+              <a-input style="width: 90%" v-model="editCompetitionSend.distance" placeholder=""/>
             </a-col>
           </div>
         </a-col>
@@ -664,7 +681,7 @@
                 })
             },
             handleChangeSex(value){
-                this.editCompetitionSend.attributeJson[0].attributeValue = value
+                this.editCompetitionSend.sex = value
             },
             getCompetitionList() {
                 this.$fetch('/project/findProjectsByMatchIdAndPage',{matchId:this.editCompetitionSend.matchId,page:1,page_size:100}).then((reData)=>{
@@ -681,10 +698,20 @@
                 })
             },
             handleChangeMatchType(value) {
+                if(value == 8){
+                    this.isDS = true
+                }else {
+                    this.isDS = false
+                }
+                this.editCompetitionSend.itemGroupIdListJson = []
+                this.editCompetitionSend.rowingTypeIdListJson = []
+
                 this.editCompetitionSend.matchTypeId = value
-                this.$fetch('/project/findItemGroupByCompetitionEventIdAndMatchTypeId',{competitionEventId:this.editCompetitionEventData.competitionEventId,matchTypeId:value,page:1,page_size:100}).then((reData)=>{
+                this.$fetch('/match/findItemGroupAndRowingTypeByCompetitionEventIdAndMatchTypeId',{competitionEventId:this.editCompetitionEventData.competitionEventId,matchTypeId:value,page:1,page_size:100}).then((reData)=>{
                     if(reData.code==200){
-                        this.editCompetitionEventData.GroupByCompetitionEventList=reData.data.dataList
+                        this.editCompetitionEventData.GroupByCompetitionEventList=reData.data.itemGroupDTOList
+                        this.editCompetitionEventData.RowingTypeList=reData.data.rowingTypeDTOList
+                        this.isShow = true
                     }else {
                         this.$notification.open({
                             message: reData.msg,
@@ -696,22 +723,13 @@
                 })
             },
             handleChangeGroup(value) {
-                this.editCompetitionSend.itemGroupId = value
-                this.$fetch('/project/findRowingTypeByCompetitionEventId',{competitionEventId:this.editCompetitionEventData.competitionEventId,page:1,page_size:100}).then((reData)=>{
-                    if(reData.code==200){
-                        this.editCompetitionEventData.RowingTypeList=reData.data.dataList
-                    }else {
-                        this.$notification.open({
-                            message: reData.msg,
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                    }
-                })
+                this.editCompetitionSend.itemGroupIdListJson = value
             },
-            handleChangeRowingType(value) {
-                this.editCompetitionSend.rowingTypeId = value
+            handleChangeGroupSelect(value) {
+                this.editCompetitionSend.itemGroupIdListJson.push(value)
+            },
+            handleChangeRowingType(checkedList) {
+                this.editCompetitionSend.rowingTypeIdListJson = checkedList
 
             },
             handleOkSubmitMatch(){
@@ -742,8 +760,8 @@
                 this.submitMatchId=id
             },
             editCompetitionEvents(id,competitionEventId){
-
-
+                this.isShow=false
+               this.isDS=false
                 this.editCompetitionEventData={
                         id:'',
                         competitionEventId:'',
@@ -756,17 +774,10 @@
                         matchId:'',
                         competitionEventId:'',
                         matchTypeId:'',
-                        itemGroupId:'请依次选择',
-                        rowingTypeId:'请依次选择',
-                        attributeJson:[{
-                        attributeId:3,
-                        attributeValue:"男子"
-                    },
-                        {
-                            attributeId:4,
-                            attributeValue:""
-                        }
-                    ],
+                        itemGroupIdListJson:'请依次选择',
+                        rowingTypeIdListJson:'请依次选择',
+                        sex:'男子',
+                        distance:'2000米'
                 }
 
 
@@ -1033,30 +1044,33 @@
             handleEditOk(e) {
                 this.editCompetitionSend.competitionEventId = this.editCompetitionEventData.competitionEventId
                 var passData = this.editCompetitionSend
-                passData.attributeJson= JSON.stringify(this.editCompetitionSend.attributeJson)
-
-                this.$fetch('/match/addMatchProject',passData).then((reData)=>{
+                // passData.attributeJson= JSON.stringify(this.editCompetitionSend.attributeJson)
+                passData.itemGroupIdListJson = JSON.stringify(this.editCompetitionSend.itemGroupIdListJson)
+                passData.rowingTypeIdListJson = JSON.stringify(this.editCompetitionSend.rowingTypeIdListJson)
+                this.$fetch('/match/addMatchProjects',passData).then((reData)=>{
                     if(reData.code==200){
                         // this.visibleEdit=false
+                        passData.itemGroupIdListJson = JSON.parse(this.editCompetitionSend.itemGroupIdListJson)
+                        passData.rowingTypeIdListJson = JSON.parse(this.editCompetitionSend.rowingTypeIdListJson)
                         this.$notification.open({
                             message: '修改成功',
                             onClick: () => {
                                 console.log('Notification Clicked!');
                             },
                         });
-                        this.editCompetitionEventData.GroupByCompetitionEventList=[]
-                        this.editCompetitionEventData.RowingTypeList=[]
-                        this.editCompetitionSend.itemGroupId='请依次选择'
-                        this.editCompetitionSend.rowingTypeId='请依次选择'
-                        this.editCompetitionSend.attributeJson=[
-                            {
-                                attributeId:3,
-                                attributeValue:"男子"
-                            },
-                            {
-                                attributeId:4,
-                                attributeValue:""
-                            }]
+                        // this.editCompetitionEventData.GroupByCompetitionEventList=[]
+                        // this.editCompetitionEventData.RowingTypeList=[]
+                        // this.editCompetitionSend.itemGroupId='请依次选择'
+                        // this.editCompetitionSend.rowingTypeId='请依次选择'
+                        // this.editCompetitionSend.attributeJson=[
+                        //     {
+                        //         attributeId:3,
+                        //         attributeValue:"男子"
+                        //     },
+                        //     {
+                        //         attributeId:4,
+                        //         attributeValue:""
+                        //     }]
 
                         this.getCompetitionList()
 
@@ -1092,6 +1106,8 @@
         },
         data() {
             return {
+                isDS:false,
+                isShow:false,
                 dateFormat: 'YYYY-MM-DD',
                 competitionList:[],
                 editCompetitionEventData:{
@@ -1106,17 +1122,10 @@
                     matchId:'',
                     competitionEventId:'',
                     matchTypeId:'',
-                    itemGroupId:'请依次选择',
-                    rowingTypeId:'请依次选择',
-                    attributeJson:[{
-                            attributeId:3,
-                            attributeValue:"男子"
-                        },
-                        {
-                            attributeId:4,
-                            attributeValue:""
-                        }
-                    ],
+                    itemGroupIdListJson:'请依次选择',
+                    rowingTypeIdListJson:'请依次选择',
+                    sex:'男子',
+                    distance:'2000米'
                 },
                 editId:'',
                 isEdit:false,
