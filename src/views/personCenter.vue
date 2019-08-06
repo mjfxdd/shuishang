@@ -91,7 +91,7 @@
                           </a-col>
 
                           <a-col :span="4" >
-                              <a-button @click="joinProject()" type="primary">运动员报名</a-button>
+                              <a-button @click="joinProject()" type="primary">填报运动员</a-button>
                           </a-col>
                       </a-row>
                       <a-row v-for="(item,index) in projectReList">
@@ -118,7 +118,7 @@
               title="查看信息"
               v-model="visible5"
               footer=''
-              destroyOnClose="true"
+              :destroyOnClose="true"
               @ok="handleOk"
               width="800px"
       >
@@ -306,30 +306,7 @@
                   </div>
               </a-col>
           </a-row>
-          <!--<a-row>-->
-          <!--<a-col class="gutter-row" :span="24">-->
-          <!--<div class="inputPart">-->
-          <!--<a-col class="gutter-row" :span="4">-->
-          <!--<div class="inputName">男领队数：</div>-->
-          <!--</a-col>-->
-          <!--<a-col class="gutter-row" :span="20">-->
-          <!--<a-input v-model="addGame.mLeaderNum" placeholder=""/>-->
-          <!--</a-col>-->
-          <!--</div>-->
-          <!--</a-col>-->
-          <!--</a-row>-->
-          <!--<a-row>-->
-          <!--<a-col class="gutter-row" :span="24">-->
-          <!--<div class="inputPart">-->
-          <!--<a-col class="gutter-row" :span="4">-->
-          <!--<div class="inputName">女领队数：</div>-->
-          <!--</a-col>-->
-          <!--<a-col class="gutter-row" :span="20">-->
-          <!--<a-input v-model="addGame.wLeaderNum" placeholder=""/>-->
-          <!--</a-col>-->
-          <!--</div>-->
-          <!--</a-col>-->
-          <!--</a-row>-->
+
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
@@ -427,7 +404,7 @@
                   <div>
                       <a-row v-for="(item,index) in postionList">
                           <a-col :span="10">
-                              <div class="gameName">{{index+1}}、{{item.val}}</div>
+                              <div class="gameName">{{item.val}}</div>
                           </a-col>
                           <a-col :offset="2" :span="2" style="line-height: 30px"> 运动员：</a-col>
                           <a-col :span="10" >
@@ -465,7 +442,7 @@
                   <div>
                       <a-row v-for="(item,index) in postionEditList">
                           <a-col :span="10">
-                              <div class="gameName">{{index+1}}、{{item.positionName}}</div>
+                              <div class="gameName">{{item.positionName}}</div>
                           </a-col>
                           <a-col :offset="2" :span="2" style="line-height: 30px"> 运动员：</a-col>
                           <a-col :span="10" >
@@ -785,7 +762,7 @@
       <a-modal
               title="赛事查看"
               v-model="visibleSee"
-              destroyOnClose="true"
+              :destroyOnClose="true"
 
               footer=''
 
@@ -1016,7 +993,7 @@
             @ok="handleOkSubmitMatch"
             @cancel="handleCancel"
     >
-      <p>一旦提交将无法修改，是否确认提交？</p>
+      <p>提交进入待审核阶段将无法修改，是否确认提交？</p>
     </a-modal>
 
   </div>
@@ -1420,8 +1397,7 @@
             },
             seeGame(id){
 
-                this.visible5= true
-
+                this.projectList = []
                 this.$fetch('/register/loadRegisterFormById',{id:id}).then((reData)=>{
                     this.addGame = reData.data
                     this.loading = false
@@ -1430,7 +1406,8 @@
                     this.projectList = reData.data
                     this.loading = false
                 })
-
+                this.visible5= true
+                this.competitionList=[]
             },
             editGame(id,matchId){
                 this.editId = id

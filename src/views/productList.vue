@@ -62,6 +62,20 @@
         </a-col>
       </a-row>
 
+      <a-row v-if="showPassWorld">
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName">密码生成：</div>
+            </a-col>
+            <a-col style="color: red;
+    font-size: 25px;" class="gutter-row" :span="20">
+              {{newPassword}}
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
 
 
 
@@ -97,6 +111,8 @@
           </div>
         </a-col>
       </a-row>
+
+
     </a-modal>
 
 
@@ -210,13 +226,12 @@
                 this.visible=true
                 this.addData.userName=''
                 this.addData.roleId=this.roleListData[0].id
-
+                this.showPassWorld = false
 
 
             },
             handleOkRes(){
                 this.$fetch('/user/resetPassword',{userName:this.resetPassworld}).then((reData)=>{
-                    this.visible = false
                     if(reData.code==200){
                         this.$notification.open({
                             duration:null,
@@ -226,6 +241,7 @@
                             },
                         });
                         this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
+                        this.visibleRes=false
 
                     }else {
                         this.$notification.open({
@@ -268,15 +284,18 @@
                     this.$message.info('请输入新增账户名称');
                 }else {
                     this.$fetch('/user/addUser',this.addData).then((reData)=>{
-                        this.visible = false
+                        // this.visible = false
                         if(reData.code==200){
-                            this.$notification.open({
-                                duration:null,
-                                message: '请记住新账号的密码：'+reData.data,
-                                onClick: () => {
-                                    console.log('Notification Clicked!');
-                                },
-                            });
+                            // this.$notification.open({
+                            //     duration:null,
+                            //     message: '请记住新账号的密码：'+reData.data,
+                            //     onClick: () => {
+                            //         console.log('Notification Clicked!');
+                            //     },
+                            // });
+
+                            this.newPassword = reData.data
+                            this.showPassWorld = true
                             this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
 
                         }else {
@@ -334,6 +353,8 @@
         },
         data() {
             return {
+                showPassWorld:false,
+                newPassword:'',
                 resetPassworld:'',
                 del:{
                     name:'',

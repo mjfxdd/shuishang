@@ -1,10 +1,27 @@
 <template>
   <div class="producetList">
     <a-row>
-      <a-col class="gutter-row" :span="6">
-
+      <a-col class="gutter-row" :span="12">
+        <div class="inputPart">
+          <!--<a-col class="gutter-row" :span="2">-->
+          <!--<div class="inputName">赛事状态：</div>-->
+          <!--</a-col>-->
+          <a-col class="gutter-row" style="text-align: left" :span="24">
+            <template>
+              报名状态：
+              <a-checkbox-group @change="onChange">
+                <a-row>
+                  <a-checkbox value="1">草稿</a-checkbox>
+                  <a-checkbox value="2">已提交(待审核)</a-checkbox>
+                  <a-checkbox value="3">审核通过</a-checkbox>
+                  <a-checkbox value="4">审核拒绝</a-checkbox>
+                </a-row>
+              </a-checkbox-group>
+            </template>
+          </a-col>
+        </div>
       </a-col>
-      <a-col class="gutter-row"  :span="4" :offset="14">
+      <a-col class="gutter-row"  :span="4" :offset="8">
         <a-button type="primary" @click="search()">返回赛事列表</a-button>
       </a-col>
     </a-row>
@@ -353,6 +370,16 @@
     const productListData = [];
     export default {
         methods: {
+            onChange (checkedValues) {
+                console.log('checked = ', checkedValues)
+                this.checked=checkedValues
+                if(this.checked.length ==0){
+                    this.checked=[1,2,3,4]
+                }
+                console.log(this.checked)
+                this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId,statusJson:JSON.stringify(this.checked)})
+
+            },
             notPass(id){
                this.visible6 =true
                 this.formId= id
@@ -360,7 +387,7 @@
             notPassOk(){
                 this.$fetch('/register/auditRefuseRegisterForm',{id:this.formId,auditInfo:this.reasion}).then((reData)=>{
                     if(reData.code==200){
-                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId})
+                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId,statusJson:JSON.stringify(this.checked)})
                         this.visible6=false
                     }else {
                         this.$notification.open({
@@ -376,7 +403,7 @@
             passGo(id){
                 this.$fetch('/register/auditPassRegisterForm',{id:id}).then((reData)=>{
                     if(reData.code==200){
-                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId})
+                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId,statusJson:JSON.stringify(this.checked)})
                     }else {
                         this.$notification.open({
                             duration:2,
@@ -445,7 +472,7 @@
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.nowPage = pagination.current
-                this.getList({page:pagination.current,page_size:pagination.defaultPageSize,matchId:this.$store.state.matchId})
+                this.getList({page:pagination.current,page_size:pagination.defaultPageSize,matchId:this.$store.state.matchId,statusJson:JSON.stringify(this.checked)})
             }
             ,addAccount(){
                 this.visible=true
@@ -464,7 +491,7 @@
                                console.log('Notification Clicked!');
                            },
                        });
-                       this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId})
+                       this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId,statusJson:JSON.stringify(this.checked)})
                        this.visibleDel=false
                    }else {
                        this.$notification.open({
@@ -491,7 +518,7 @@
                                     console.log('Notification Clicked!');
                                 },
                             });
-                            this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId})
+                            this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId,statusJson:JSON.stringify(this.checked)})
 
                         }else {
                             this.$notification.open({
@@ -517,7 +544,7 @@
                                 console.log('Notification Clicked!');
                             },
                         });
-                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId})
+                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,matchId:this.$store.state.matchId,statusJson:JSON.stringify(this.checked)})
 
                     }else {
                         this.$notification.open({
@@ -546,11 +573,13 @@
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'报名表管理'});
-            this.getList({page:1,page_size:10,matchId:this.$store.state.matchId})
+            this.getList({page:1,page_size:10,matchId:this.$store.state.matchId,statusJson:JSON.stringify(this.checked)})
 
         },
         data() {
             return {
+                checked:[1,2,3,4,5],
+
                 reasion:'',
                 activeKey: ['1'],
                 visible6:false,

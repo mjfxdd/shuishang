@@ -284,7 +284,7 @@
               <div class="inputName">赛事类型：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-select defaultValue="请选择赛事类型" style="width: 90%" @change="handleChangeMatchType">
+              <a-select defaultValue="请选择赛事类型" style="width: 90%" :disabled='isableType' @change="handleChangeMatchType">
                 <a-select-option :value="item.id" v-for="item in editCompetitionEventData.matchTypeList">{{item.matchTypeName}}</a-select-option>
               </a-select>
             </a-col>
@@ -376,11 +376,17 @@
           </div>
         </a-col>
       </a-row>
-      <a-row v-for="(item,index) in competitionList">
-        <a-col :span="20">   {{index+1}}.{{item.projectName}}</a-col>
-        <a-col :span="4"><a-icon @click="delCompetition(item.id)" type="close" /></a-col>
-      </a-row>
-
+      <!--<a-row v-for="(item,index) in competitionList">-->
+        <!--<a-col :span="20">   {{index+1}}.{{item.projectName}}</a-col>-->
+        <!--<a-col :span="4"><a-icon @click="delCompetition(item.id)" type="close" /></a-col>-->
+      <!--</a-row>-->
+        <a-row v-for="(item,index) in competitionList">
+            <a-col style="font-weight: bold;margin: 10px 0px;" :span="20"> {{item.distance}} - {{item.itemGroupName}}</a-col>
+            <a-row v-for="(items,index) in item.projectsDTOList">
+                <a-col :span="20"> {{items.projectName}}({{items.abbreviation}})</a-col>
+                <a-col :span="4"><a-icon @click="delCompetition(items.id)" type="close" /></a-col>
+            </a-row>
+        </a-row>
 
 
 
@@ -600,10 +606,15 @@
                   </div>
               </a-col>
           </a-row>
+          <!--<a-row v-for="(item,index) in competitionList">-->
+              <!--<a-col :span="20">   {{index+1}}.{{item.projectName}}</a-col>-->
+          <!--</a-row>-->
           <a-row v-for="(item,index) in competitionList">
-              <a-col :span="20">   {{index+1}}.{{item.projectName}}</a-col>
+              <a-col style="font-weight: bold;margin: 10px 0px;" :span="20"> {{item.distance}} - {{item.itemGroupName}}</a-col>
+              <a-row v-for="(items,index) in item.projectsDTOList">
+                  <a-col :span="20"> {{items.projectName}}({{items.abbreviation}})</a-col>
+              </a-row>
           </a-row>
-
       </a-modal>
 
       <a-modal
@@ -622,6 +633,14 @@
     >
       <p>一旦提交将无法修改，是否确认提交？</p>
     </a-modal>
+      <a-modal
+              title="提示"
+              :visible="visibleAgain"
+              @ok="handleOkAgain"
+              @cancel="handleCancelAgain"
+      >
+          <p>添加成功，是否继续？</p>
+      </a-modal>
 
   </div>
 </template>
@@ -684,9 +703,22 @@
                 this.editCompetitionSend.sex = value
             },
             getCompetitionList() {
-                this.$fetch('/project/findProjectsByMatchIdAndPage',{matchId:this.editCompetitionSend.matchId,page:1,page_size:100}).then((reData)=>{
+                // this.$fetch('/project/findProjectsByMatchIdAndPage',{matchId:this.editCompetitionSend.matchId,page:1,page_size:100}).then((reData)=>{
+                //     if(reData.code==200){
+                //         this.competitionList=reData.data.dataList
+                //     }else {
+                //         this.$notification.open({
+                //             message: reData.msg,
+                //             onClick: () => {
+                //                 console.log('Notification Clicked!');
+                //             },
+                //         });
+                //     }
+                // })
+
+                this.$fetch('/project/findProjectsByMatchIdWithAggregation',{matchId:this.editCompetitionSend.matchId,page:1,page_size:100}).then((reData)=>{
                     if(reData.code==200){
-                        this.competitionList=reData.data.dataList
+                        this.competitionList=reData.data
                     }else {
                         this.$notification.open({
                             message: reData.msg,
@@ -726,6 +758,7 @@
                 this.editCompetitionSend.itemGroupIdListJson = value
             },
             handleChangeGroupSelect(value) {
+                this.editCompetitionSend.itemGroupIdListJson=[]
                 this.editCompetitionSend.itemGroupIdListJson.push(value)
             },
             handleChangeRowingType(checkedList) {
@@ -762,6 +795,7 @@
             editCompetitionEvents(id,competitionEventId){
                 this.isShow=false
                this.isDS=false
+                this.isableType=false
                 this.editCompetitionEventData={
                         id:'',
                         competitionEventId:'',
@@ -940,9 +974,9 @@
                         });
                     }
                 })
-                this.$fetch('/project/findProjectsByMatchIdAndPage',{matchId:id,page:1,page_size:100}).then((reData)=>{
+                this.$fetch('/project/findProjectsByMatchIdWithAggregation',{matchId:id,page:1,page_size:100}).then((reData)=>{
                     if(reData.code==200){
-                        this.competitionList=reData.data.dataList
+                        this.competitionList=reData.data
                     }else {
                         this.$notification.open({
                             message: reData.msg,
@@ -1052,26 +1086,8 @@
                         // this.visibleEdit=false
                         passData.itemGroupIdListJson = JSON.parse(this.editCompetitionSend.itemGroupIdListJson)
                         passData.rowingTypeIdListJson = JSON.parse(this.editCompetitionSend.rowingTypeIdListJson)
-                        this.$notification.open({
-                            message: '修改成功',
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                        // this.editCompetitionEventData.GroupByCompetitionEventList=[]
-                        // this.editCompetitionEventData.RowingTypeList=[]
-                        // this.editCompetitionSend.itemGroupId='请依次选择'
-                        // this.editCompetitionSend.rowingTypeId='请依次选择'
-                        // this.editCompetitionSend.attributeJson=[
-                        //     {
-                        //         attributeId:3,
-                        //         attributeValue:"男子"
-                        //     },
-                        //     {
-                        //         attributeId:4,
-                        //         attributeValue:""
-                        //     }]
-
+                        this.isableType=true
+                        this.visibleAgain=true
                         this.getCompetitionList()
 
                     }else {
@@ -1093,22 +1109,37 @@
                 this.visibleSubmitMatch=false
                 this.visibleSee=false
 
+
+            },
+            handleCancelAgain(){
+                this.visible=false
+                this.visibleEdit=false
+                this.visibleDel=false
+                this.visibleSubmitMatch=false
+                this.visibleSee=false
+                this.visibleAgain =false
+
+            }
+            ,handleOkAgain(){
+                this.visibleAgain =false
             }
 
     },
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'赛事管理'});
-            this.getList({page:1,page_size:10,statusJson:this.checked})
+            this.getList({page:1,page_size:10,statusJson:JSON.stringify(this.checked)})
             this.getRole()
             this.getCompetitionEvents()
 
         },
         data() {
             return {
+                visibleAgain:false,
+                isableType:false,
                 isDS:false,
                 isShow:false,
-                dateFormat: 'YYYY-MM-DD',
+                dateFormat: 'YYYY-MM-DD HH:mm',
                 competitionList:[],
                 editCompetitionEventData:{
                     id:'',
@@ -1131,7 +1162,6 @@
                 isEdit:false,
                 submitMatchId:'',
                 competitionEvents:[],
-                dateFormat: 'YYYY/MM/DD',
                 addGame:{
                     matchName:"",
                     competitionEventId:"",

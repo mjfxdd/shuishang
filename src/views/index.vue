@@ -809,6 +809,7 @@
         mounted() {
             if(sessionStorage.getItem("userName")){
                 store.commit('changeStore',{key:'userName',val:sessionStorage.getItem("userName")});
+
             }
             if(sessionStorage.getItem("userId")){
                 store.commit('changeStore',{key:'userId',val:sessionStorage.getItem("userId")});
