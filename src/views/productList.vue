@@ -25,7 +25,7 @@
                       <a-divider type="vertical" />
                       <a @click="reSetPassworld(text.id,text.userName)">重置密码</a>
                       <a-divider type="vertical" />
-                      <a @click="edit(text.id,text.userName)">编辑</a>
+                      <a @click="edit(text.id,text.userName,text.organization)">编辑</a>
           </span>
     </a-table>
 
@@ -62,6 +62,21 @@
         </a-col>
       </a-row>
 
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName">所属单位：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-select  style="width: 100%"  @change="loadOrganizationAdd">
+                <a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
       <a-row v-if="showPassWorld">
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -83,6 +98,7 @@
     <a-modal
             title="修改账户"
             v-model="visibleEdit"
+            :destroyOnClose="true"
             @ok="handleEditOk"
     >
       <a-row>
@@ -111,7 +127,20 @@
           </div>
         </a-col>
       </a-row>
-
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName">所属单位：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-select  style="width: 100%" disabled  :defaultValue="editData.organization" @change="loadOrganization">
+                <a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
 
     </a-modal>
 
@@ -148,6 +177,8 @@
         },
         { title: '账户名称', dataIndex: 'userName', key: 'userName'},
         { title: '账户角色', dataIndex: 'roleName', key: 'roleName'},
+        { title: '所属单位', dataIndex: 'organization', key: 'organization'},
+
 
 
     ];
@@ -155,6 +186,16 @@
     const productListData = [];
     export default {
         methods: {
+            loadOrganization(value) {
+                // console.log(`selected ${value}`);
+
+                this.editData.organization= value
+            },
+            loadOrganizationAdd(value) {
+                // console.log(`selected ${value}`);
+
+                this.addData.organization= value
+            },
             reSetPassworld(id,name){
                 this.visibleRes=true
                 this.resetPassworld = name
@@ -167,10 +208,13 @@
 
 
             },
-            edit(id,name){
+            edit(id,name,organization){
                 this.visibleEdit=true
                 this.editData.userId=id
                 this.editData.userName=name
+                this.editData.organization=organization
+
+
             },
             search(){
                 if(this.searchName!=''){
@@ -207,6 +251,10 @@
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.count
                     this.loading = false
+                })
+
+                this.$fetch('/system/loadOrganization').then((reData)=>{
+                    this.loadOrganization=reData.data
                 })
             }
             ,getRole(){
@@ -353,6 +401,7 @@
         },
         data() {
             return {
+                loadOrganization:[],
                 showPassWorld:false,
                 newPassword:'',
                 resetPassworld:'',

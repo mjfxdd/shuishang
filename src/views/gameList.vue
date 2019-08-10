@@ -39,7 +39,7 @@
                         <a-divider type="vertical" />
                         <a @click="editCompetitionEvents(text.id,text.competitionEventId)">项目管理</a>
                         <a-divider type="vertical" />
-                        <a @click="submitMatch(text.id)">提交赛事</a>
+                        <a @click="submitMatch(text.id)">发布赛事</a>
                          <a-divider type="vertical" />
                           <a @click="seeTable(text.id)">报名表审核</a>
                       </div>
@@ -275,6 +275,7 @@
             title="赛事项目管理"
             v-model="visibleEdit"
             :destroyOnClose="true"
+            width="800px"
             @ok="handleEditOk"
     >
       <a-row>
@@ -327,7 +328,7 @@
 
                 <a-checkbox-group @change="handleChangeRowingType">
                     <a-row>
-                        <a-col :span="8" v-for="item in editCompetitionEventData.RowingTypeList"><a-checkbox :value="item.id">{{item.name}}</a-checkbox></a-col>
+                        <a-col :span="8" v-for="item in editCompetitionEventData.RowingTypeList"><a-checkbox :value="item.id">{{item.name}} {{item.abbreviation}}</a-checkbox></a-col>
                     </a-row>
                 </a-checkbox-group>
 
@@ -364,6 +365,7 @@
             <a-col class="gutter-row" :span="20">
               <a-input style="width: 90%" v-model="editCompetitionSend.distance" placeholder=""/>
             </a-col>
+              <span style="color: rgba(255, 0, 0, 0.57)">比赛距离可根据本赛事设项要求手工输入修改</span>
           </div>
         </a-col>
       </a-row>
@@ -380,13 +382,16 @@
         <!--<a-col :span="20">   {{index+1}}.{{item.projectName}}</a-col>-->
         <!--<a-col :span="4"><a-icon @click="delCompetition(item.id)" type="close" /></a-col>-->
       <!--</a-row>-->
-        <a-row v-for="(item,index) in competitionList">
-            <a-col style="font-weight: bold;margin: 10px 0px;" :span="20"> {{item.distance}} - {{item.itemGroupName}}</a-col>
-            <a-row v-for="(items,index) in item.projectsDTOList">
-                <a-col :span="20"> {{items.projectName}}({{items.abbreviation}})</a-col>
-                <a-col :span="4"><a-icon @click="delCompetition(items.id)" type="close" /></a-col>
+        <div style="width: 640px;margin: auto;">
+            <a-row v-for="(item,index) in competitionList">
+                <a-col style="font-weight: bold;margin: 10px 0px;" :span="20"> {{item.distance}}   {{item.itemGroupName}}</a-col>
+                <a-row v-for="(items,index) in item.projectsDTOList">
+                    <a-col :span="20"> {{items.projectName}}({{items.abbreviation}})</a-col>
+                    <a-col :span="4"><a-icon @click="delCompetition(items.id)" type="close" /></a-col>
+                </a-row>
             </a-row>
-        </a-row>
+        </div>
+
 
 
 

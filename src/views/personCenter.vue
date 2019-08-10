@@ -157,6 +157,7 @@
                       </a-col>
                       <a-col class="gutter-row" :offset="1" :span="4">
                           <a-radio-group :options="plainOptions" disabled @change="onChange1" :defaultValue="addGame.teamLeaderSex" />
+
                       </a-col>
                   </div>
               </a-col>
@@ -306,7 +307,6 @@
                   </div>
               </a-col>
           </a-row>
-
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
@@ -319,7 +319,6 @@
                   </div>
               </a-col>
           </a-row>
-
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
@@ -332,7 +331,6 @@
                   </div>
               </a-col>
           </a-row>
-
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
@@ -659,30 +657,7 @@
                 </div>
             </a-col>
         </a-row>
-        <!--<a-row>-->
-        <!--<a-col class="gutter-row" :span="24">-->
-        <!--<div class="inputPart">-->
-        <!--<a-col class="gutter-row" :span="4">-->
-        <!--<div class="inputName">男领队数：</div>-->
-        <!--</a-col>-->
-        <!--<a-col class="gutter-row" :span="20">-->
-        <!--<a-input v-model="addGame.mLeaderNum" placeholder=""/>-->
-        <!--</a-col>-->
-        <!--</div>-->
-        <!--</a-col>-->
-        <!--</a-row>-->
-        <!--<a-row>-->
-        <!--<a-col class="gutter-row" :span="24">-->
-        <!--<div class="inputPart">-->
-        <!--<a-col class="gutter-row" :span="4">-->
-        <!--<div class="inputName">女领队数：</div>-->
-        <!--</a-col>-->
-        <!--<a-col class="gutter-row" :span="20">-->
-        <!--<a-input v-model="addGame.wLeaderNum" placeholder=""/>-->
-        <!--</a-col>-->
-        <!--</div>-->
-        <!--</a-col>-->
-        <!--</a-row>-->
+
         <a-row>
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
@@ -1401,12 +1376,13 @@
                 this.$fetch('/register/loadRegisterFormById',{id:id}).then((reData)=>{
                     this.addGame = reData.data
                     this.loading = false
+                    this.visible5= true
+
                 })
                 this.$fetch('/register/findApplicantProjectByRegisterFormId',{id:id}).then((reData)=>{
                     this.projectList = reData.data
                     this.loading = false
                 })
-                this.visible5= true
                 this.competitionList=[]
             },
             editGame(id,matchId){

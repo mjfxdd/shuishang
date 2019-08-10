@@ -22,7 +22,11 @@
                         <a-collapse v-model="activeKey">
                             <a-collapse-panel v-for="(item,index) in gameList" :key="index">
                                 <template slot="header">
-                                    {{item.matchName}}
+                                    <span class="titleName">{{item.matchName}}</span>
+                                    <span>
+                                    <div>比赛时间：{{item.startTime}}~{{item.endTime}}</div><div> 报名时间： {{item.signUpStartTime}}~ {{item.signUpEndTime}}</div>
+                                    </span>
+                                    比赛地址：{{item.province}}{{item.city}}
                                     <a @click="joinGame(item.id,item.matchName)"  style="float:right;padding-right: 20px">报名参加</a>
 
                                     <!--<a @click="joinGame(item.id,item.matchName)" v-if="item.status == 4" style="float:right;padding-right: 20px">报名参加</a>-->
@@ -44,6 +48,16 @@
                                         <!--</div>-->
                                     <!--</a-col>-->
                                 <!--</a-row>-->
+
+                                <a-row>
+                                    <a-col class="gutter-row" :span="24">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="4">
+                                                <div class="inputName" ><a style="text-decoration: underline" @click="seeProject(item.id)">点击查看项目列表</a></div>
+                                            </a-col>
+                                        </div>
+                                    </a-col>
+                                </a-row>
                                 <a-row>
                                     <a-col class="gutter-row" :span="24">
                                         <div class="inputPart">
@@ -73,26 +87,15 @@
                                     <a-col class="gutter-row" :span="24">
                                         <div class="inputPart">
                                             <a-col class="gutter-row" :span="4">
-                                                <div class="inputName">举办省名：</div>
+                                                <div class="inputName">举办地址：</div>
                                             </a-col>
                                             <a-col class="gutter-row" :span="20">
-                                                {{item.province}}
+                                                {{item.province}}{{item.city}}
                                             </a-col>
                                         </div>
                                     </a-col>
                                 </a-row>
-                                <a-row>
-                                    <a-col class="gutter-row" :span="24">
-                                        <div class="inputPart">
-                                            <a-col class="gutter-row" :span="4">
-                                                <div class="inputName">举办市名：</div>
-                                            </a-col>
-                                            <a-col class="gutter-row" :span="20">
-                                                {{item.city}}
-                                            </a-col>
-                                        </div>
-                                    </a-col>
-                                </a-row>
+
                                 <a-row>
                                     <a-col class="gutter-row" :span="24">
                                         <div class="inputPart">
@@ -215,15 +218,7 @@
                                         </div>
                                     </a-col>
                                 </a-row>
-                                <a-row>
-                                    <a-col class="gutter-row" :span="24">
-                                        <div class="inputPart">
-                                            <a-col class="gutter-row" :span="4">
-                                                <div class="inputName"><a @click="seeProject(item.id)">查看项目列表</a></div>
-                                            </a-col>
-                                        </div>
-                                    </a-col>
-                                </a-row>
+
                             </a-collapse-panel>
 
                         </a-collapse>
@@ -978,7 +973,12 @@
     }
 
 
-
+.titleName{
+    font-size: 16px;
+    font-weight: 800;
+    color: #000000;
+        /*text-shadow: 1px 1px 3px #f1c6c6;*/
+    }
 
 
 

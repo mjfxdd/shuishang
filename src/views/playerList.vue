@@ -63,6 +63,7 @@
           </div>
         </a-col>
       </a-row>
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -328,6 +329,7 @@
           </div>
         </a-col>
       </a-row>
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -701,6 +703,7 @@
                     this.playsTypeList=reData.data
                 })
 
+
             },
             downFile(){
                 window.open('http://ip:8080/ERService/excel/downImportAthletesTemp');
@@ -751,6 +754,7 @@
                 // console.log(`selected ${value}`);
                 this.addData.level= value
             },
+
             schoolSelect(value) {
                 // console.log(`selected ${value}`);
 
@@ -944,6 +948,7 @@
         },
         data() {
             return {
+                loadOrganization:[],
                 visibleAdd:false,
                 registrant:'',
                 registrantList:[],
