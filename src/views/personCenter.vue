@@ -32,18 +32,18 @@
     <div class="hrLine"></div>
     <a-table :columns="columns" :dataSource="productListData" :pagination="pagination"  :loading="loading"  @change="handleTableChange" >
        <span slot="action" slot-scope="text, record">
-                      <div v-if="text.status==1||text.status==4">
+                      <div v-if="text.status==4 || text.matchStatus ==4">
                         <a @click="deleteUser(text.id,text.matchName)">删除</a>
                         <a-divider type="vertical" />
                         <a @click="editGame(text.id,text.matchId)">编辑</a>
                         <a-divider type="vertical" />
-                        <a @click="editCompetitionEvents(text.id,text.matchId)">项目报名</a>
+                        <a @click="editCompetitionEvents(text.id,text.matchId)">报名报项</a>
                             <a-divider type="vertical" />
                         <a  @click="seeGame(text.id)" style="text-decoration: underline;cursor: pointer">查看</a>
                         <a-divider type="vertical" />
                         <a @click="submitMatch(text.id)">提交报名表</a>
                       </div>
-                      <div v-if="text.status!=1 &&text.status!=4" @click="seeGame(text.id)" style="text-decoration: underline;cursor: pointer">查看</div>
+                      <div v-else @click="seeGame(text.id)" style="text-decoration: underline;cursor: pointer">查看</div>
 
           </span>
        <span slot="status" slot-scope="text, record">
@@ -174,6 +174,7 @@
                   </div>
               </a-col>
           </a-row>
+          <div></div>
           <a-row>
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
@@ -1106,7 +1107,14 @@
                 })
             },
             handleOk3(){
-                this.$fetch('/register/addRegisterFormProject',{registerFormId:this.registerFormId,userId:this.$store.state.userId,projectId:this.projectId,projectRegisterJson:JSON.stringify(this.postionList)}).then((reData)=>{
+                console.log(this.postionList)
+                var postionListData =this.postionList
+                postionListData.forEach((r,index) => {
+                    if(r.positionAthletesId==''&& r.val =='替补位'){
+                        postionListData.splice(index,1)
+                    }
+                })
+                this.$fetch('/register/addRegisterFormProject',{registerFormId:this.registerFormId,userId:this.$store.state.userId,projectId:this.projectId,projectRegisterJson:JSON.stringify(postionListData)}).then((reData)=>{
                     if(reData.code==200){
                         this.visible3=false
                         this.loadProjectRe()
@@ -1146,6 +1154,7 @@
                             rightData.push({ "positionId":key, val:positionMap[key],"positionAthletesId":"", "athletesName":""})
                         }
                         this.postionList = rightData
+                        this.visible3 = true
 
                     }else {
                         this.$notification.open({
@@ -1158,7 +1167,6 @@
                 })
             },
             joinProject(){
-                this.visible3 = true
                 this.projectId = this.formId
                 this.loadProject(this.formId)
             },
@@ -1262,9 +1270,10 @@
             editCompetitionEvents(id,matchId){
                 this.registerFormId = id
                 this.matchId = matchId
-                this.visible2 = true
                 this.getProjectList()
                 this.loadProjectRe()
+                this.visible2 = true
+
             },
             onChange (checkedValues) {
                 console.log('checked = ', checkedValues)

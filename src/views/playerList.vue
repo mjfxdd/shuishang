@@ -329,7 +329,20 @@
           </div>
         </a-col>
       </a-row>
-
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册来源：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select  style="width: 100%" :value="editData.organization" @change="loadOrganization">-->
+                <!--<a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">

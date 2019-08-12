@@ -627,10 +627,12 @@
             fixed: 'left',
             scopedSlots: { customRender: 'action' },
         },
+
         { title: '赛事名称', dataIndex: 'matchName', key: 'matchName'},
-        { title: '团队名称', dataIndex: 'teamName', key: 'teamName'},
-        { title: '教练', dataIndex: 'coach', key: 'coach'},
-        { title: '领队名称', dataIndex: 'teamLeaderName', key: 'teamLeaderName'},
+        { title: '参赛队名称', dataIndex: 'teamName', key: 'teamName'},
+        { title: '报名艇数', dataIndex: 'signUpBoatNum', key: 'signUpBoatNum'},
+        { title: '报项数', dataIndex: 'signUpProjectNum', key: 'signUpProjectNum'},
+        { title: '领队姓名', dataIndex: 'teamLeaderName', key: 'teamLeaderName'},
         { title: '领队电话', dataIndex: 'leaderPhone', key: 'leaderPhone'},
         {
             title: '审核状态',

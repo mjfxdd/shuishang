@@ -34,6 +34,7 @@
             title="新增账户"
             v-model="visible"
             @ok="handleOk"
+            :destroyOnClose="true"
     >
       <a-row>
         <a-col class="gutter-row" :span="24">
@@ -71,12 +72,25 @@
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%"  @change="loadOrganizationAdd">
                 <a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>
+                <a-select-option value="other">其他</a-select-option>
               </a-select>
             </a-col>
           </div>
         </a-col>
       </a-row>
 
+      <a-row v-if="isShow">
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName">手动输入：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="addData.organization" placeholder="请输入所属单位"/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
       <a-row v-if="showPassWorld">
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -134,9 +148,11 @@
               <div class="inputName">所属单位：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-select  style="width: 100%" disabled  :defaultValue="editData.organization" @change="loadOrganization">
-                <a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>
-              </a-select>
+              <a-input :defaultValue="editData.organization" disabled placeholder="请输入账号名称"/>
+
+              <!--<a-select  style="width: 100%" disabled  :defaultValue="editData.organization" @change="loadOrganization">-->
+                <!--<a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
             </a-col>
           </div>
         </a-col>
@@ -193,8 +209,17 @@
             },
             loadOrganizationAdd(value) {
                 // console.log(`selected ${value}`);
+                if(value=='other'){
+                    this.isShow= true
+                    delete this.addData.organization
 
-                this.addData.organization= value
+                    // this.addData.organization= ''
+
+                }else {
+                    this.addData.organization= ''
+                    this.isShow= false
+                    this.addData.organization= value
+                }
             },
             reSetPassworld(id,name){
                 this.visibleRes=true
@@ -272,6 +297,9 @@
             }
             ,addAccount(){
                 this.visible=true
+                this.isShow= false
+                this.addData.organization= ''
+
                 this.addData.userName=''
                 this.addData.roleId=this.roleListData[0].id
                 this.showPassWorld = false
@@ -401,6 +429,7 @@
         },
         data() {
             return {
+                isShow:false,
                 loadOrganization:[],
                 showPassWorld:false,
                 newPassword:'',

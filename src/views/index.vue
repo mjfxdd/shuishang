@@ -20,8 +20,10 @@
                     <div>
 
                         <a-collapse v-model="activeKey">
+                            <!--<a-collapse-panel v-for="(item,index) in gameList" v-if="item.status==3 ||item.status==4" :key="index">-->
                             <a-collapse-panel v-for="(item,index) in gameList" :key="index">
-                                <template slot="header">
+
+                            <template slot="header">
                                     <span class="titleName">{{item.matchName}}</span>
                                     <span>
                                     <div>比赛时间：{{item.startTime}}~{{item.endTime}}</div><div> 报名时间： {{item.signUpStartTime}}~ {{item.signUpEndTime}}</div>
@@ -117,6 +119,7 @@
                                             <a-col class="gutter-row" :span="20">
                                                 {{item.matchRule}}
                                             </a-col>
+                                            <a  v-if="item.matchRuleUrl" :href="item.matchRuleUrl" target="_blank">赛事规则链接</a>
                                         </div>
                                     </a-col>
                                 </a-row>
@@ -773,8 +776,7 @@
 
             },
             change(page,pageSize){
-                this.getList({page:page,page_size:this.pagination.defaultPageSize
-                    // ,statusJson:JSON.stringify(["4"])
+                this.getList({page:page,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(["3","4"])
                 })
             },
             login(){
@@ -810,8 +812,8 @@
                 store.commit('changeStore',{key:'userId',val:sessionStorage.getItem("userId")});
             }
             // store.commit('changeStore',{key:'title',val:'新增产品'});
-            // this.getList({page:1,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(["4"])})
-            this.getList({page:1,page_size:this.pagination.defaultPageSize})
+            this.getList({page:1,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(["3","4"])})
+            // this.getList({page:1,page_size:this.pagination.defaultPageSize})
             var name=[]
             const obj = {
                 1:1,

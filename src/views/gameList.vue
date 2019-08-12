@@ -169,6 +169,18 @@
           </div>
         </a-col>
       </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="24">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="4">
+                        <div class="inputName">规则链接：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="20">
+                        <a-input  v-model="addGame.matchRuleUrl" :rows="4"/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -363,12 +375,33 @@
               <div class="inputName">比赛距离：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-input style="width: 90%" v-model="editCompetitionSend.distance" placeholder=""/>
+
+                <a-select  style="width: 90%" @change="handleChangeLong">
+                    <a-select-option value="200米">200米</a-select-option>
+                    <a-select-option value="500米">500米</a-select-option>
+                    <a-select-option value="1000米">1000米</a-select-option>
+                    <a-select-option value="2000米">2000米</a-select-option>
+                    <a-select-option value="5000米">5000米</a-select-option>
+                    <a-select-option value="other">其他</a-select-option>
+                </a-select>
+              <!--<a-input style="width: 90%" v-model="editCompetitionSend.distance" placeholder=""/>-->
             </a-col>
               <span style="color: rgba(255, 0, 0, 0.57)">比赛距离可根据本赛事设项要求手工输入修改</span>
           </div>
         </a-col>
       </a-row>
+        <a-row v-if="isShows">
+            <a-col class="gutter-row" :span="24">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="4">
+                        <div class="inputName">手动输入：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="20">
+                        <a-input style="width: 90%" v-model="editCompetitionSend.distance" placeholder=""/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -508,6 +541,18 @@
               <a-col class="gutter-row" :span="24">
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="4">
+                          <div class="inputName">规则链接：</div>
+                      </a-col>
+                      <a-col class="gutter-row" :span="20">
+                          <a-input  disabled="true" v-model="addGame.matchRuleUrl" :rows="4"/>
+                      </a-col>
+                  </div>
+              </a-col>
+          </a-row>
+          <a-row>
+              <a-col class="gutter-row" :span="24">
+                  <div class="inputPart">
+                      <a-col class="gutter-row" :span="4">
                           <div class="inputName">报名要求：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="20">
@@ -631,12 +676,12 @@
           <p>确认要删除 {{del.name}}？</p>
         </a-modal>
     <a-modal
-            title="警告"
+            title="提醒"
             :visible="visibleSubmitMatch"
             @ok="handleOkSubmitMatch"
             @cancel="handleCancel"
     >
-      <p>一旦提交将无法修改，是否确认提交？</p>
+      <p>是否确认发布 ？</p>
     </a-modal>
       <a-modal
               title="提示"
@@ -679,6 +724,19 @@
     export default {
         methods: {
             moment,
+            handleChangeLong(value){
+
+                if(value=='other'){
+                    this.isShows= true
+                    this.editCompetitionSend.distance=''
+
+                }else {
+                    this.editCompetitionSend.distance=''
+                    this.isShows= false
+                    this.editCompetitionSend.distance=value
+                }
+
+            },
             seeTable(id){
                 store.commit('changeStore',{key:'matchId',val:id});
                 router.push('/registerForm')
@@ -799,6 +857,7 @@
             },
             editCompetitionEvents(id,competitionEventId){
                 this.isShow=false
+                this.isShows= false
                this.isDS=false
                 this.isableType=false
                 this.editCompetitionEventData={
@@ -934,6 +993,7 @@
                     city:"",
                     matchIntroduction:"",
                     matchRule:"",
+                    matchRuleUrl:'',
                     qualification:"",
                     signUpStartTime:"",
                     signUpEndTime:"",
@@ -955,7 +1015,9 @@
                         city:"",
                         matchIntroduction:"",
                         matchRule:"",
-                        qualification:"",
+                    matchRuleUrl:'',
+
+                    qualification:"",
                         signUpStartTime:"",
                         signUpEndTime:"",
                         organizers:"",
@@ -1096,6 +1158,8 @@
                         this.getCompetitionList()
 
                     }else {
+                        passData.itemGroupIdListJson = JSON.parse(this.editCompetitionSend.itemGroupIdListJson)
+                        passData.rowingTypeIdListJson = JSON.parse(this.editCompetitionSend.rowingTypeIdListJson)
                         this.$notification.open({
                             duration:3,
                             message: reData.msg,
@@ -1105,6 +1169,7 @@
                         });
                     }
                 })
+
 
         },
             handleCancel(){
@@ -1140,6 +1205,7 @@
         },
         data() {
             return {
+                isShows:false,
                 visibleAgain:false,
                 isableType:false,
                 isDS:false,
