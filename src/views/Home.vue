@@ -17,8 +17,8 @@
           <a-menu-item key="13" @click="choseWhich('/gameList','赛事管理')">赛事管理</a-menu-item>
           <a-menu-item key="14" @click="choseWhich('/playerList','运动员管理')">运动员管理</a-menu-item>
         </a-sub-menu>
-        <a-menu-item key="3" @click="loginOut()"><a-icon type="rocket" />退出登录</a-menu-item>
 
+        <a-menu-item key="3" @click="loginOut()"><a-icon type="rocket" />退出登录</a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">

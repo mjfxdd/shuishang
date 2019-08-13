@@ -17,13 +17,27 @@
             <div class="inputName">注册单位：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-select  style="width: 100%"  v-model="registrant" @change="sexEditSelect">
+            <a-select  style="width: 100%"  v-model="registrant" >
               <a-select-option value="">所有单位</a-select-option>
               <a-select-option v-for = "item in registrantList" :value="item">{{item}}</a-select-option>
             </a-select>
           </a-col>
         </div>
       </a-col>
+      <a-col class="gutter-row" :span="6">
+        <div class="inputPart">
+          <a-col class="gutter-row" :span="6">
+            <div class="inputName">项目：</div>
+          </a-col>
+          <a-col class="gutter-row" :span="18">
+            <a-select  style="width: 100%"  v-model="selectType" >
+              <a-select-option value="">所有项目</a-select-option>
+              <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
+            </a-select>
+          </a-col>
+        </div>
+      </a-col>
+
       <a-col class="gutter-row"  :span="6" :offset="6">
         <a-button type="primary" @click="visibleAdd=true">批量上传</a-button>
 
@@ -739,7 +753,7 @@
             },
             search(){
                 if(this.searchName!=''){
-                    this.$fetch('/athletes/findAthletesByQueryAndPage',{nameKeyword:this.searchName,registrantOrg:this.registrant}).then((reData)=>{
+                    this.$fetch('/athletes/findAthletesByQueryAndPage',{nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType}).then((reData)=>{
                         if(reData.data==null){
                             this.$message.info('未查询到此用户');
                         }else {
@@ -750,7 +764,7 @@
 
                     })
                 }else {
-                    this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant})
+                    this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
 
                 }
 
@@ -841,7 +855,7 @@
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.nowPage = pagination.current
-                this.getList({page:pagination.current,page_size:pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
+                this.getList({page:pagination.current,page_size:pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
             }
             ,addAccount(){
                 this.visible=true
@@ -954,13 +968,14 @@
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'运动员管理'});
-            this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant})
+            this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
             this.getRole()
             this.getOptionList()
             this.getregistrantList()
         },
         data() {
             return {
+                selectType:'',
                 loadOrganization:[],
                 visibleAdd:false,
                 registrant:'',

@@ -969,7 +969,7 @@
             @ok="handleOkSubmitMatch"
             @cancel="handleCancel"
     >
-      <p>提交进入待审核阶段将无法修改，是否确认提交？</p>
+      <p>是否确认提交？</p>
     </a-modal>
 
   </div>
@@ -1242,7 +1242,7 @@
 
             },
             handleOkSubmitMatch(){
-                this.$fetch('/register/submitRegisterForm',{id:this.submitMatchId,userId:this.$store.state.userId}).then((reData)=>{
+                this.$fetch('/register/submitRegisterForm',{id:this.submitMatchId,userId:sessionStorage.getItem("userId")}).then((reData)=>{
                     if(reData.code==200){
                         this.$notification.open({
                             message: '操作成功',
@@ -1251,7 +1251,7 @@
                             },
                         });
                         this.visibleSubmitMatch=false
-                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,userId:this.$store.state.userId})
+                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,userId:sessionStorage.getItem("userId")})
                         this.visibleDel=false
                     }else {
                         this.$notification.open({
@@ -1421,7 +1421,7 @@
                                console.log('Notification Clicked!');
                            },
                        });
-                       this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
+                       this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,userId:sessionStorage.getItem("userId")})
                        this.visibleDel=false
                    }else {
                        this.$notification.open({
@@ -1449,7 +1449,7 @@
                                         console.log('Notification Clicked!');
                                     },
                                 });
-                                this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(this.checked),userId:this.$store.state.userId})
+                                this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(this.checked),userId:sessionStorage.getItem("userId")})
 
                             }else {
                                 this.$notification.open({
@@ -1534,7 +1534,7 @@
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'报名列表'});
-            this.getList({page:1,page_size:10,statusJson:JSON.stringify(this.checked),userId:this.$store.state.userId})
+            this.getList({page:1,page_size:10,statusJson:JSON.stringify(this.checked),userId:sessionStorage.getItem("userId")})
             this.getRole()
             this.getCompetitionEvents()
             // this.loadProject()

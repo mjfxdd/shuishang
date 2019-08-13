@@ -24,6 +24,7 @@ import userHome from './views/userHome.vue'
 import registerForm from './views/registerForm'
 import personCenterUser from './views/personCenterUser'
 
+import tableAllPlayer from './views/tableAllPlayer'
 
 import ceshi from './views/ceshi.vue'
 Vue.use(Router)
@@ -106,6 +107,12 @@ export default new Router({
               path: '/registerForm',
               name: 'registerForm',
               component: registerForm
+          },
+          {
+              //赛参赛人员统计表
+              path: '/tableAllPlayer',
+              name: 'tableAllPlayer',
+              component: tableAllPlayer
           }
 
       ]
