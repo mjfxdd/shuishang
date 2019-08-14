@@ -25,6 +25,8 @@ import registerForm from './views/registerForm'
 import personCenterUser from './views/personCenterUser'
 
 import tableAllPlayer from './views/tableAllPlayer'
+import playerListToC from './views/playerListToC'
+
 
 import ceshi from './views/ceshi.vue'
 Vue.use(Router)
@@ -142,6 +144,12 @@ export default new Router({
                   path: '/personCenterUser',
                   name: 'personCenterUser',
                   component: personCenterUser
+
+              },{
+                  //运动员管理
+                  path: '/playerListToC',
+                  name: 'playerListToC',
+                  component: playerListToC
 
               }
 

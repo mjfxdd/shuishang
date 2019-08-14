@@ -12,17 +12,17 @@
           </div>
       </a-col>
       <a-col class="gutter-row" :span="4">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName">注册单位：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-select  style="width: 100%"  v-model="registrant" >
-              <a-select-option value="">所有单位</a-select-option>
-              <a-select-option v-for = "item in registrantList" :value="item">{{item}}</a-select-option>
-            </a-select>
-          </a-col>
-        </div>
+        <!--<div class="inputPart">-->
+          <!--<a-col class="gutter-row" :span="6">-->
+            <!--<div class="inputName">注册单位：</div>-->
+          <!--</a-col>-->
+          <!--<a-col class="gutter-row" :span="18">-->
+            <!--<a-select  style="width: 100%"  v-model="registrant" >-->
+              <!--<a-select-option value="">所有单位</a-select-option>-->
+              <!--<a-select-option v-for = "item in registrantList" :value="item">{{item}}</a-select-option>-->
+            <!--</a-select>-->
+          <!--</a-col>-->
+        <!--</div>-->
       </a-col>
       <a-col class="gutter-row" :span="4">
         <div class="inputPart">
@@ -795,7 +795,7 @@
             },
             search(){
                 if(this.searchName!=''){
-                    this.$fetch('/athletes/findAthletesByQueryAndPage',{nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType}).then((reData)=>{
+                    this.$fetch('/athletes/findClientAthletesByQueryAndPage',{userId:this.$store.state.userId,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType}).then((reData)=>{
                         if(reData.data==null){
                             this.$message.info('未查询到此用户');
                         }else {
@@ -878,7 +878,8 @@
             }
             ,getList(data){
                 this.loading = true
-                this.$fetch('/athletes/findAthletesByQueryAndPage',data).then((reData)=>{
+                data.userId=this.$store.state.userId
+                this.$fetch('/athletes/findClientAthletesByQueryAndPage',data).then((reData)=>{
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.count
                     this.loading = false

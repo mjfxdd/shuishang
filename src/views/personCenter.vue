@@ -1030,7 +1030,7 @@
                         result.forEach((r) => {
                             data.push({
                                 // value: r.id,
-                                value:{id:r.id,name:r.name},
+                                value:{id:r.idCard,name:r.name},
                                 text: r.name+'-'+r.registrantOrg+'-'+r.idCardTail,
                             });
                         });
