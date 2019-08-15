@@ -67,7 +67,7 @@
               v-model="visible2"
               footer=''
               zIndex="8"
-              destroyOnClose="true"
+              :destroyOnClose="true"
               width="800px"
       >
           <div style="height: 30px;"></div>
@@ -100,7 +100,7 @@
                           </a-col>
 
                           <a-col :span="4" >
-                              <a @click="editPlayer(item.attendProjectId)">更改运动员</a>
+                              <a @click="editPlayer(item.attendProjectId,item.projectId)">更改运动员</a>
                               <a-divider type="vertical" />
                               <a @click="delPlayer(item.attendProjectId)">删除</a>
                           </a-col>
@@ -396,6 +396,8 @@
               :title="alertTitle3"
               v-model="visible3"
               @ok="handleOk3"
+              :destroyOnClose="true"
+
               width="800px"
       >
           <template>
@@ -408,19 +410,23 @@
                           <a-col :offset="2" :span="2" style="line-height: 30px"> 运动员：</a-col>
                           <a-col :span="10" >
                               <template>
-                                  <a-select
-                                          showSearch
-                                          :value="postionList[index].athletesName"
-                                          placeholder="input search text"
-                                          style="width: 100%"
-                                          :defaultActiveFirstOption="false"
-                                          :showArrow="false"
-                                          :filterOption="false"
-                                          @search="handleSearch"
-                                          @change="value => handleChange(value, index)"
-                                          :notFoundContent="null"
-                                  >
-                                      <a-select-option v-for="d in data" :key="d.value">{{d.text}} </a-select-option>
+                                  <!--<a-select-->
+                                          <!--showSearch-->
+                                          <!--:value="postionList[index].athletesName"-->
+                                          <!--placeholder="input search text"-->
+                                          <!--style="width: 100%"-->
+                                          <!--:defaultActiveFirstOption="false"-->
+                                          <!--:showArrow="false"-->
+                                          <!--:filterOption="false"-->
+                                          <!--@search="handleSearch"-->
+                                          <!--@change="value => handleChange(value, index)"-->
+                                          <!--:notFoundContent="null"-->
+                                  <!--&gt;-->
+                                      <!--<a-select-option v-for="d in data" :key="d.value">{{d.text}} </a-select-option>-->
+                                  <!--</a-select>-->
+
+                                  <a-select defaultValue="请选择运动员" style="width: 100%"   @change="value => handleChange(value, index)">
+                                      <a-select-option v-for="items in postionPlayerList" :value="{id:items.idCard,name:items.name}">{{items.name}}</a-select-option>
                                   </a-select>
                               </template>
                           </a-col>
@@ -434,6 +440,8 @@
               title="修改"
               v-model="visible4"
               @ok="handleOk4"
+              :destroyOnClose="true"
+
               width="800px"
       >
           <template>
@@ -446,19 +454,23 @@
                           <a-col :offset="2" :span="2" style="line-height: 30px"> 运动员：</a-col>
                           <a-col :span="10" >
                               <template>
-                                  <a-select
-                                          showSearch
-                                          :value="postionEditList[index].athletesName"
-                                          placeholder="input search text"
-                                          style="width: 100%"
-                                          :defaultActiveFirstOption="false"
-                                          :showArrow="false"
-                                          :filterOption="false"
-                                          @search="handleSearch"
-                                          @change="value => handleEditChange(value, index)"
-                                          :notFoundContent="null"
-                                  >
-                                      <a-select-option v-for="d in data" :key="d.value">{{d.text}} </a-select-option>
+                                  <!--<a-select-->
+                                          <!--showSearch-->
+                                          <!--:value="postionEditList[index].athletesName"-->
+                                          <!--placeholder="input search text"-->
+                                          <!--style="width: 100%"-->
+                                          <!--:defaultActiveFirstOption="false"-->
+                                          <!--:showArrow="false"-->
+                                          <!--:filterOption="false"-->
+                                          <!--@search="handleSearch"-->
+                                          <!--@change="value => handleEditChange(value, index)"-->
+                                          <!--:notFoundContent="null"-->
+                                  <!--&gt;-->
+                                      <!--<a-select-option v-for="d in data" :key="d.value">{{d.text}} </a-select-option>-->
+                                  <!--</a-select>-->
+
+                                  <a-select :defaultValue="postionEditList[index].athletesName" style="width: 100%"   @change="value => handleEditChange(value, index)">
+                                      <a-select-option v-for="item in postionPlayerList" :value="{id:item.idCard,name:item.name}">{{item.name}}</a-select-option>
                                   </a-select>
                               </template>
                           </a-col>
@@ -1044,10 +1056,27 @@
 
     export default {
         methods: {
+            getPlayList(userId,projectId){
+                this.$fetch('/athletes/findProjectAthletes',{userId:userId,projectId:projectId}).then((reData)=>{
+                    if(reData.code==200) {
+                        this.postionPlayerList = reData.data.dataList
+                    }else {
+                        this.$notification.open({
+                            duration:2,
+                            message: reData.msg,
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                        });
+                    }
+                })
+            },
             onChange1 (e) {
                 this.addGame.teamLeaderSex = e.target.value
             },
-            editPlayer(id){
+            editPlayer(id,projectId){
+                this.getPlayList(this.$store.state.userId,projectId)
+
                 this.$fetch('/register/loadApplicantProjectById',{id:id}).then((reData)=>{
                     this.attendProjectId = id
                     if(reData.code==200) {
@@ -1134,15 +1163,26 @@
             handleSearch (value) {
                 fetch(value, data => this.data = data);
             },
+            // handleChange (value,index) {
+            //     this.postionList[index].positionAthletesId = value.id
+            //     this.postionList[index].athletesName = value.name
+            //     fetch(value, data => this.data = data);
+            // },
             handleChange (value,index) {
+                console.log(
+                    value
+                )
                 this.postionList[index].positionAthletesId = value.id
                 this.postionList[index].athletesName = value.name
-                fetch(value, data => this.data = data);
             },
+            // handleEditChange (value,index) {
+            //     this.postionEditList[index].positionAthletesId = value.id
+            //     this.postionEditList[index].athletesName = value.name
+            //     fetch(value, data => this.data = data);
+            // },
             handleEditChange (value,index) {
                 this.postionEditList[index].positionAthletesId = value.id
                 this.postionEditList[index].athletesName = value.name
-                fetch(value, data => this.data = data);
             },
             loadProject(id){
                 this.$fetch('/project/loadProjectById',{id:id}).then((reData)=>{
@@ -1168,6 +1208,7 @@
             },
             joinProject(){
                 this.projectId = this.formId
+                this.getPlayList(this.$store.state.userId,this.formId)
                 this.loadProject(this.formId)
             },
             delCompetition(id){
@@ -1541,6 +1582,7 @@
         },
         data() {
             return {
+                postionPlayerList:[],
                 plainOptions:['男', '女'],
                 attendProjectId:'',
                 alertTitle4:'修改项目',
