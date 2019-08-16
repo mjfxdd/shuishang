@@ -630,7 +630,6 @@
           <p>确认要删除 {{del.name}}？</p>
         </a-modal>
 
-
     <a-modal
             title="批量上传"
             :visible="visibleAdd"
@@ -645,7 +644,7 @@
               <div class="inputName">模板下载：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;" :span="20">
-              <a target="_blank" href="http://106.12.61.239:8080/ERService/excel/downImportAthletesTemp">运动员批量上传模板</a>
+              <a target="_blank" href="http://106.12.61.239:8080/ERService/athletes/downImportAthletesTemp">运动员批量上传模板</a>
             </a-col>
           </div>
         </a-col>
@@ -657,8 +656,9 @@
               <div class="inputName">模板上传：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;" :span="20">
-              <form action="http://106.12.61.239:8080/ERService/excel/importAthletesExcel" method="POST" target="_blank" enctype="multipart/form-data">
+              <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" method="POST" target="_blank" enctype="multipart/form-data">
                 <input type="file" name="file"/><br/>
+                <input type="hidden" v-model="$store.state.userId" name="userId" >
                 <input style="border: none;
     background: #1890ff;
     color: white;
@@ -672,6 +672,47 @@
         </a-col>
       </a-row>
     </a-modal>
+    <!--<a-modal-->
+            <!--title="批量上传"-->
+            <!--:visible="visibleAdd"-->
+            <!--@ok="handleOkDel"-->
+            <!--footer=""-->
+            <!--@cancel="handleCancel"-->
+    <!--&gt;-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">模板下载：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" style="padding-top: 6px;" :span="20">-->
+              <!--<a target="_blank" href="http://106.12.61.239:8080/ERService/excel/downImportAthletesTemp">运动员批量上传模板</a>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">模板上传：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" style="padding-top: 6px;" :span="20">-->
+              <!--<form action="http://106.12.61.239:8080/ERService/excel/importAthletesExcel" method="POST" target="_blank" enctype="multipart/form-data">-->
+                <!--<input type="file" name="file"/><br/>-->
+                <!--<input style="border: none;-->
+    <!--background: #1890ff;-->
+    <!--color: white;-->
+    <!--width: 178px;-->
+    <!--height: 35px;-->
+    <!--margin: 36px 0px 0px 0px;-->
+    <!--border-radius: 3px;" type="submit" value="表格上传"/>-->
+              <!--</form>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+    <!--</a-modal>-->
 
   </div>
 </template>

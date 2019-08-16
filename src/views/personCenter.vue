@@ -424,9 +424,10 @@
                                   <!--&gt;-->
                                       <!--<a-select-option v-for="d in data" :key="d.value">{{d.text}} </a-select-option>-->
                                   <!--</a-select>-->
+                                  <!--<a-select defaultValue="请选择运动员" style="width: 100%"   @change="value => handleChange(value,index)">-->
 
-                                  <a-select defaultValue="请选择运动员" style="width: 100%"   @change="value => handleChange(value, index)">
-                                      <a-select-option v-for="items in postionPlayerList" :value="{id:items.idCard,name:items.name}">{{items.name}}</a-select-option>
+                                  <a-select defaultValue="请选择运动员" style="width: 100%"   @change="handleChange">
+                                      <a-select-option v-for="(items,indexs) in postionPlayerList" :value="items.idCard" :index="index" :name="items.name">{{items.name}}</a-select-option>
                                   </a-select>
                               </template>
                           </a-col>
@@ -469,8 +470,12 @@
                                       <!--<a-select-option v-for="d in data" :key="d.value">{{d.text}} </a-select-option>-->
                                   <!--</a-select>-->
 
-                                  <a-select :defaultValue="postionEditList[index].athletesName" style="width: 100%"   @change="value => handleEditChange(value, index)">
-                                      <a-select-option v-for="item in postionPlayerList" :value="{id:item.idCard,name:item.name}">{{item.name}}</a-select-option>
+                                  <!--<a-select :defaultValue="postionEditList[index].athletesName" style="width: 100%"   @change="value => handleEditChange(value, index)">-->
+                                      <a-select :defaultValue="postionEditList[index].athletesName" style="width: 100%"   @change="handleEditChange">
+
+                                      <a-select-option v-for="(items,indexs) in postionPlayerList" :value="items.idCard" :index="index" :name="items.name">{{items.name}}</a-select-option>
+
+                                      <!--<a-select-option v-for="item in postionPlayerList" :value="{id:item.idCard,name:item.name}">{{item.name}}</a-select-option>-->
                                   </a-select>
                               </template>
                           </a-col>
@@ -1168,21 +1173,19 @@
             //     this.postionList[index].athletesName = value.name
             //     fetch(value, data => this.data = data);
             // },
-            handleChange (value,index) {
-                console.log(
-                    value
-                )
-                this.postionList[index].positionAthletesId = value.id
-                this.postionList[index].athletesName = value.name
+            handleChange (value,name) {
+                console.log(name)
+                this.postionList[name.data.attrs.index].positionAthletesId = value
+                this.postionList[name.data.attrs.index].athletesName =name.data.attrs.name
             },
             // handleEditChange (value,index) {
             //     this.postionEditList[index].positionAthletesId = value.id
             //     this.postionEditList[index].athletesName = value.name
             //     fetch(value, data => this.data = data);
             // },
-            handleEditChange (value,index) {
-                this.postionEditList[index].positionAthletesId = value.id
-                this.postionEditList[index].athletesName = value.name
+            handleEditChange (value,name) {
+                this.postionEditList[name.data.attrs.index].positionAthletesId = value
+                this.postionEditList[name.data.attrs.index].athletesName = name.data.attrs.name
             },
             loadProject(id){
                 this.$fetch('/project/loadProjectById',{id:id}).then((reData)=>{
