@@ -19,6 +19,18 @@ Vue.prototype.common=common
 Vue.prototype.axios=axios
 Vue.config.productionTip = false
 
+
+router.beforeEach((to,from,next)=>{
+  if(to.path=='/login' || to.path=='/'){
+    next()
+  }else {
+    if(sessionStorage.getItem("userId")==null||sessionStorage.getItem("userId")==''){
+        next({path:'/login'})
+    }else {
+        next()
+    }
+  }
+})
 new Vue({
   router,
   store,$,

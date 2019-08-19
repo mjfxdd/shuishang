@@ -84,6 +84,8 @@
                         store.commit('changeStore',{key:'token',val:reData.data.token});
                         sessionStorage.setItem("token", reData.data.token);
                         sessionStorage.setItem("userId", reData.data.userId);
+                        sessionStorage.setItem("categoryId", reData.data.categoryId);
+
                         sessionStorage.setItem("userName", this.postData.userName);
                         store.commit('changeStore',{key:'userName',val:this.postData.userName});
                         if(reData.data.categoryId==2){

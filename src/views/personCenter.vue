@@ -387,10 +387,6 @@
               </a-collapse-panel>
           </a-collapse>
       </a-modal>
-
-
-
-
       <!--项目添加运动员-->
       <a-modal
               :title="alertTitle3"
@@ -495,7 +491,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">参赛队全名：</div>
+                        <div class="inputName">*  参赛队全名：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.teamName" placeholder=""/>
@@ -507,7 +503,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">参赛队简称：</div>
+                        <div class="inputName">*  参赛队简称：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.simpleName" placeholder=""/>
@@ -519,7 +515,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">领队姓名：</div>
+                        <div class="inputName">*  领队姓名：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="14">
                         <a-input v-model="addGame.teamLeaderName" placeholder=""/>
@@ -534,7 +530,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">领队联系方式：</div>
+                        <div class="inputName">*  领队联系方式：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.leaderPhone" placeholder=""/>
@@ -546,7 +542,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">领队微信：</div>
+                        <div class="inputName">*  领队微信：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.leaderWechat" placeholder=""/>
@@ -558,7 +554,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">教练员：</div>
+                        <div class="inputName">*  教练员：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.coach" placeholder=""/>
@@ -570,7 +566,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">男教练数：</div>
+                        <div class="inputName">*  男教练数：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.mCoachNum" placeholder=""/>
@@ -582,7 +578,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">女教练数：</div>
+                        <div class="inputName">*  女教练数：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.wCoachNum" placeholder=""/>
@@ -590,12 +586,35 @@
                 </div>
             </a-col>
         </a-row>
-
         <a-row>
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">填报人：</div>
+                        <div class="inputName">*  男子人数：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="20">
+                        <a-input v-model="addGame.manNum" placeholder=""/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="24">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="4">
+                        <div class="inputName">*  女子人数：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="20">
+                        <a-input v-model="addGame.womenNum" placeholder=""/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="24">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="4">
+                        <div class="inputName">*  填报人：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.operator" placeholder=""/>
@@ -607,7 +626,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">单位电话：</div>
+                        <div class="inputName">*  单位电话：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.workPhone" placeholder=""/>
@@ -619,7 +638,7 @@
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
-                        <div class="inputName">单位传真：</div>
+                        <div class="inputName">*  单位传真：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="20">
                         <a-input v-model="addGame.workFax" placeholder=""/>
@@ -627,18 +646,7 @@
                 </div>
             </a-col>
         </a-row>
-        <a-row>
-            <a-col class="gutter-row" :span="24">
-                <div class="inputPart">
-                    <a-col class="gutter-row" :span="4">
-                        <div class="inputName">男子人数：</div>
-                    </a-col>
-                    <a-col class="gutter-row" :span="20">
-                        <a-input v-model="addGame.manNum" placeholder=""/>
-                    </a-col>
-                </div>
-            </a-col>
-        </a-row>
+
         <a-row>
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
@@ -651,18 +659,7 @@
                 </div>
             </a-col>
         </a-row>
-        <a-row>
-            <a-col class="gutter-row" :span="24">
-                <div class="inputPart">
-                    <a-col class="gutter-row" :span="4">
-                        <div class="inputName">女子人数：</div>
-                    </a-col>
-                    <a-col class="gutter-row" :span="20">
-                        <a-input v-model="addGame.womenNum" placeholder=""/>
-                    </a-col>
-                </div>
-            </a-col>
-        </a-row>
+
         <a-row>
             <a-col class="gutter-row" :span="24">
                 <div class="inputPart">
@@ -1143,25 +1140,38 @@
             handleOk3(){
                 console.log(this.postionList)
                 var postionListData =this.postionList
+
+                let isAllOk = true
                 postionListData.forEach((r,index) => {
-                    if(r.positionAthletesId==''&& r.val =='替补位'){
-                        postionListData.splice(index,1)
+                    if(r.positionAthletesId==''&& r.val !='替补位'){
+                        this.$message.error(r.val+'未选择，请选择后再提交');
+                        isAllOk = false
                     }
                 })
-                this.$fetch('/register/addRegisterFormProject',{registerFormId:this.registerFormId,userId:this.$store.state.userId,projectId:this.projectId,projectRegisterJson:JSON.stringify(postionListData)}).then((reData)=>{
-                    if(reData.code==200){
-                        this.visible3=false
-                        this.loadProjectRe()
-                    }else {
-                        this.$notification.open({
-                            duration:2,
-                            message: reData.msg,
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                    }
-                })
+
+                if(isAllOk){
+                    postionListData.forEach((r,index) => {
+                        if(r.positionAthletesId==''&& r.val =='替补位'){
+                            postionListData.splice(index,1)
+                        }
+                    })
+                    console.log(postionListData)
+                    this.$fetch('/register/addRegisterFormProject',{registerFormId:this.registerFormId,userId:this.$store.state.userId,projectId:this.projectId,projectRegisterJson:JSON.stringify(postionListData)}).then((reData)=>{
+                        if(reData.code==200){
+                            this.visible3=false
+                            this.loadProjectRe()
+                        }else {
+                            this.$notification.open({
+                                duration:2,
+                                message: reData.msg,
+                                onClick: () => {
+                                    console.log('Notification Clicked!');
+                                },
+                            });
+                        }
+                    })
+
+                }
 
 
             },
@@ -1483,28 +1493,32 @@
                     this.addGame.id = this.editId
                     this.addGame.matchId = this.matchId
 
+                if(this.addGame.teamName==''||this.addGame.simpleName==''||this.addGame.teamLeaderName==''||this.addGame.leaderPhone==''||this.addGame.leaderWechat==''||this.addGame.coach==''||this.addGame.mCoachNum==''||this.addGame.wCoachNum==''||this.addGame.manNum==''||this.addGame.womenNum==''||this.addGame.operator==''||this.addGame.workPhone==''||this.addGame.workFax==''){
+                    this.$message.success('加*为必填项，请检查后再提交');
+                }else {
+                    this.$fetch('/register/updateRegisterForm',this.addGame).then((reData)=>{
+                        this.visible = false
+                        if(reData.code==200){
+                            this.$notification.open({
+                                message: '成功修改报名表',
+                                onClick: () => {
+                                    console.log('Notification Clicked!');
+                                },
+                            });
+                            this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(this.checked),userId:sessionStorage.getItem("userId")})
 
-                        this.$fetch('/register/updateRegisterForm',this.addGame).then((reData)=>{
-                            this.visible = false
-                            if(reData.code==200){
-                                this.$notification.open({
-                                    message: '成功修改报名表',
-                                    onClick: () => {
-                                        console.log('Notification Clicked!');
-                                    },
-                                });
-                                this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(this.checked),userId:sessionStorage.getItem("userId")})
+                        }else {
+                            this.$notification.open({
+                                duration:3,
+                                message: reData.msg,
+                                onClick: () => {
+                                    console.log('Notification Clicked!');
+                                },
+                            });
+                        }
+                    })
 
-                            }else {
-                                this.$notification.open({
-                                    duration:3,
-                                    message: reData.msg,
-                                    onClick: () => {
-                                        console.log('Notification Clicked!');
-                                    },
-                                });
-                            }
-                        })
+                }
 
 
 

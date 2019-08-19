@@ -66,7 +66,7 @@
     <a-modal
             title="新增运动员"
             v-model="visible"
-            destroyOnClose="true"
+            :destroyOnClose="true"
             @ok="handleOk"
             width="980px"
     >
@@ -74,7 +74,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">姓名：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  姓名：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="addData.name" placeholder=""/>
@@ -87,7 +87,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">选择性别：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  选择性别：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%" :value="addData.sex" @change="sexSelect">
@@ -101,19 +101,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">名族：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="addData.nation" placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">出生日期：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  出生日期：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-date-picker style="width: 100%" @change="onChangeAddBirthday" />
@@ -125,7 +113,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">身份证：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  身份证：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="addData.idCard" placeholder=""/>
@@ -137,10 +125,25 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册单位：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册单位：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="addData.registrantOrg" placeholder=""/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册类型：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-select  style="width: 100%" :value="addData.registrantType" @change="typeSelect">
+                <a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>
+              </a-select>
             </a-col>
           </div>
         </a-col>
@@ -149,7 +152,36 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册来源：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册年份：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="addData.registrantYear" placeholder="例如：2019"/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册项目：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-select   style="width: 100%" :value="addData.registrantProject" @change="typeProSelect">
+                <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
+
+
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>注册来源：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%" :value="addData.registrantFrom" @change="registrantFromSelect">
@@ -163,6 +195,19 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
+              <div class="inputName">民族：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="addData.nation" placeholder=""/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
               <div class="inputName">双重注册单位：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
@@ -171,20 +216,7 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册类型：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-select  style="width: 100%" :value="addData.registrantType" @change="typeSelect">
-                <a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>
-              </a-select>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -250,32 +282,8 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册年份：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="addData.registrantYear" placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册项目：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-select   style="width: 100%" :value="addData.registrantProject" @change="typeProSelect">
-                <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
-              </a-select>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -331,7 +339,7 @@
     </a-modal>
     <a-modal
             title="修改运动员信息"
-            destroyOnClose="true"
+            :destroyOnClose="true"
             v-model="visibleEdit"
             @ok="handleEditOk"
             width="980px"
@@ -340,7 +348,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">姓名：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  姓名：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="editData.name" placeholder=""/>
@@ -352,12 +360,91 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">选择性别：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  选择性别：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%" :value="editData.sex" @change="sexEditSelect">
                 <a-select-option v-for = "item in sexList" :value="item">{{item}}</a-select-option>
               </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  出生日期：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-date-picker v-if="editData.birthday!=''" style="width: 100%" :defaultValue="moment(editData.birthday)"  @change="onChangeEditBirthday" />
+
+              <a-date-picker v-else style="width: 100%" format="YYYY-MM-DD"     @change="onChangeEditBirthday" />
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  身份证：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="editData.idCard" placeholder=""/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册单位：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="editData.registrantOrg" placeholder=""/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册项目：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+
+              <a-select   style="width: 100%" :value="editData.registrantProject" @change="typeEditProSelect">
+                <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册类型：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-select  style="width: 100%" :value="editData.registrantType" @change="typeEditSelect">
+                <a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册年份：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="editData.registrantYear"  placeholder="例如2019"/>
             </a-col>
           </div>
         </a-col>
@@ -376,56 +463,8 @@
           <!--</div>-->
         <!--</a-col>-->
       <!--</a-row>-->
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">名族：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="editData.nation" placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">出生日期：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-date-picker v-if="editData.birthday!=''" style="width: 100%" :defaultValue="moment(editData.birthday)"  @change="onChangeEditBirthday" />
 
-              <a-date-picker v-else style="width: 100%" format="YYYY-MM-DD"     @change="onChangeEditBirthday" />
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">身份证：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="editData.idCard" placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册单位：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="editData.registrantOrg" placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
 
 
 
@@ -435,7 +474,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册来源：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>注册来源：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%" :value="editData.registrantFrom" @change="registrantFromSelectEdit">
@@ -449,6 +488,19 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
+              <div class="inputName">民族：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="editData.nation" placeholder=""/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
               <div class="inputName">双重注册单位：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
@@ -457,20 +509,7 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册类型：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-select  style="width: 100%" :value="editData.registrantType" @change="typeEditSelect">
-                <a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>
-              </a-select>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -539,33 +578,8 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册年份：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="editData.registrantYear"  placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册项目：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
 
-              <a-select   style="width: 100%" :value="editData.registrantProject" @change="typeEditProSelect">
-                <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
-              </a-select>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -657,7 +671,10 @@
               <div class="inputName">模板上传：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;" :span="20">
-              <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" method="POST" target="_blank" enctype="multipart/form-data">
+
+
+
+              <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" id="form1" method="post"  enctype="multipart/form-data">
                 <input type="file" name="file"/><br/>
                 <input type="hidden" v-model="$store.state.userId" name="userId" >
                 <input style="border: none;
@@ -666,8 +683,20 @@
     width: 178px;
     height: 35px;
     margin: 36px 0px 0px 0px;
-    border-radius: 3px;" type="submit" value="表格上传"/>
+    border-radius: 3px;" type="submit"   value="表格上传"/>
               </form>
+
+              <!--<form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" method="POST" target="_blank" enctype="multipart/form-data">-->
+                <!--<input type="file" name="file"/><br/>-->
+                <!--<input type="hidden" v-model="$store.state.userId" name="userId" >-->
+                <!--<input style="border: none;-->
+    <!--background: #1890ff;-->
+    <!--color: white;-->
+    <!--width: 178px;-->
+    <!--height: 35px;-->
+    <!--margin: 36px 0px 0px 0px;-->
+    <!--border-radius: 3px;" type="submit" value="表格上传"/>-->
+              <!--</form>-->
             </a-col>
           </div>
         </a-col>
@@ -680,7 +709,8 @@
     import router from '../router';
     import store from '../store'
     import moment from 'moment';
-
+    import $ from 'jquery'
+    import 'jquery-form'
     const columns = [
         {
             title: '操作',
@@ -907,10 +937,10 @@
                 this.getList({page:pagination.current,page_size:pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
             }
             ,addAccount(){
+
+
+
                 this.visible=true
-
-
-
             },
             handleOkDel(){
                 this.$fetch('/athletes/deleteAthletesById',{id:this.del.id}).then((reData)=>{
@@ -937,37 +967,74 @@
             ,handleOk(e) {
                 this.addData.userId=this.$store.state.userId
 
-                    this.$fetch('/athletes/addAthletes',this.addData).then((reData)=>{
+                    if(this.addData.name==''||this.addData.registrantFrom==''||this.addData.sex==''||this.addData.birthday==''||this.addData.idCard==''||this.addData.registrantOrg==''||this.addData.registrantYear==''||this.addData.registrantProject==''||this.addData.registrantType==''||this.addData.name==''){
+                        this.$message.error('加*为必填项，请检查后再提交');
+                    }else {
+                        this.$fetch('/athletes/addAthletes',this.addData).then((reData)=>{
+                            if(reData.code==200){
+                                this.$notification.open({
+                                    message: '成功添加运动员',
+                                    onClick: () => {
+                                        console.log('Notification Clicked!');
+                                    },
+                                });
+                                this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
+                                this.addData = {
+                                    name:'',
+                                    sex:'',
+                                    nation:'',
+                                    birthday:'',
+                                    registrantFrom:'',
+                                    idCard:'',
+                                    level:'',
+                                    registrantOrg:'',
+                                    registrantOrg2:'',
+                                    protocolStartTime:'',
+                                    protocolEndTime:'',
+                                    protocolStartTime2:'',
+                                    protocolEndTime2:'',
+                                    registrantProject:'',
+                                    registrantType:'',
+                                    educationLevel:'',
+                                    domicile:'',
+                                    registrantYear:'',
+                                    trainDepart:'',
+                                    outputDepart:'',
+                                }
+                                this.visible = false
+
+                            }else {
+                                this.$notification.open({
+                                    duration:3,
+                                    message: reData.msg,
+                                    onClick: () => {
+                                        console.log('Notification Clicked!');
+                                    },
+                                });
+                            }
+                        })
+                    }
+
+
+            },
+            handleEditOk(e) {
+                this.editData.userId=this.$store.state.userId
+
+
+                if(this.editData.name==''||this.editData.registrantFrom==''||this.editData.sex==''||this.editData.birthday==''||this.editData.idCard==''||this.editData.registrantOrg==''||this.editData.registrantYear==''||this.editData.registrantProject==''||this.editData.registrantType==''){
+                    this.$message.error('加*为必填项，请检查后再提交');
+                }else {
+                    this.$fetch('/athletes/updateAthletes',this.editData).then((reData)=>{
+                        this.visible = false
                         if(reData.code==200){
+                            this.visibleEdit=false
                             this.$notification.open({
-                                message: '成功添加运动员',
+                                message: '修改成功',
                                 onClick: () => {
                                     console.log('Notification Clicked!');
                                 },
                             });
-                            this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
-                           this.addData = {
-                                name:'',
-                                sex:'',
-                                nation:'',
-                                birthday:'',
-                                idCard:'',
-                                level:'',
-                                registrantOrg:'',
-                                registrantOrg2:'',
-                                protocolStartTime:'',
-                                protocolEndTime:'',
-                                protocolStartTime2:'',
-                                protocolEndTime2:'',
-                                registrantProject:'',
-                                registrantType:'',
-                                educationLevel:'',
-                                domicile:'',
-                                registrantYear:'',
-                                trainDepart:'',
-                                outputDepart:'',
-                            }
-                            this.visible = false
+                            this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
 
                         }else {
                             this.$notification.open({
@@ -980,31 +1047,10 @@
                         }
                     })
 
-            },
-            handleEditOk(e) {
-                this.editData.userId=this.$store.state.userId
-                this.$fetch('/athletes/updateAthletes',this.editData).then((reData)=>{
-                    this.visible = false
-                    if(reData.code==200){
-                        this.visibleEdit=false
-                        this.$notification.open({
-                            message: '修改成功',
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
+                }
 
-                    }else {
-                        this.$notification.open({
-                            duration:3,
-                            message: reData.msg,
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                    }
-                })
+
+
 
         },
             handleCancel(){
@@ -1016,12 +1062,19 @@
 
     },
         mounted() {
+
             var vm = this
+            $("#form1").ajaxForm(function(data){
+                // vm.$message.success(data.message);
+            });
             store.commit('changeStore',{key:'title',val:'运动员管理'});
             this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
             this.getRole()
             this.getOptionList()
             this.getregistrantList()
+
+
+
         },
         data() {
             return {

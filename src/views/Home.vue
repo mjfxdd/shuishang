@@ -85,7 +85,7 @@
                 sessionStorage.setItem("token",'');
                 sessionStorage.setItem("userId",'');
                 sessionStorage.setItem("userName",'');
-
+                sessionStorage.setItem("categoryId",'')
                 store.commit('changeStore',{key:'userName',val:''});
                 router.push("/")
             }
@@ -94,7 +94,7 @@
             store.commit('changeStore',{key:'userId',val:sessionStorage.getItem("userId")});
 
             $(".conRoom").css('min-height',$(window).height()-60)
-            if(this.$store.state.categoryId == 1){
+            if(sessionStorage.getItem("categoryId") == 1){
                 router.push('/')
             }
         }

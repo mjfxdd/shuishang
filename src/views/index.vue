@@ -249,7 +249,7 @@
         <a-modal
                 title="比赛项目"
                 v-model="visibleProject"
-                destroyOnClose="true"
+                :destroyOnClose="true"
                 footer=""
                 width="800px"
         >
@@ -267,7 +267,7 @@
         <a-modal
                 :title="alertTitle"
                 v-model="visible"
-                destroyOnClose="true"
+                :destroyOnClose="true"
                 @ok="handleOk"
                 width="1000px"
         >
@@ -275,7 +275,7 @@
                     <a-col class="gutter-row" :span="24">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="3">
-                                <div class="inputName">参赛队全名：</div>
+                                <div class="inputName">*  参赛队全名：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="21">
                                 <a-input v-model="addGame.teamName" placeholder=""/>
@@ -288,7 +288,7 @@
                     <a-col class="gutter-row" :span="24">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="3">
-                                <div class="inputName">参赛队简称：</div>
+                                <div class="inputName">*  参赛队简称：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="21">
                                 <a-input v-model="addGame.simpleName" placeholder=""/>
@@ -300,7 +300,7 @@
                     <a-col class="gutter-row" :span="24">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="3">
-                                <div class="inputName">领队姓名：</div>
+                                <div class="inputName">*  领队姓名：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="16">
                                 <a-input v-model="addGame.teamLeaderName" placeholder=""/>
@@ -315,7 +315,7 @@
                     <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">领队联系方式：</div>
+                                <div class="inputName">*  领队联系方式：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input v-model="addGame.leaderPhone" placeholder=""/>
@@ -325,7 +325,7 @@
                     <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">领队微信：</div>
+                                <div class="inputName">*  领队微信：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input v-model="addGame.leaderWechat" placeholder=""/>
@@ -338,7 +338,7 @@
                     <a-col class="gutter-row" :span="24">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="3">
-                                <div class="inputName">教练员：</div>
+                                <div class="inputName">*  教练员：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="21">
                                 <a-input v-model="addGame.coach" placeholder=""/>
@@ -350,7 +350,7 @@
                 <a-col class="gutter-row" :span="12">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">男教练数：</div>
+                            <div class="inputName">*  男教练数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addGame.mCoachNum" placeholder=""/>
@@ -360,7 +360,7 @@
                 <a-col class="gutter-row" :span="12">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">女教练数：</div>
+                            <div class="inputName">*  女教练数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addGame.wCoachNum" placeholder=""/>
@@ -372,7 +372,7 @@
                 <a-col class="gutter-row" :span="12">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">男子人数：</div>
+                            <div class="inputName">*  男子人数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addGame.manNum" placeholder=""/>
@@ -382,7 +382,7 @@
                 <a-col class="gutter-row" :span="12">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">女子人数：</div>
+                            <div class="inputName">*  女子人数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addGame.womenNum" placeholder=""/>
@@ -489,7 +489,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="3">
-                            <div class="inputName">填报人：</div>
+                            <div class="inputName">*  填报人：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="21">
                             <a-input v-model="addGame.operator" placeholder=""/>
@@ -502,7 +502,7 @@
                     <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">单位电话：</div>
+                                <div class="inputName">*  单位电话：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input v-model="addGame.workPhone" placeholder=""/>
@@ -512,7 +512,7 @@
                     <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">单位传真：</div>
+                                <div class="inputName">*  单位传真：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input v-model="addGame.workFax" placeholder=""/>
@@ -520,17 +520,6 @@
                         </div>
                     </a-col>
                 </a-row>
-
-
-
-
-
-
-
-
-
-
-
 
         </a-modal>
         <!--参加赛事报名项目填写-->
@@ -721,22 +710,27 @@
                 this.loadProject(id)
             },
             handleOk(){
-                this.$fetch('/register/addRegisterForm',this.addGame).then((reData)=>{
-                    if(reData.code==200){
-                        this.visible=false
-                        this.visible2= true
-                        this.registerFormId = reData.data
-                        this.getProjectList()
-                    }else {
-                        this.$notification.open({
-                            duration:2,
-                            message: reData.msg,
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                    }
-                })
+                if(this.addGame.teamName==''||this.addGame.simpleName==''||this.addGame.teamLeaderName==''||this.addGame.leaderPhone==''||this.addGame.leaderWechat==''||this.addGame.coach==''||this.addGame.mCoachNum==''||this.addGame.wCoachNum==''||this.addGame.manNum==''||this.addGame.womenNum==''||this.addGame.operator==''||this.addGame.workPhone==''||this.addGame.workFax==''){
+                    this.$message.success('加*为必填项，请检查后再提交');
+                }else {
+                    this.$fetch('/register/addRegisterForm',this.addGame).then((reData)=>{
+                        if(reData.code==200){
+                            this.visible=false
+                            this.visible2= true
+                            this.registerFormId = reData.data
+                            this.getProjectList()
+                        }else {
+                            this.$notification.open({
+                                duration:2,
+                                message: reData.msg,
+                                onClick: () => {
+                                    console.log('Notification Clicked!');
+                                },
+                            });
+                        }
+                    })
+                }
+
 
 
             },
@@ -758,7 +752,37 @@
 
             },
             joinGame(id,name){
-                if(this.$store.state.userId==''){
+
+                this.addGame={
+                    userId:'',
+                        matchId:'',
+                        teamName:'',
+                        teamLeaderName:'',
+                        teamLeaderSex:'男',
+                        leaderPhone:'',
+                        coach:'',
+                        doctor:'',
+                        personnel:'',
+                        operator:'',
+                        workPhone:'',
+                        workFax:'',
+                        manNum:'',
+                        lManNum:'',
+                        womenNum:'',
+                        lWomanNum:'',
+                        // mLeaderNum:'',
+                        // wLeaderNum:'',
+                        mCoachNum:'',
+                        wCoachNum:'',
+                        mDoctorNum:'',
+                        wDoctorNum:'',
+                        mPersonnelNum:'',
+                        wPersonnelNum:'',
+                        simpleName:"",
+                        leaderWechat:''
+
+                }
+                if(sessionStorage.getItem("userId")==''||sessionStorage.getItem("userId")==null ){
                     this.$notification.open({
                         duration:2,
                         message: '请先登录在进行报名',
@@ -770,7 +794,7 @@
                     this.visible=true
                     this.alertTitle = "报名赛事："+name
                     this.addGame.matchId = id
-                    this.addGame.userId = this.$store.state.userId
+                    this.addGame.userId = sessionStorage.getItem("userId")
                 }
 
 
@@ -783,7 +807,11 @@
                 router.push('/login')
             },
             goPersonCenter(){
-                router.push('/userHome')
+                if(sessionStorage.getItem("categoryId")==2){
+                    router.push('/index')
+                }else {
+                    router.push('/userHome')
+                }
             },
             getList(data){
                 this.$fetch('/match/findMatchByStatusAndPage',data).then((reData)=>{

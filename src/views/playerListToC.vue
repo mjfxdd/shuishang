@@ -62,11 +62,10 @@
           </span>
     </a-table>
 
-
     <a-modal
             title="新增运动员"
             v-model="visible"
-            destroyOnClose="true"
+            :destroyOnClose="true"
             @ok="handleOk"
             width="980px"
     >
@@ -74,7 +73,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">姓名：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  姓名：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="addData.name" placeholder=""/>
@@ -87,7 +86,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">选择性别：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  选择性别：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%" :value="addData.sex" @change="sexSelect">
@@ -101,19 +100,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">名族：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="addData.nation" placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">出生日期：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  出生日期：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-date-picker style="width: 100%" @change="onChangeAddBirthday" />
@@ -125,7 +112,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">身份证：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  身份证：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="addData.idCard" placeholder=""/>
@@ -137,10 +124,25 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册单位：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册单位：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="addData.registrantOrg" placeholder=""/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册类型：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-select  style="width: 100%" :value="addData.registrantType" @change="typeSelect">
+                <a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>
+              </a-select>
             </a-col>
           </div>
         </a-col>
@@ -149,7 +151,36 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册来源：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册年份：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="addData.registrantYear" placeholder="例如：2019"/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册项目：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-select   style="width: 100%" :value="addData.registrantProject" @change="typeProSelect">
+                <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
+
+
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>注册来源：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%" :value="addData.registrantFrom" @change="registrantFromSelect">
@@ -163,6 +194,19 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
+              <div class="inputName">民族：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="addData.nation" placeholder=""/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
               <div class="inputName">双重注册单位：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
@@ -171,20 +215,7 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册类型：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-select  style="width: 100%" :value="addData.registrantType" @change="typeSelect">
-                <a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>
-              </a-select>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -250,32 +281,8 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册年份：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="addData.registrantYear" placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册项目：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-select   style="width: 100%" :value="addData.registrantProject" @change="typeProSelect">
-                <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
-              </a-select>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -331,7 +338,7 @@
     </a-modal>
     <a-modal
             title="修改运动员信息"
-            destroyOnClose="true"
+            :destroyOnClose="true"
             v-model="visibleEdit"
             @ok="handleEditOk"
             width="980px"
@@ -340,7 +347,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">姓名：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  姓名：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="editData.name" placeholder=""/>
@@ -352,7 +359,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">选择性别：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  选择性别：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%" :value="editData.sex" @change="sexEditSelect">
@@ -362,37 +369,11 @@
           </div>
         </a-col>
       </a-row>
-      <!--<a-row>-->
-        <!--<a-col class="gutter-row" :span="24">-->
-          <!--<div class="inputPart">-->
-            <!--<a-col class="gutter-row" :span="4">-->
-              <!--<div class="inputName">注册来源：</div>-->
-            <!--</a-col>-->
-            <!--<a-col class="gutter-row" :span="20">-->
-              <!--<a-select  style="width: 100%" :value="editData.organization" @change="loadOrganization">-->
-                <!--<a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>-->
-              <!--</a-select>-->
-            <!--</a-col>-->
-          <!--</div>-->
-        <!--</a-col>-->
-      <!--</a-row>-->
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">名族：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="editData.nation" placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">出生日期：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span> 出生日期：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-date-picker v-if="editData.birthday!=''" style="width: 100%" :defaultValue="moment(editData.birthday)"  @change="onChangeEditBirthday" />
@@ -406,7 +387,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">身份证：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  身份证：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="editData.idCard" placeholder=""/>
@@ -418,7 +399,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册单位：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册单位：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-input v-model="editData.registrantOrg" placeholder=""/>
@@ -426,6 +407,63 @@
           </div>
         </a-col>
       </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册项目：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+
+              <a-select   style="width: 100%" :value="editData.registrantProject" @change="typeEditProSelect">
+                <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册类型：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-select  style="width: 100%" :value="editData.registrantType" @change="typeEditSelect">
+                <a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册年份：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="editData.registrantYear"  placeholder="例如2019"/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <!--<a-row>-->
+      <!--<a-col class="gutter-row" :span="24">-->
+      <!--<div class="inputPart">-->
+      <!--<a-col class="gutter-row" :span="4">-->
+      <!--<div class="inputName">注册来源：</div>-->
+      <!--</a-col>-->
+      <!--<a-col class="gutter-row" :span="20">-->
+      <!--<a-select  style="width: 100%" :value="editData.organization" @change="loadOrganization">-->
+      <!--<a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>-->
+      <!--</a-select>-->
+      <!--</a-col>-->
+      <!--</div>-->
+      <!--</a-col>-->
+      <!--</a-row>-->
+
+
 
 
 
@@ -435,7 +473,7 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册来源：</div>
+              <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>注册来源：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
               <a-select  style="width: 100%" :value="editData.registrantFrom" @change="registrantFromSelectEdit">
@@ -449,6 +487,19 @@
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
+              <div class="inputName">民族：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="20">
+              <a-input v-model="editData.nation" placeholder=""/>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+
+      <a-row>
+        <a-col class="gutter-row" :span="24">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="4">
               <div class="inputName">双重注册单位：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
@@ -457,20 +508,7 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册类型：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-select  style="width: 100%" :value="editData.registrantType" @change="typeEditSelect">
-                <a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>
-              </a-select>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -539,33 +577,8 @@
           </div>
         </a-col>
       </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册年份：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
-              <a-input v-model="editData.registrantYear"  placeholder=""/>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col class="gutter-row" :span="24">
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="4">
-              <div class="inputName">注册项目：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="20">
 
-              <a-select   style="width: 100%" :value="editData.registrantProject" @change="typeEditProSelect">
-                <a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>
-              </a-select>
-            </a-col>
-          </div>
-        </a-col>
-      </a-row>
+
       <a-row>
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
@@ -620,6 +633,563 @@
       </a-row>
     </a-modal>
 
+    <!--<a-modal-->
+            <!--title="新增运动员"-->
+            <!--v-model="visible"-->
+            <!--:destroyOnClose="true"-->
+            <!--@ok="handleOk"-->
+            <!--width="980px"-->
+    <!--&gt;-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">姓名：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.name" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">选择性别：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select  style="width: 100%" :value="addData.sex" @change="sexSelect">-->
+                <!--<a-select-option v-for = "item in sexList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">民族：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.nation" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">出生日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker style="width: 100%" @change="onChangeAddBirthday" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">身份证：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.idCard" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册单位：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.registrantOrg" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册来源：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select  style="width: 100%" :value="addData.registrantFrom" @change="registrantFromSelect">-->
+                <!--<a-select-option v-for = "item in comeFromList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">双重注册单位：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.registrantOrg2" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册类型：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select  style="width: 100%" :value="addData.registrantType" @change="typeSelect">-->
+                <!--<a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">协议起始日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker style="width: 100%" @change="onChangeAddProtocolStartTime" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">协议结束日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker style="width: 100%" @change="onChangeAddProtocolEndTime" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">文化程度：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select   style="width: 100%" :value="addData.educationLevel"  @change="schoolSelect">-->
+                <!--<a-select-option v-for = "item in schoolList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">运动员等级：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select   style="width: 100%" :value="addData.level" @change="levelSelect">-->
+                <!--<a-select-option v-for = "item in levelList" :value="item">{{item}}</a-select-option>-->
+
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">户籍所在地：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.domicile" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册年份：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.registrantYear" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册项目：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select   style="width: 100%" :value="addData.registrantProject" @change="typeProSelect">-->
+                <!--<a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">训练单位：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.trainDepart" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">双重注册协议起始日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker   style="width: 100%"  @change="onChangeAddProtocolStartTime2" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">双重注册协议结束日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker style="width: 100%"   @change="onChangeAddProtocolEndTime2" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">输送单位：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="addData.outputDepart" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+
+
+
+
+    <!--</a-modal>-->
+    <!--<a-modal-->
+            <!--title="修改运动员信息"-->
+            <!--:destroyOnClose="true"-->
+            <!--v-model="visibleEdit"-->
+            <!--@ok="handleEditOk"-->
+            <!--width="980px"-->
+    <!--&gt;-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">姓名：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.name" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">选择性别：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select  style="width: 100%" :value="editData.sex" @change="sexEditSelect">-->
+                <!--<a-select-option v-for = "item in sexList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--&lt;!&ndash;<a-row>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a-col class="gutter-row" :span="24">&ndash;&gt;-->
+          <!--&lt;!&ndash;<div class="inputPart">&ndash;&gt;-->
+            <!--&lt;!&ndash;<a-col class="gutter-row" :span="4">&ndash;&gt;-->
+              <!--&lt;!&ndash;<div class="inputName">注册来源：</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</a-col>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a-col class="gutter-row" :span="20">&ndash;&gt;-->
+              <!--&lt;!&ndash;<a-select  style="width: 100%" :value="editData.organization" @change="loadOrganization">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a-select-option v-for = "item in loadOrganization" :value="item">{{item}}</a-select-option>&ndash;&gt;-->
+              <!--&lt;!&ndash;</a-select>&ndash;&gt;-->
+            <!--&lt;!&ndash;</a-col>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</a-col>&ndash;&gt;-->
+      <!--&lt;!&ndash;</a-row>&ndash;&gt;-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">民族：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.nation" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">出生日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker v-if="editData.birthday!=''" style="width: 100%" :defaultValue="moment(editData.birthday)"  @change="onChangeEditBirthday" />-->
+
+              <!--<a-date-picker v-else style="width: 100%" format="YYYY-MM-DD"     @change="onChangeEditBirthday" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">身份证：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.idCard" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册单位：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.registrantOrg" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+
+
+
+
+
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册来源：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select  style="width: 100%" :value="editData.registrantFrom" @change="registrantFromSelectEdit">-->
+                <!--<a-select-option v-for = "item in comeFromList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">双重注册单位：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.registrantOrg2" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册类型：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select  style="width: 100%" :value="editData.registrantType" @change="typeEditSelect">-->
+                <!--<a-select-option v-for = "item in playsTypeList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">协议起始日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker v-if="editData.protocolStartTime!=''" style="width: 100%" :defaultValue="moment(editData.protocolStartTime)"  @change="onChangeEditProtocolStartTime" />-->
+
+              <!--<a-date-picker v-else style="width: 100%"  @change="onChangeEditProtocolStartTime" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">协议结束日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker v-if="editData.protocolEndTime!=''" style="width: 100%" :defaultValue="moment(editData.protocolEndTime)"  @change="onChangeEditProtocolEndTime" />-->
+
+              <!--<a-date-picker v-else style="width: 100%" @change="onChangeEditProtocolEndTime" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">文化程度：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select   style="width: 100%" :value="editData.educationLevel"  @change="schoolEditSelect">-->
+                <!--<a-select-option v-for = "item in schoolList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">运动员等级：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-select   style="width: 100%" :value="editData.level" @change="levelEditSelect">-->
+                <!--<a-select-option v-for = "item in levelList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">户籍所在地：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.domicile" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册年份：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.registrantYear"  placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">注册项目：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+
+              <!--<a-select   style="width: 100%" :value="editData.registrantProject" @change="typeEditProSelect">-->
+                <!--<a-select-option v-for = "item in typeList" :value="item">{{item}}</a-select-option>-->
+              <!--</a-select>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">训练单位：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.trainDepart" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">双重注册协议起始日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker v-if="editData.protocolStartTime2!=''" style="width: 100%" :defaultValue="moment(editData.protocolStartTime2)"  @change="onChangeEditProtocolStartTime2" />-->
+
+              <!--<a-date-picker  v-else  style="width: 100%" @change="onChangeEditProtocolStartTime2" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">双重注册协议结束日期：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-date-picker v-if="editData.protocolEndTime2!=''" style="width: 100%" :defaultValue="moment(editData.protocolEndTime2)"  @change="onChangeEditProtocolEndTime2" />-->
+
+              <!--<a-date-picker v-else style="width: 100%"  @change="onChangeEditProtocolEndTime2" />-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+      <!--<a-row>-->
+        <!--<a-col class="gutter-row" :span="24">-->
+          <!--<div class="inputPart">-->
+            <!--<a-col class="gutter-row" :span="4">-->
+              <!--<div class="inputName">输送单位：</div>-->
+            <!--</a-col>-->
+            <!--<a-col class="gutter-row" :span="20">-->
+              <!--<a-input v-model="editData.outputDepart" placeholder=""/>-->
+            <!--</a-col>-->
+          <!--</div>-->
+        <!--</a-col>-->
+      <!--</a-row>-->
+    <!--</a-modal>-->
+
 
         <a-modal
                 title="警告"
@@ -656,7 +1226,7 @@
               <div class="inputName">模板上传：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;" :span="20">
-              <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" method="POST" target="_blank" enctype="multipart/form-data">
+              <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" method="POST"  enctype="multipart/form-data">
                 <input type="file" name="file"/><br/>
                 <input type="hidden" v-model="$store.state.userId" name="userId" >
                 <input style="border: none;
@@ -720,7 +1290,7 @@
     import router from '../router';
     import store from '../store'
     import moment from 'moment';
-
+    import  'jquery-form'
     const columns = [
         {
             title: '操作',
@@ -836,7 +1406,7 @@
             },
             search(){
                 if(this.searchName!=''){
-                    this.$fetch('/athletes/findClientAthletesByQueryAndPage',{userId:this.$store.state.userId,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType}).then((reData)=>{
+                    this.$fetch('/athletes/findClientAthletesByQueryAndPage',{userId:sessionStorage.getItem("userId"),nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType}).then((reData)=>{
                         if(reData.data==null){
                             this.$message.info('未查询到此用户');
                         }else {
@@ -919,7 +1489,7 @@
             }
             ,getList(data){
                 this.loading = true
-                data.userId=this.$store.state.userId
+                data.userId=sessionStorage.getItem("userId")
                 this.$fetch('/athletes/findClientAthletesByQueryAndPage',data).then((reData)=>{
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.count
@@ -977,7 +1547,9 @@
             }
             ,handleOk(e) {
                 this.addData.userId=this.$store.state.userId
-
+                if(this.addData.name==''||this.addData.sex==''||this.addData.registrantFrom==''||this.addData.birthday==''||this.addData.idCard==''||this.addData.registrantOrg==''||this.addData.registrantYear==''||this.addData.registrantProject==''||this.addData.registrantType==''||this.addData.name==''){
+                    this.$message.error('加*为必填项，请检查后再提交');
+                }else {
                     this.$fetch('/athletes/addAthletes',this.addData).then((reData)=>{
                         if(reData.code==200){
                             this.$notification.open({
@@ -987,11 +1559,12 @@
                                 },
                             });
                             this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
-                           this.addData = {
+                            this.addData = {
                                 name:'',
                                 sex:'',
                                 nation:'',
                                 birthday:'',
+                                registrantFrom:'',
                                 idCard:'',
                                 level:'',
                                 registrantOrg:'',
@@ -1021,31 +1594,38 @@
                         }
                     })
 
+                }
+
             },
             handleEditOk(e) {
                 this.editData.userId=this.$store.state.userId
-                this.$fetch('/athletes/updateAthletes',this.editData).then((reData)=>{
-                    this.visible = false
-                    if(reData.code==200){
-                        this.visibleEdit=false
-                        this.$notification.open({
-                            message: '修改成功',
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                        this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
+                if(this.editData.name==''||this.editData.sex==''||this.editData.birthday==''||this.editData.registrantFrom==''||this.editData.idCard==''||this.editData.registrantOrg==''||this.editData.registrantYear==''||this.editData.registrantProject==''||this.editData.registrantType==''){
+                    this.$message.error('加*为必填项，请检查后再提交');
+                }else {
+                    this.$fetch('/athletes/updateAthletes',this.editData).then((reData)=>{
+                        this.visible = false
+                        if(reData.code==200){
+                            this.visibleEdit=false
+                            this.$notification.open({
+                                message: '修改成功',
+                                onClick: () => {
+                                    console.log('Notification Clicked!');
+                                },
+                            });
+                            this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize})
 
-                    }else {
-                        this.$notification.open({
-                            duration:3,
-                            message: reData.msg,
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                    }
-                })
+                        }else {
+                            this.$notification.open({
+                                duration:3,
+                                message: reData.msg,
+                                onClick: () => {
+                                    console.log('Notification Clicked!');
+                                },
+                            });
+                        }
+                    })
+                }
+
 
         },
             handleCancel(){

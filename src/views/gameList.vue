@@ -64,7 +64,7 @@
     <a-modal
             title="赛事信息"
             v-model="visible"
-            destroyOnClose="true"
+            :destroyOnClose="true"
             @ok="handleOk"
     >
       <a-row>
@@ -434,7 +434,7 @@
       <a-modal
               title="赛事查看"
               v-model="visibleSee"
-              destroyOnClose="true"
+              :destroyOnClose="true"
               footer=''
 
       >
