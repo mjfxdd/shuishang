@@ -34,7 +34,7 @@
                       <a-divider type="vertical" />
                       <a @click="notPass(text.id)">拒绝</a>
                       <a-divider type="vertical" />
-                      <a @click="seeMore(text.id)">查看</a>
+                      <a @click="seeMore(text.id)">查看报名</a>
        </span>
       <span slot="status" slot-scope="text, record">
                     <span v-if="text.status==1">草稿</span>

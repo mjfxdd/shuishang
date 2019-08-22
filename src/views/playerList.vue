@@ -13,10 +13,10 @@
       </a-col>
       <a-col class="gutter-row" :span="4">
         <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="10">
             <div class="inputName">注册单位：</div>
           </a-col>
-          <a-col class="gutter-row" :span="18">
+          <a-col class="gutter-row" :span="14">
             <a-select  style="width: 100%"  v-model="registrant" >
               <a-select-option value="">所有单位</a-select-option>
               <a-select-option v-for = "item in registrantList" :value="item">{{item}}</a-select-option>
@@ -37,7 +37,6 @@
           </a-col>
         </div>
       </a-col>
-
       <a-col class="gutter-row"  :span="6" :offset="6">
         <a-button type="primary" @click="visibleAdd=true">批量上传</a-button>
         <a-button type="primary" @click="addAccount()">新增</a-button>
@@ -677,6 +676,8 @@
               <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" id="form1" method="post"  enctype="multipart/form-data">
                 <input type="file" name="file"/><br/>
                 <input type="hidden" v-model="$store.state.userId" name="userId" >
+                <input type="hidden" v-model="$store.state.token" name="token" >
+
                 <input style="border: none;
     background: #1890ff;
     color: white;
@@ -1069,7 +1070,7 @@
             });
             store.commit('changeStore',{key:'title',val:'运动员管理'});
             this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
-            this.getRole()
+            // this.getRole()
             this.getOptionList()
             this.getregistrantList()
 

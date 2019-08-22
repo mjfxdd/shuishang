@@ -122,7 +122,7 @@
               <div class="inputName">账号名称：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-input v-model="editData.userName" placeholder="请输入账号名称"/>
+              <a-input v-model="editData.userName" disabled placeholder="请输入账号名称"/>
             </a-col>
           </div>
         </a-col>

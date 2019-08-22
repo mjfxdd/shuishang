@@ -290,7 +290,9 @@
             width="800px"
             @ok="handleEditOk"
     >
-      <a-row>
+
+        <a-row>
+
         <a-col class="gutter-row" :span="24">
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
@@ -376,7 +378,7 @@
             </a-col>
             <a-col class="gutter-row" :span="20">
 
-                <a-select  style="width: 90%" @change="handleChangeLong">
+                <a-select defaultValue="2000米" style="width: 90%" @change="handleChangeLong">
                     <a-select-option value="200米">200米</a-select-option>
                     <a-select-option value="500米">500米</a-select-option>
                     <a-select-option value="1000米">1000米</a-select-option>
@@ -407,6 +409,8 @@
           <div class="inputPart">
             <a-col class="gutter-row" :span="4">
               <div class="inputName">项目列表：</div>
+
+
             </a-col>
           </div>
         </a-col>
@@ -687,17 +691,20 @@
               title="提示"
               :visible="visibleAgain"
               @ok="handleOkAgain"
+              okText="继续"
+              cancelText="结束"
+
               @cancel="handleCancelAgain"
       >
           <p>添加成功，是否继续？</p>
       </a-modal>
-
   </div>
 </template>
 <script>
     import router from '../router';
     import store from '../store'
     import moment from 'moment';
+
     const columns = [
         {
             title: '操作',
@@ -722,6 +729,7 @@
 
     const productListData = [];
     export default {
+
         methods: {
             moment,
             handleChangeLong(value){
@@ -936,6 +944,7 @@
                 this.editData.userName=name
             },
             search(){
+
                 if(this.checked.length==0){
                     this.$notification.open({
                         message: '请选择查找状态后再点击 ',
@@ -1145,30 +1154,60 @@
             handleEditOk(e) {
                 this.editCompetitionSend.competitionEventId = this.editCompetitionEventData.competitionEventId
                 var passData = this.editCompetitionSend
-                // passData.attributeJson= JSON.stringify(this.editCompetitionSend.attributeJson)
-                passData.itemGroupIdListJson = JSON.stringify(this.editCompetitionSend.itemGroupIdListJson)
-                passData.rowingTypeIdListJson = JSON.stringify(this.editCompetitionSend.rowingTypeIdListJson)
-                this.$fetch('/match/addMatchProjects',passData).then((reData)=>{
-                    if(reData.code==200){
-                        // this.visibleEdit=false
-                        passData.itemGroupIdListJson = JSON.parse(this.editCompetitionSend.itemGroupIdListJson)
-                        passData.rowingTypeIdListJson = JSON.parse(this.editCompetitionSend.rowingTypeIdListJson)
-                        this.isableType=true
-                        this.visibleAgain=true
-                        this.getCompetitionList()
+                console.log(passData.rowingTypeIdListJson)
+                if(passData.matchTypeId==''){
+                    this.$notification.open({
+                        duration:2,
+                        message: '请选择赛事类型',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
+                }else if( passData.itemGroupIdListJson=="[]"|| passData.itemGroupIdListJson.length==0|| passData.itemGroupIdListJson=="请依次选择" ){
+                    this.$notification.open({
+                        duration:2,
+                        message: '请选择赛项组别',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
+                }else if(passData.rowingTypeIdListJson=="[]"||passData.rowingTypeIdListJson.length==0||passData.rowingTypeIdListJson=="请依次选择"){
+                    this.$notification.open({
+                        duration:2,
+                        message: '请选择赛艇种类',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
+                }else {
 
-                    }else {
-                        passData.itemGroupIdListJson = JSON.parse(this.editCompetitionSend.itemGroupIdListJson)
-                        passData.rowingTypeIdListJson = JSON.parse(this.editCompetitionSend.rowingTypeIdListJson)
-                        this.$notification.open({
-                            duration:3,
-                            message: reData.msg,
-                            onClick: () => {
-                                console.log('Notification Clicked!');
-                            },
-                        });
-                    }
-                })
+                    // passData.attributeJson= JSON.stringify(this.editCompetitionSend.attributeJson)
+                    passData.itemGroupIdListJson = JSON.stringify(this.editCompetitionSend.itemGroupIdListJson)
+                    passData.rowingTypeIdListJson = JSON.stringify(this.editCompetitionSend.rowingTypeIdListJson)
+                    this.$fetch('/match/addMatchProjects',passData).then((reData)=>{
+                        if(reData.code==200){
+                            // this.visibleEdit=false
+                            passData.itemGroupIdListJson = JSON.parse(this.editCompetitionSend.itemGroupIdListJson)
+                            passData.rowingTypeIdListJson = JSON.parse(this.editCompetitionSend.rowingTypeIdListJson)
+                            this.isableType=true
+                            this.visibleAgain=true
+                            this.getCompetitionList()
+
+                        }else {
+                            passData.itemGroupIdListJson = JSON.parse(this.editCompetitionSend.itemGroupIdListJson)
+                            passData.rowingTypeIdListJson = JSON.parse(this.editCompetitionSend.rowingTypeIdListJson)
+                            this.$notification.open({
+                                duration:3,
+                                message: reData.msg,
+                                onClick: () => {
+                                    console.log('Notification Clicked!');
+                                },
+                            });
+                        }
+                    })
+
+                }
+
 
 
         },
@@ -1199,12 +1238,13 @@
             var vm = this
             store.commit('changeStore',{key:'title',val:'赛事管理'});
             this.getList({page:1,page_size:10,statusJson:JSON.stringify(this.checked)})
-            this.getRole()
+            // this.getRole()
             this.getCompetitionEvents()
 
         },
         data() {
             return {
+                loader:true,
                 isShows:false,
                 visibleAgain:false,
                 isableType:false,

@@ -6,9 +6,9 @@
       <div class="logo">
         <img src="../assets/logoF.jpg" width="100%" alt="">
       </div>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['2']" :style="{ textAlign: 'left' }">
+      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['']" :style="{ textAlign: 'left' }">
         <a-menu-item key="1" @click="choseWhich('/','首页')">首页</a-menu-item>
-        <a-menu-item key="2" @click="choseWhich('/userHome','报名列表')">报名列表</a-menu-item>
+        <a-menu-item key="2" @click="choseWhich('/registerFormC','报名列表')">报名列表</a-menu-item>
         <a-menu-item key="4" @click="choseWhich('/playerListToC','运动员管理')">运动员管理</a-menu-item>
         <a-menu-item key="3" @click="choseWhich('/personCenterUser','密码修改')">密码修改</a-menu-item>
         <a-menu-item key="22" @click="loginOut()">退出登录</a-menu-item>
@@ -66,11 +66,11 @@
         methods: {
             handleOkDel() {
                 store.commit('changeStore',{key:'alertTip',val:false});
-                router.push('/login')
+                router.push('/userHome')
             },
             handleCancel () {
                 store.commit('changeStore',{key:'alertTip',val:false});
-                router.push('/login')
+                router.push('/userHome')
             },
             choseWhich(url,title){
                 router.push(url)

@@ -1229,6 +1229,8 @@
               <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" method="POST"  enctype="multipart/form-data">
                 <input type="file" name="file"/><br/>
                 <input type="hidden" v-model="$store.state.userId" name="userId" >
+                <input type="hidden" v-model="$store.state.token" name="token" >
+
                 <input style="border: none;
     background: #1890ff;
     color: white;
@@ -1640,7 +1642,7 @@
             var vm = this
             store.commit('changeStore',{key:'title',val:'运动员管理'});
             this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
-            this.getRole()
+            // this.getRole()
             this.getOptionList()
             this.getregistrantList()
         },

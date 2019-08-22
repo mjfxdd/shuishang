@@ -29,7 +29,8 @@
                                     <div>比赛时间：{{item.startTime}}~{{item.endTime}}</div><div> 报名时间： {{item.signUpStartTime}}~ {{item.signUpEndTime}}</div>
                                     </span>
                                     比赛地址：{{item.province}}{{item.city}}
-                                    <a @click="joinGame(item.id,item.matchName)"  style="float:right;padding-right: 20px">报名参加</a>
+                                    <a v-if="item.status == 4"  @click="joinGame(item.id,item.matchName)"  style="float:right;padding-right: 20px">报名参加</a>
+                                   <span  v-if="item.status == 3" style="float:right;padding-right: 20px">报名未开始</span>
 
                                     <!--<a @click="joinGame(item.id,item.matchName)" v-if="item.status == 4" style="float:right;padding-right: 20px">报名参加</a>-->
                                     <!--<span  v-if="item.status == 3" style="float:right;padding-right: 20px">报名未开始</span>-->
@@ -353,7 +354,7 @@
                             <div class="inputName">*  男教练数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.mCoachNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.mCoachNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -363,7 +364,7 @@
                             <div class="inputName">*  女教练数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.wCoachNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.wCoachNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -375,7 +376,7 @@
                             <div class="inputName">*  男子人数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.manNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.manNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -385,7 +386,7 @@
                             <div class="inputName">*  女子人数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.womenNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.womenNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -397,7 +398,7 @@
                             <div class="inputName">男轻人数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.lManNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.lManNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -407,7 +408,7 @@
                             <div class="inputName">女轻人数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.lWomanNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.lWomanNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -432,7 +433,7 @@
                             <div class="inputName">男医生数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.mDoctorNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.mDoctorNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -442,7 +443,7 @@
                             <div class="inputName">女医生数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.wDoctorNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.wDoctorNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -469,7 +470,7 @@
                             <div class="inputName">男工作人员数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.mPersonnelNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.mPersonnelNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -479,7 +480,7 @@
                             <div class="inputName">女工作人员数：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-input v-model="addGame.wPersonnelNum" placeholder=""/>
+                            <a-input type="number" v-model="addGame.wPersonnelNum" placeholder=""/>
                         </a-col>
                     </div>
                 </a-col>
@@ -785,7 +786,7 @@
                 if(sessionStorage.getItem("userId")==''||sessionStorage.getItem("userId")==null ){
                     this.$notification.open({
                         duration:2,
-                        message: '请先登录在进行报名',
+                        message: '请先登录再进行报名',
                         onClick: () => {
                             console.log('Notification Clicked!');
                         },
@@ -839,20 +840,12 @@
             if(sessionStorage.getItem("userId")){
                 store.commit('changeStore',{key:'userId',val:sessionStorage.getItem("userId")});
             }
+            if(sessionStorage.getItem("categoryId")){
+                store.commit('changeStore',{key:'categoryId',val:sessionStorage.getItem("categoryId")});
+            }
             // store.commit('changeStore',{key:'title',val:'新增产品'});
             this.getList({page:1,page_size:this.pagination.defaultPageSize,statusJson:JSON.stringify(["3","4"])})
             // this.getList({page:1,page_size:this.pagination.defaultPageSize})
-            var name=[]
-            const obj = {
-                1:1,
-                2:'zhangsan',
-                3:18
-            }
-
-            for(let key  in obj){
-                name.push(key)
-                console.log(key + '---' + obj[key])
-            }
 
 
         },

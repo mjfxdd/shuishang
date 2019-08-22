@@ -6,13 +6,13 @@
       <div class="logo">
         <img src="../assets/logoF.jpg" width="100%" alt="">
       </div>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['4']" :style="{ textAlign: 'left' }">
-        <!--<a-menu-item key="1" @click="choseWhich('/index','首页')"><a-icon type="rocket" />首页</a-menu-item>-->
+      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['']" :style="{ textAlign: 'left' }">
+        <a-menu-item key="1" @click="choseWhich('/','首页')"><a-icon type="rocket" />首页</a-menu-item>
         <a-sub-menu
                 key="1"
         >
           <span slot="title"><a-icon type="rocket" /><span>基础功能</span></span>
-          <a-menu-item key="11" @click="choseWhich('/index','账号管理')">账号管理</a-menu-item>
+          <a-menu-item key="11" @click="choseWhich('/userList','账号管理')">账号管理</a-menu-item>
           <a-menu-item key="12" @click="choseWhich('/roleList','角色管理')">角色管理</a-menu-item>
           <a-menu-item key="13" @click="choseWhich('/gameList','赛事管理')">赛事管理</a-menu-item>
           <a-menu-item key="14" @click="choseWhich('/playerList','运动员管理')">运动员管理</a-menu-item>
@@ -71,11 +71,11 @@
         methods: {
             handleOkDel() {
                 store.commit('changeStore',{key:'alertTip',val:false});
-                router.push('/login')
+                router.push('/index')
             },
             handleCancel () {
                 store.commit('changeStore',{key:'alertTip',val:false});
-                router.push('/login')
+                router.push('/index')
             },
             choseWhich(url,title){
                 router.push(url)

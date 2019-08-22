@@ -26,6 +26,8 @@ import personCenterUser from './views/personCenterUser'
 
 import tableAllPlayer from './views/tableAllPlayer'
 import playerListToC from './views/playerListToC'
+import homeIndex from './views/homeIndex'
+import homeIndexC from './views/homeIndexC'
 
 
 import ceshi from './views/ceshi.vue'
@@ -38,9 +40,15 @@ export default new Router({
       name: 'home',
       component: Home,
       children: [
+          {
+              //欢迎
+              path: '/',
+              name: 'homeIndex',
+              component: homeIndex
+          },
             {
                 //产品列表
-                path: '/',
+                path: '/userList',
                 name: 'productList',
                 component: productList
             },{
@@ -133,10 +141,15 @@ export default new Router({
           path: '/userHome',
           name: 'userHome',
           component: userHome,
-          children: [
+          children: [  {
+              //欢迎
+                      path: '/',
+                      name: 'homeIndexC',
+                      component: homeIndexC
+                  },
               {
-                  //个人中心
-                  path: '/',
+                  //
+                  path: '/registerFormC',
                   name: 'personCenter',
                   component: personCenter
               },{
