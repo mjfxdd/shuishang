@@ -92,6 +92,7 @@
         },
         mounted() {
             store.commit('changeStore',{key:'userId',val:sessionStorage.getItem("userId")});
+            store.commit('changeStore',{key:'token',val:sessionStorage.getItem("token")});
 
             $(".conRoom").css('min-height',$(window).height()-60)
             if(sessionStorage.getItem("categoryId") == 1){

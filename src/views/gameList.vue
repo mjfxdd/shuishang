@@ -44,6 +44,13 @@
                           <a @click="seeTable(text.id)">报名表审核</a>
                       </div>
                         <div v-if="text.status!=1">
+                             <a @click="deleteUser(text.id,text.matchName)">删除</a>
+                        <a-divider type="vertical" />
+                        <a @click="editGame(text.id)">编辑</a>
+                        <a-divider type="vertical" />
+                        <a @click="editCompetitionEvents(text.id,text.competitionEventId)">项目管理</a>
+                        <a-divider type="vertical" />
+
                               <span  @click="seeGame(text.id)" style="text-decoration: underline;cursor: pointer">查看</span>
                               <a-divider type="vertical" />
                                <a @click="seeTable(text.id)">报名表审核</a>

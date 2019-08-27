@@ -29,7 +29,7 @@
                                     <div>比赛时间：{{item.startTime}}~{{item.endTime}}</div><div> 报名时间： {{item.signUpStartTime}}~ {{item.signUpEndTime}}</div>
                                     </span>
                                     比赛地址：{{item.province}}{{item.city}}
-                                    <a v-if="item.status == 4"  @click="joinGame(item.id,item.matchName)"  style="float:right;padding-right: 20px">报名参加</a>
+                                    <a v-if="item.status == 4"  @click="joinGame(item.id,item.matchName)"  style="float:right;padding-right: 20px">报名参赛</a>
                                    <span  v-if="item.status == 3" style="float:right;padding-right: 20px">报名未开始</span>
 
                                     <!--<a @click="joinGame(item.id,item.matchName)" v-if="item.status == 4" style="float:right;padding-right: 20px">报名参加</a>-->
@@ -256,8 +256,19 @@
         >
 
 
-            <a-row v-for="(items,index) in competitionList">
-                <a-col :span="20">   {{index+1}}.{{items.projectName}}</a-col>
+            <!--<a-row v-for="(items,index) in competitionList">-->
+                <!--<a-col :span="20">   {{index+1}}.{{items.projectName}}</a-col>-->
+            <!--</a-row>-->
+
+
+            <!--<a-row v-for="(item,index) in competitionList">-->
+            <!--<a-col :span="20">   {{index+1}}.{{item.projectName}}</a-col>-->
+            <!--</a-row>-->
+            <a-row v-for="(item,index) in competitionList">
+                <a-col style="font-weight: bold;margin: 10px 0px;" :span="20"> {{item.distance}} - {{item.itemGroupName}}</a-col>
+                <a-row v-for="(items,index) in item.projectsDTOList">
+                    <a-col :span="20"> {{items.projectName}}({{items.abbreviation}})</a-col>
+                </a-row>
             </a-row>
 
         </a-modal>
@@ -546,7 +557,7 @@
                     <!--</div>-->
                 <!--</a-card>-->
             <!--</template>-->
-            您已成功报名，请到个人中心添加具体比赛项目。
+            你单位已成功报名，请到你单位账户下的“报名列表”栏添加具体参赛项目。
         </a-modal>
         <!--项目添加运动员-->
         <a-modal
@@ -640,10 +651,11 @@
         },
         methods: {
             seeProject(id){
-                this.$fetch('/project/findProjectsByMatchIdAndPage',{matchId:id,page:1,page_size:100}).then((reData)=>{
+                this.$fetch('/project/findProjectsByMatchIdWithAggregation',{matchId:id,page:1,page_size:100}).then((reData)=>{
                     if(reData.code==200){
-                        this.competitionList=reData.data.dataList
-                        this.visibleProject =true
+                        this.competitionList=reData.data
+                                this.visibleProject =true
+
                     }else {
                         this.$notification.open({
                             message: reData.msg,
@@ -653,6 +665,21 @@
                         });
                     }
                 })
+
+
+                // this.$fetch('/project/findProjectsByMatchIdAndPage',{matchId:id,page:1,page_size:100}).then((reData)=>{
+                //     if(reData.code==200){
+                //         this.competitionList=reData.data.dataList
+                //         this.visibleProject =true
+                //     }else {
+                //         this.$notification.open({
+                //             message: reData.msg,
+                //             onClick: () => {
+                //                 console.log('Notification Clicked!');
+                //             },
+                //         });
+                //     }
+                // })
             },
             onChange1 (e) {
                 this.addGame.teamLeaderSex = e.target.value
@@ -852,6 +879,7 @@
         data() {
 
             return {
+
                 visibleProject:false,
                 competitionList:[],
                 activeKey: ['1'],
@@ -893,7 +921,7 @@
                 visible:false,
                 alertTitle:'',
                 visible2:false,
-                alertTitle2:'赛事项目添加',
+                alertTitle2:'比赛项目添加',
                 visible3:false,
                 alertTitle3:'运动员选择',
                 pagination:{

@@ -154,7 +154,7 @@
               <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册年份：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-input v-model="addData.registrantYear" placeholder="例如：2019"/>
+              <a-input v-model="addData.registrantYear" type="number" placeholder="例如：2019"/>
             </a-col>
           </div>
         </a-col>
@@ -443,7 +443,7 @@
               <div class="inputName"><span style="color: red;font-size: 18px;">*  </span>  注册年份：</div>
             </a-col>
             <a-col class="gutter-row" :span="20">
-              <a-input v-model="editData.registrantYear"  placeholder="例如2019"/>
+              <a-input v-model="editData.registrantYear" type="number" placeholder="例如2019"/>
             </a-col>
           </div>
         </a-col>
@@ -1244,6 +1244,17 @@
         </a-col>
       </a-row>
     </a-modal>
+    <a-modal
+            title="提示"
+            :visible="visibleAgain"
+            @ok="handleOkAgain"
+            okText="继续"
+            cancelText="结束"
+
+            @cancel="handleCancel"
+    >
+      <p>添加成功，是否继续？</p>
+    </a-modal>
     <!--<a-modal-->
             <!--title="批量上传"-->
             <!--:visible="visibleAdd"-->
@@ -1520,6 +1531,28 @@
                 this.getList({page:pagination.current,page_size:pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
             }
             ,addAccount(){
+                this.addData = {
+                    name:'',
+                    sex:'男',
+                    nation:'',
+                    birthday:'',
+                    registrantFrom:'',
+                    idCard:'',
+                    level:'',
+                    registrantOrg:'',
+                    registrantOrg2:'',
+                    protocolStartTime:'',
+                    protocolEndTime:'',
+                    protocolStartTime2:'',
+                    protocolEndTime2:'',
+                    registrantProject:'',
+                    registrantType:'',
+                    educationLevel:'',
+                    domicile:'',
+                    registrantYear:'',
+                    trainDepart:'',
+                    outputDepart:'',
+                }
                 this.visible=true
 
 
@@ -1549,43 +1582,38 @@
             }
             ,handleOk(e) {
                 this.addData.userId=this.$store.state.userId
-                if(this.addData.name==''||this.addData.sex==''||this.addData.registrantFrom==''||this.addData.birthday==''||this.addData.idCard==''||this.addData.registrantOrg==''||this.addData.registrantYear==''||this.addData.registrantProject==''||this.addData.registrantType==''||this.addData.name==''){
+                if(this.addData.name==''||this.addData.registrantFrom==''||this.addData.sex==''||this.addData.birthday==''||this.addData.idCard==''||this.addData.registrantOrg==''||this.addData.registrantYear==''||this.addData.registrantProject==''||this.addData.registrantType==''){
                     this.$message.error('加*为必填项，请检查后再提交');
                 }else {
+                    this.loading=true
                     this.$fetch('/athletes/addAthletes',this.addData).then((reData)=>{
                         if(reData.code==200){
-                            this.$notification.open({
-                                message: '成功添加运动员',
-                                onClick: () => {
-                                    console.log('Notification Clicked!');
-                                },
-                            });
+                            // this.$notification.open({
+                            //     message: '成功添加运动员',
+                            //     onClick: () => {
+                            //         console.log('Notification Clicked!');
+                            //     },
+                            // });
+
+                            this.loading=false
                             this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
-                            this.addData = {
-                                name:'',
-                                sex:'',
-                                nation:'',
-                                birthday:'',
-                                registrantFrom:'',
-                                idCard:'',
-                                level:'',
-                                registrantOrg:'',
-                                registrantOrg2:'',
-                                protocolStartTime:'',
-                                protocolEndTime:'',
-                                protocolStartTime2:'',
-                                protocolEndTime2:'',
-                                registrantProject:'',
-                                registrantType:'',
-                                educationLevel:'',
-                                domicile:'',
-                                registrantYear:'',
-                                trainDepart:'',
-                                outputDepart:'',
-                            }
-                            this.visible = false
+                            this.addData.name=''
+                            this.addData.idCard=''
+                            this.addData.level=''
+                            this.addData.nation=''
+                            this.addData.registrantOrg2=''
+                            this.addData.educationLevel=''
+                            this.addData.domicile=''
+                            this.addData.trainDepart=''
+                            this.addData.outputDepart=''
+                            this.visible=false
+                            this.visible=true
+                            this.visibleAgain=true
+
 
                         }else {
+                            this.loading=false
+
                             this.$notification.open({
                                 duration:3,
                                 message: reData.msg,
@@ -1595,10 +1623,62 @@
                             });
                         }
                     })
-
                 }
 
+
             },
+            // ,handleOk(e) {
+            //     this.addData.userId=this.$store.state.userId
+            //     if(this.addData.name==''||this.addData.sex==''||this.addData.registrantFrom==''||this.addData.birthday==''||this.addData.idCard==''||this.addData.registrantOrg==''||this.addData.registrantYear==''||this.addData.registrantProject==''||this.addData.registrantType==''||this.addData.name==''){
+            //         this.$message.error('加*为必填项，请检查后再提交');
+            //     }else {
+            //         this.$fetch('/athletes/addAthletes',this.addData).then((reData)=>{
+            //             if(reData.code==200){
+            //                 this.$notification.open({
+            //                     message: '成功添加运动员',
+            //                     onClick: () => {
+            //                         console.log('Notification Clicked!');
+            //                     },
+            //                 });
+            //                 this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
+            //                 this.addData = {
+            //                     name:'',
+            //                     sex:'',
+            //                     nation:'',
+            //                     birthday:'',
+            //                     registrantFrom:'',
+            //                     idCard:'',
+            //                     level:'',
+            //                     registrantOrg:'',
+            //                     registrantOrg2:'',
+            //                     protocolStartTime:'',
+            //                     protocolEndTime:'',
+            //                     protocolStartTime2:'',
+            //                     protocolEndTime2:'',
+            //                     registrantProject:'',
+            //                     registrantType:'',
+            //                     educationLevel:'',
+            //                     domicile:'',
+            //                     registrantYear:'',
+            //                     trainDepart:'',
+            //                     outputDepart:'',
+            //                 }
+            //                 this.visible = false
+            //
+            //             }else {
+            //                 this.$notification.open({
+            //                     duration:3,
+            //                     message: reData.msg,
+            //                     onClick: () => {
+            //                         console.log('Notification Clicked!');
+            //                     },
+            //                 });
+            //             }
+            //         })
+            //
+            //     }
+            //
+            // },
             handleEditOk(e) {
                 this.editData.userId=this.$store.state.userId
                 if(this.editData.name==''||this.editData.sex==''||this.editData.birthday==''||this.editData.registrantFrom==''||this.editData.idCard==''||this.editData.registrantOrg==''||this.editData.registrantYear==''||this.editData.registrantProject==''||this.editData.registrantType==''){
@@ -1630,11 +1710,16 @@
 
 
         },
+
             handleCancel(){
                 this.visible=false
                 this.visibleEdit=false
                 this.visibleDel=false
                 this.visibleAdd=false
+                this.visibleAgain=false
+            },
+            handleOkAgain(){
+                this.visibleAgain=false
             }
 
     },
@@ -1648,6 +1733,8 @@
         },
         data() {
             return {
+                visibleAgain:false,
+
                 comeFromList:[],
                 selectType:'',
                 loadOrganization:[],
@@ -1673,7 +1760,7 @@
                 columns,
                 addData:{
                     name:'',
-                    sex:'',
+                    sex:'男',
                     nation:'',
                     birthday:'',
                     registrantFrom:'',
