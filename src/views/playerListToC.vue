@@ -39,12 +39,49 @@
       </a-col>
 
       <a-col class="gutter-row"  :span="6" :offset="6">
-        <a-button type="primary" @click="visibleAdd=true">批量上传</a-button>
+        <!--<a-button type="primary" @click="visibleAdd=true">批量上传</a-button>-->
         <a-button type="primary" @click="addAccount()">新增</a-button>
         <a-button type="primary" @click="search()">搜索</a-button>
       </a-col>
     </a-row>
 
+    <div>
+      <a-row>
+        <a-col class="gutter-row" :span="4">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="6">
+              <div class="inputName">模板下载：</div>
+            </a-col>
+            <a-col class="gutter-row" style="padding-top: 6px;" :span="12">
+              <a target="_blank" href="http://106.12.61.239:8080/ERService/athletes/downImportAthletesTemp">运动员批量上传模板</a>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="4">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="6">
+              <div class="inputName">模板上传：</div>
+            </a-col>
+            <a-col class="gutter-row" style="padding-top: 6px;" :span="12">
+              <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" id="form1" method="post" enctype="multipart/form-data">
+                <input type="file" name="file"/><br/>
+                <input type="hidden" v-model="$store.state.userId" name="userId" >
+                <input type="hidden" v-model="$store.state.token" name="token" >
+                <input style="border: none;
+    background: #1890ff;
+    color: white;
+    width: 178px;
+    height: 35px;
+    margin: 36px 0px 0px 0px;
+    border-radius: 3px;" type="submit"   value="运动员批量上传"/>
+              </form>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+    </div>
 
 
     <div class="hrLine"></div>
@@ -685,54 +722,24 @@
     >
       <p>添加成功，是否继续？</p>
     </a-modal>
-    <!--<a-modal-->
-            <!--title="批量上传"-->
-            <!--:visible="visibleAdd"-->
-            <!--@ok="handleOkDel"-->
-            <!--footer=""-->
-            <!--@cancel="handleCancel"-->
-    <!--&gt;-->
-      <!--<a-row>-->
-        <!--<a-col class="gutter-row" :span="24">-->
-          <!--<div class="inputPart">-->
-            <!--<a-col class="gutter-row" :span="4">-->
-              <!--<div class="inputName">模板下载：</div>-->
-            <!--</a-col>-->
-            <!--<a-col class="gutter-row" style="padding-top: 6px;" :span="20">-->
-              <!--<a target="_blank" href="http://106.12.61.239:8080/ERService/excel/downImportAthletesTemp">运动员批量上传模板</a>-->
-            <!--</a-col>-->
-          <!--</div>-->
-        <!--</a-col>-->
-      <!--</a-row>-->
-      <!--<a-row>-->
-        <!--<a-col class="gutter-row" :span="24">-->
-          <!--<div class="inputPart">-->
-            <!--<a-col class="gutter-row" :span="4">-->
-              <!--<div class="inputName">模板上传：</div>-->
-            <!--</a-col>-->
-            <!--<a-col class="gutter-row" style="padding-top: 6px;" :span="20">-->
-              <!--<form action="http://106.12.61.239:8080/ERService/excel/importAthletesExcel" method="POST" target="_blank" enctype="multipart/form-data">-->
-                <!--<input type="file" name="file"/><br/>-->
-                <!--<input style="border: none;-->
-    <!--background: #1890ff;-->
-    <!--color: white;-->
-    <!--width: 178px;-->
-    <!--height: 35px;-->
-    <!--margin: 36px 0px 0px 0px;-->
-    <!--border-radius: 3px;" type="submit" value="表格上传"/>-->
-              <!--</form>-->
-            <!--</a-col>-->
-          <!--</div>-->
-        <!--</a-col>-->
-      <!--</a-row>-->
-    <!--</a-modal>-->
+    <a-modal
+            title="提示"
+            :visible="visibleAlert"
+            :footer="null"
+            @cancel="handleCancel"
 
+    >
+      <p v-for="item in errorData.failMsgList">身份证：{{item.idCard}}&nbsp;&nbsp;&nbsp;<br>错误信息:   <span style="color: red">{{item.msg}}</span> </p>
+    </a-modal>
   </div>
 </template>
 <script>
+
     import router from '../router';
     import store from '../store'
     import moment from 'moment';
+    import $ from 'jquery'
+
     import  'jquery-form'
     const columns = [
         {
@@ -1058,58 +1065,7 @@
 
 
             },
-            // ,handleOk(e) {
-            //     this.addData.userId=this.$store.state.userId
-            //     if(this.addData.name==''||this.addData.sex==''||this.addData.registrantFrom==''||this.addData.birthday==''||this.addData.idCard==''||this.addData.registrantOrg==''||this.addData.registrantYear==''||this.addData.registrantProject==''||this.addData.registrantType==''||this.addData.name==''){
-            //         this.$message.error('加*为必填项，请检查后再提交');
-            //     }else {
-            //         this.$fetch('/athletes/addAthletes',this.addData).then((reData)=>{
-            //             if(reData.code==200){
-            //                 this.$notification.open({
-            //                     message: '成功添加运动员',
-            //                     onClick: () => {
-            //                         console.log('Notification Clicked!');
-            //                     },
-            //                 });
-            //                 this.getList({page:this.nowPage,page_size:this.pagination.defaultPageSize,nameKeyword:this.searchName,registrantOrg:this.registrant})
-            //                 this.addData = {
-            //                     name:'',
-            //                     sex:'',
-            //                     nation:'',
-            //                     birthday:'',
-            //                     registrantFrom:'',
-            //                     idCard:'',
-            //                     level:'',
-            //                     registrantOrg:'',
-            //                     registrantOrg2:'',
-            //                     protocolStartTime:'',
-            //                     protocolEndTime:'',
-            //                     protocolStartTime2:'',
-            //                     protocolEndTime2:'',
-            //                     registrantProject:'',
-            //                     registrantType:'',
-            //                     educationLevel:'',
-            //                     domicile:'',
-            //                     registrantYear:'',
-            //                     trainDepart:'',
-            //                     outputDepart:'',
-            //                 }
-            //                 this.visible = false
-            //
-            //             }else {
-            //                 this.$notification.open({
-            //                     duration:3,
-            //                     message: reData.msg,
-            //                     onClick: () => {
-            //                         console.log('Notification Clicked!');
-            //                     },
-            //                 });
-            //             }
-            //         })
-            //
-            //     }
-            //
-            // },
+
             handleEditOk(e) {
                 this.editData.userId=this.$store.state.userId
                 if(this.editData.name==''||this.editData.sex==''||this.editData.birthday==''||this.editData.registrantFrom==''||this.editData.idCard==''||this.editData.registrantOrg==''||this.editData.registrantYear==''||this.editData.registrantProject==''||this.editData.registrantType==''){
@@ -1148,6 +1104,8 @@
                 this.visibleDel=false
                 this.visibleAdd=false
                 this.visibleAgain=false
+                this.visibleAlert=false
+
             },
             handleOkAgain(){
                 this.visibleAgain=false
@@ -1156,6 +1114,35 @@
     },
         mounted() {
             var vm = this
+            $("#form1").ajaxForm(function(data){
+                if(data.code!='200'){
+                    vm.$notification.open({
+                        message: data.msg,
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
+                }else {
+                    if(data.data.failCount==0){
+                        vm.$notification.open({
+                            message: '批量上传成功',
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                        });
+                        vm.getList({page:1,page_size:vm.pagination.defaultPageSize})
+
+                    }else {
+                        vm.errorData = data.data
+                        vm.visibleAlert= true
+                        vm.getList({page:1,page_size:vm.pagination.defaultPageSize})
+                    }
+
+
+                }
+                // vm.$message.success(data.message);
+            });
+
             store.commit('changeStore',{key:'title',val:'运动员管理'});
             this.getList({page:1,page_size:10,nameKeyword:this.searchName,registrantOrg:this.registrant,registrantProject:this.selectType})
             // this.getRole()
@@ -1164,6 +1151,8 @@
         },
         data() {
             return {
+                errorData:{},
+                visibleAlert:false,
                 visibleAgain:false,
 
                 comeFromList:[],

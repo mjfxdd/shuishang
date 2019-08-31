@@ -13,10 +13,35 @@
             fileName:<input type="text" name="fileName"><br/>
             <input type="submit" value="下载"/>
         </form>
+
+
+
+        <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" id="form1" method="post"  enctype="multipart/form-data">
+            <input type="submit" class="subForm" value="上传">
+            <input type="file" class="file2" name="myFile" ><br/>
+        </form>
+        <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" id="form2" method="post" enctype="multipart/form-data">
+            <input type="file" name="file"/><br/>
+            <input type="hidden" v-model="$store.state.userId" name="userId" >
+            <input type="hidden" v-model="$store.state.token" name="token" >
+
+            <input style="border: none;
+    background: #1890ff;
+    color: white;
+    width: 178px;
+    height: 35px;
+    margin: 36px 0px 0px 0px;
+    border-radius: 3px;" type="submit"   value="表格上传"/>
+        </form>
+
+
     </div>
 </template>
 <script>
-    const treeData = [{
+    import $ from 'jquery'
+    import 'jquery-form'
+    const treeData =
+        [{
         title: '0-0',
         key: '0-0',
         children: [{
@@ -67,7 +92,9 @@
                 console.log('onCheck', val)
             }
         }, mounted() {
+            $("#form2").ajaxForm(function(data){
 
+            });
             this.$post('/auth/login/login',{'userName':'jack','password':'Commit'}).then((data)=>{
                 console.log(data)
             })
