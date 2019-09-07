@@ -1,12 +1,12 @@
 <template>
   <div class="producetList">
     <a-row>
-      <a-col class="gutter-row" :span="4">
+      <a-col class="gutter-row" :span="6">
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
               <div class="inputName">姓名：</div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-input v-model="searchName" placeholder="请输入运动员姓名"/>
             </a-col>
           </div>
@@ -37,7 +37,7 @@
           </a-col>
         </div>
       </a-col>
-      <a-col class="gutter-row"  :span="6" :offset="6">
+      <a-col class="gutter-row"  :span="6" :offset="4">
         <!--<a-button type="primary" @click="visibleAdd=true">批量上传</a-button>-->
         <a-button type="primary" @click="addAccount()">新增</a-button>
         <a-button type="primary" @click="search()">搜索</a-button>
@@ -46,21 +46,21 @@
 
     <div>
       <a-row>
-        <a-col class="gutter-row" :span="4">
+        <a-col class="gutter-row" :span="6">
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
               <div class="inputName">模板下载：</div>
             </a-col>
-            <a-col class="gutter-row" style="padding-top: 6px;" :span="12">
+            <a-col class="gutter-row" style="padding-top: 6px;text-align: left" :span="12" >
               <a target="_blank" href="http://106.12.61.239:8080/ERService/athletes/downImportAthletesTemp">运动员批量上传模板</a>
             </a-col>
           </div>
         </a-col>
       </a-row>
       <a-row>
-        <a-col class="gutter-row" :span="4">
+        <a-col class="gutter-row" :span="6">
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
               <div class="inputName">模板上传：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;" :span="12">

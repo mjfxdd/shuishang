@@ -122,7 +122,9 @@
   #wrap {
     height: 719px;
     width: 100%;
-    background-image: url('../assets/bg.jpeg');
+    /*background-image: url('../assets/bg.jpeg');*/
+    background-image: url('../assets/bg4.jpg');
+
     background-repeat: no-repeat;
     background-position: center center;
     position: relative;

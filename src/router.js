@@ -15,6 +15,7 @@ import tableAllPlayer from './views/tableAllPlayer'
 import playerListToC from './views/playerListToC'
 import homeIndex from './views/homeIndex'
 import homeIndexC from './views/homeIndexC'
+import downEX from './views/downEX'
 
 
 import ceshi from './views/ceshi.vue'
@@ -69,6 +70,12 @@ export default new Router({
               path: '/tableAllPlayer',
               name: 'tableAllPlayer',
               component: tableAllPlayer
+          },
+          {
+              //报表下载
+              path: '/downEX',
+              name: 'downEX',
+              component: downEX
           }
 
       ]

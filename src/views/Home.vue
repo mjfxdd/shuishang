@@ -16,6 +16,8 @@
           <a-menu-item key="12" @click="choseWhich('/roleList','角色管理')">角色管理</a-menu-item>
           <a-menu-item key="13" @click="choseWhich('/gameList','赛事管理')">赛事管理</a-menu-item>
           <a-menu-item key="14" @click="choseWhich('/playerList','运动员管理')">运动员管理</a-menu-item>
+          <a-menu-item key="15" @click="choseWhich('/downEX','报表下载')">报表下载</a-menu-item>
+
         </a-sub-menu>
 
         <a-menu-item key="3" @click="loginOut()"><a-icon type="rocket" />退出登录</a-menu-item>

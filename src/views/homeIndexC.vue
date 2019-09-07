@@ -2,8 +2,8 @@
     <div style="background: url('../assets/timg.jpg');background-size: 100% 100%">
 
         <h1 style="    line-height: 129px;">欢迎来到水尚赛事管理系统</h1>
-        <!--<img src="../assets/timg.jpg" width="100%" alt="">-->
-        <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2379162234,2963853238&fm=26&gp=0.jpg" width="100%" alt="">
+        <img src="../assets/bg8.jpg" width="100%" alt="">
+        <!--<img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2379162234,2963853238&fm=26&gp=0.jpg" width="100%" alt="">-->
     </div>
 
 </template>

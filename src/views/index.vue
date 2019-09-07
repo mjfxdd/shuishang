@@ -9,10 +9,17 @@
             </div>
             <div style="height: 92px"></div>
             <a-carousel >
-                <div><img src="http://xhimg.sports.cn/Image/181120/16-1Q120134914432.jpg" width="100%" alt=""></div>
-                <div><img src="http://xhimg.sports.cn/Image/181120/16-1Q120134914432.jpg" width="100%" alt=""></div>
-                <div><img src="http://xhimg.sports.cn/Image/181120/16-1Q120134914432.jpg" width="100%" alt=""></div>
-                <div><img src="http://xhimg.sports.cn/Image/181120/16-1Q120134914432.jpg" width="100%" alt=""></div>
+                <!--<div><img src="http://xhimg.sports.cn/Image/181120/16-1Q120134914432.jpg" width="100%" alt=""></div>-->
+
+                <div><img src="../assets/bgs1.jpg" width="100%" alt=""></div>
+                <div><img src="../assets/bgs2.jpg" width="100%" alt=""></div>
+                <div><img src="../assets/bgs4.jpg" width="100%" alt=""></div>
+                <div><img src="../assets/bgs5.jpg" width="100%" alt=""></div>
+                <div><img src="../assets/bgs6.jpg" width="100%" alt=""></div>
+                <div><img src="../assets/bgs7.jpg" width="100%" alt=""></div>
+                <div><img src="../assets/bgs8.jpg" width="100%" alt=""></div>
+                <div><img src="../assets/bgs9.jpg" width="100%" alt=""></div>
+
             </a-carousel>
             <template>
                 <a-card title="赛事列表">
@@ -1033,7 +1040,14 @@
 
 
 
-
+    /*.ant-carousel .slick-list {*/
+        /*position: relative;*/
+        /*overflow: hidden;*/
+        /*display: block;*/
+        /*margin: 0;*/
+        /*height: 632px;*/
+        /*padding: 0;*/
+    /*}*/
 
 
 
