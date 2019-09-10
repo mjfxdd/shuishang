@@ -121,7 +121,7 @@
         <div style="height: 80px;"></div>
         <div class="secondTitle">
             <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
-                分项报名汇总表生成：
+                单项报名汇总表生成：
             </a-col>
             <a-col class="gutter-row" :span="3">
                 <a-row>
@@ -201,7 +201,7 @@
                         if(reData.code==200){
                             this.ready1 = false
 
-                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data
+                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data+'&token='+sessionStorage.getItem("token")
                         }else {
                             this.ready1 = false
 
@@ -232,7 +232,7 @@
                     this.$fetch('/statistics/generateAttendBoatNumReportForm',{matchId:this.matchId2}).then((reData)=>{
                         if(reData.code==200){
                             this.ready2 = false
-                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data
+                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data+'&token='+sessionStorage.getItem("token")
                         }else {
                             this.ready2 = false
 
@@ -263,7 +263,7 @@
                     this.$fetch('/statistics/generateAttendTeamReportForm',{matchId:this.matchId3}).then((reData)=>{
                         if(reData.code==200){
                             this.ready3 = false
-                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data
+                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data+'&token='+sessionStorage.getItem("token")
                         }else {
                             this.ready3 = false
 
@@ -295,7 +295,7 @@
                         if(reData.code==200){
                             this.ready4 = false
 
-                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data
+                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data+'&token='+sessionStorage.getItem("token")
                         }else {
                             this.ready4 = false
 
@@ -327,7 +327,7 @@
                         if(reData.code==200){
                             this.ready5 = false
 
-                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data
+                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data+'&token='+sessionStorage.getItem("token")
                         }else {
                             this.ready5 = false
 

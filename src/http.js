@@ -3,7 +3,7 @@ import qs from 'qs'
 import router from '../src/router';
 import store from '../src/store';
 import $ from 'jquery'
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 500000;
 // 有权限
 axios.defaults.baseURL ='http://106.12.61.239:8080/ERService';
 // 无权限

@@ -10,6 +10,7 @@
         <a-menu-item key="1" @click="choseWhich('/','首页')">首页</a-menu-item>
         <a-menu-item key="2" @click="choseWhich('/registerFormC','报名列表')">报名列表</a-menu-item>
         <a-menu-item key="4" @click="choseWhich('/playerListToC','运动员管理')">运动员管理</a-menu-item>
+        <a-menu-item key="6" @click="choseWhich('/downEXToC','报表下载')">报表下载</a-menu-item>
         <a-menu-item key="3" @click="choseWhich('/personCenterUser','密码修改')">密码修改</a-menu-item>
         <a-menu-item key="22" @click="loginOut()">退出登录</a-menu-item>
 

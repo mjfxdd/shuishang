@@ -16,6 +16,7 @@ import playerListToC from './views/playerListToC'
 import homeIndex from './views/homeIndex'
 import homeIndexC from './views/homeIndexC'
 import downEX from './views/downEX'
+import downEXToC from './views/downEXToC'
 
 
 import ceshi from './views/ceshi.vue'
@@ -110,6 +111,12 @@ export default new Router({
                   path: '/personCenterUser',
                   name: 'personCenterUser',
                   component: personCenterUser
+
+              },{
+                  //下载
+                  path: '/downEXToC',
+                  name: 'downEXToC',
+                  component: downEXToC
 
               },{
                   //运动员管理
