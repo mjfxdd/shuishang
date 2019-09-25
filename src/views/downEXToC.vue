@@ -16,10 +16,10 @@
             <a-row class="gutter-row">
                 <a-col class="gutter-row" :span="12">
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
+                        <a-col class="gutter-row" :span="6">
                             <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>选择报名表：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="20">
+                        <a-col class="gutter-row" :span="18">
                             <a-select  style="width: 100%" defaultValue="选择报名表" @change="handleChangeSelect1">
                                 <a-select-option v-for="item in gameListData" :value="item.id" :matchId="item.matchId">{{item.matchName}}-{{item.teamName}}-{{item.coach}}-{{item.operator}} </a-select-option>
                             </a-select>
@@ -71,7 +71,7 @@
                         if(reData.code==200){
                             this.ready1 = false
 
-                            window.location.href = 'http://106.12.61.239:8080/ERService/statistics/downReport?fileName='+reData.data+'&token='+sessionStorage.getItem("token")
+                            window.location.href = 'http://47.105.137.32:8080/ERService/statistics/downReport?fileName='+reData.data+'&token='+sessionStorage.getItem("token")
                         }else {
                             this.ready1 = false
 

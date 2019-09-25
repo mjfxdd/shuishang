@@ -25,18 +25,8 @@
 
   <div class="footer" id="foot">
     <div class="copyright">
-      <p>Copyright © 2018  Inc. All Rights Reserved.</p>
-      <div class="img">
-        <i class="icon"></i><span>联系邮箱：1021252@qq.com</span>
-      </div>
-
-      <div class="img">
-        <i class="icon1"></i><span>联系地址：江苏南京</span>
-      </div>
-
-      <div class="img">
-        <i class="icon2"></i><span>联系电话：1526550519</span>
-      </div>
+      <span>苏ICP备19052529号.</span>&nbsp;&nbsp;<span>联系地址：江苏南京</span>&nbsp;&nbsp;
+      <span>联系电话：13861084810 </span>
 
 
     </div>
@@ -138,7 +128,7 @@
     position: relative;
   }
   #foot {
-    height: 126px;
+    height: 66px;
     background-color: #CC9933;
     position: sticky;
     bottom: 0;
@@ -213,15 +203,16 @@
   }
 
   .copyright {
-    font-family: "宋体";
+    font-family: "\5B8B\4F53";
     color: #FFFFFF;
     position: absolute;
-    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);  /* 使用css3的transform来实现 */
-    height: 60px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    height: 10px;
+    line-height: 70px;
     width: 40%;
-    text-align:center;
+    text-align: center;
   }
 
 

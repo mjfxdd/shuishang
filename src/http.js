@@ -5,9 +5,11 @@ import store from '../src/store';
 import $ from 'jquery'
 axios.defaults.timeout = 500000;
 // 有权限
-axios.defaults.baseURL ='http://106.12.61.239:8080/ERService';
+// axios.defaults.baseURL ='http://106.12.61.239:8080/ERService';
+axios.defaults.baseURL ='http://47.105.137.32:8080/ERService';
+
 // 无权限
-// axios.defaults.baseURL ='http://47.105.137.32:8080/ERService';
+// axios.defaults.baseURL ='http://47.105.137.32:8080:8080/ERService';
 
 
 // axios.defaults.baseURL ='http://zjz.free.idcfengye.com/ERService';

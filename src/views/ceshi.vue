@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form action="http://106.12.61.239:8080/ERService/excel/importAthletesExcel" method="POST" enctype="multipart/form-data">
+        <form action="http://47.105.137.32:8080/ERService/excel/importAthletesExcel" method="POST" enctype="multipart/form-data">
             sheetNo:<input type="text" name="sheetNo"><br/>
             headLineNum:<input type="text" name="headLineNum">
             yourfile: <input type="file" name="file"/><br/>
@@ -9,18 +9,18 @@
 
 
 
-        <form action="http://106.12.61.239:8080/ERService/excel/downImportAthletesTemp" method="GET">
+        <form action="http://47.105.137.32:8080/ERService/excel/downImportAthletesTemp" method="GET">
             fileName:<input type="text" name="fileName"><br/>
             <input type="submit" value="下载"/>
         </form>
 
 
 
-        <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" id="form1" method="post"  enctype="multipart/form-data">
+        <form action="http://47.105.137.32:8080/ERService/athletes/importAthletes" id="form1" method="post"  enctype="multipart/form-data">
             <input type="submit" class="subForm" value="上传">
             <input type="file" class="file2" name="myFile" ><br/>
         </form>
-        <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" id="form2" method="post" enctype="multipart/form-data">
+        <form action="http://47.105.137.32:8080/ERService/athletes/importAthletes" id="form2" method="post" enctype="multipart/form-data">
             <input type="file" name="file"/><br/>
             <input type="hidden" v-model="$store.state.userId" name="userId" >
             <input type="hidden" v-model="$store.state.token" name="token" >

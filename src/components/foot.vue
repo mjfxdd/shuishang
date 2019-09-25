@@ -11,13 +11,13 @@
 			<em>周一至周日  9:00-18:00</em>
 		</span>
           <span>
-			<em>客服电话：</em>
-			<strong>4000-888-8888</strong>
+			<em>联系电话：</em>
+			<strong>13805155660</strong>
 		</span>
-          <span>
-			<em>客服QQ：</em>
-			<strong>1000266</strong>
-		</span>
+          <!--<span>-->
+			<!--<em>客服QQ：</em>-->
+			<!--<strong>1000266</strong>-->
+		<!--</span>-->
         </div>
         <div class="copyright_C">
           <div class="copyright_C_list">
@@ -63,12 +63,12 @@
           </div>
         </div>
         <div class="copyright_R">
-          <span><img src=""  /></span>
-          <p>扫描关注微信公众号</p>
+          <!--<span><img src=""  /></span>-->
+          <!--<p>扫描关注微信公众号</p>-->
         </div>
       </div>
       <div class="copyright_bottom">
-        <span>南京B2-xxxxxxx 南京网安备1101080xxxxxxx号 苏ICP备xxxxxxxx号-32   </span>
+        <span>苏ICP备19052529号   </span>
         <p>水尚为您带去专业服务的团队</p>
       </div>
     </div>

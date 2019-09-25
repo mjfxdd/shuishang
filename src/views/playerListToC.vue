@@ -53,7 +53,7 @@
               <div class="inputName">模板下载：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;text-align: left" :span="12" >
-              <a target="_blank" href="http://106.12.61.239:8080/ERService/athletes/downImportAthletesTemp">运动员批量上传模板</a>
+              <a target="_blank" href="http://47.105.137.32:8080/ERService/athletes/downImportAthletesTemp">运动员批量上传模板</a>
             </a-col>
           </div>
         </a-col>
@@ -65,7 +65,7 @@
               <div class="inputName">模板上传：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;" :span="12">
-              <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" id="form1" method="post" enctype="multipart/form-data">
+              <form action="http://47.105.137.32:8080/ERService/athletes/importAthletes" id="form1" method="post" enctype="multipart/form-data">
                 <input type="file" name="file"/><br/>
                 <input type="hidden" v-model="$store.state.userId" name="userId" >
                 <input type="hidden" v-model="$store.state.token" name="token" >
@@ -680,7 +680,7 @@
               <div class="inputName">模板下载：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;" :span="20">
-              <a target="_blank" href="http://106.12.61.239:8080/ERService/athletes/downImportAthletesTemp">运动员批量上传模板</a>
+              <a target="_blank" href="http://47.105.137.32:8080/ERService/athletes/downImportAthletesTemp">运动员批量上传模板</a>
             </a-col>
           </div>
         </a-col>
@@ -692,7 +692,7 @@
               <div class="inputName">模板上传：</div>
             </a-col>
             <a-col class="gutter-row" style="padding-top: 6px;" :span="20">
-              <form action="http://106.12.61.239:8080/ERService/athletes/importAthletes" method="POST"  enctype="multipart/form-data">
+              <form action="http://47.105.137.32:8080/ERService/athletes/importAthletes" method="POST"  enctype="multipart/form-data">
                 <input type="file" name="file"/><br/>
                 <input type="hidden" v-model="$store.state.userId" name="userId" >
                 <input type="hidden" v-model="$store.state.token" name="token" >
